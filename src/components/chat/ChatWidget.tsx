@@ -992,7 +992,7 @@ const ChatWidget = () => {
           onClick={() => setIsOpen(true)}
           variant="hero"
           size="lg"
-          className="rounded-full h-14 w-14 shadow-glow animate-pulse hover:animate-none"
+          className="rounded-full h-14 w-14 shadow-glow hover:animate-none"
         >
           <MessageCircle className="h-6 w-6" />
         </Button>
