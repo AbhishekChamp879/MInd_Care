@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
-import { 
+import {
   Play,
   Brain,
   Heart,
@@ -18,7 +18,7 @@ import {
   Clock,
   Target,
   BarChart3,
-  Users
+  Users,
 } from 'lucide-react';
 
 // Import meditation components
@@ -42,7 +42,12 @@ export const MeditationDemo: React.FC = () => {
       description: 'Customizable timer with session controls and completion tracking',
       icon: <Timer className="h-6 w-6" />,
       color: 'bg-blue-50 border-blue-200 text-blue-700',
-      highlights: ['Real-time countdown', 'Custom durations', 'Session controls', 'Completion bells']
+      highlights: [
+        'Real-time countdown',
+        'Custom durations',
+        'Session controls',
+        'Completion bells',
+      ],
     },
     {
       id: 'breathing',
@@ -50,7 +55,7 @@ export const MeditationDemo: React.FC = () => {
       description: 'Visual guides for 4-7-8, box breathing, and triangle techniques',
       icon: <Wind className="h-6 w-6" />,
       color: 'bg-green-50 border-green-200 text-green-700',
-      highlights: ['4-7-8 breathing', 'Box breathing', 'Visual animations', 'Cycle tracking']
+      highlights: ['4-7-8 breathing', 'Box breathing', 'Visual animations', 'Cycle tracking'],
     },
     {
       id: 'ambient',
@@ -58,7 +63,7 @@ export const MeditationDemo: React.FC = () => {
       description: 'Web Audio API powered ambient sounds for meditation atmosphere',
       icon: <Volume2 className="h-6 w-6" />,
       color: 'bg-purple-50 border-purple-200 text-purple-700',
-      highlights: ['Rain sounds', 'Ocean waves', 'Forest ambience', 'Volume controls']
+      highlights: ['Rain sounds', 'Ocean waves', 'Forest ambience', 'Volume controls'],
     },
     {
       id: 'progress',
@@ -66,7 +71,7 @@ export const MeditationDemo: React.FC = () => {
       description: 'Comprehensive analytics for mindfulness activities and achievements',
       icon: <TrendingUp className="h-6 w-6" />,
       color: 'bg-orange-50 border-orange-200 text-orange-700',
-      highlights: ['Session history', 'Streak tracking', 'Goal setting', 'Achievement system']
+      highlights: ['Session history', 'Streak tracking', 'Goal setting', 'Achievement system'],
     },
     {
       id: 'dashboard',
@@ -74,8 +79,13 @@ export const MeditationDemo: React.FC = () => {
       description: 'Complete meditation center with all features integrated',
       icon: <BarChart3 className="h-6 w-6" />,
       color: 'bg-pink-50 border-pink-200 text-pink-700',
-      highlights: ['Quick start options', 'Session management', 'Real-time tracking', 'Personalized recommendations']
-    }
+      highlights: [
+        'Quick start options',
+        'Session management',
+        'Real-time tracking',
+        'Personalized recommendations',
+      ],
+    },
   ];
 
   // Implementation highlights
@@ -86,8 +96,8 @@ export const MeditationDemo: React.FC = () => {
         'High-precision timer with millisecond accuracy',
         'Real-time breathing phase animations with smooth transitions',
         'Live session state management with pause/resume capability',
-        'Synchronized audio-visual feedback for meditation cues'
-      ]
+        'Synchronized audio-visual feedback for meditation cues',
+      ],
     },
     {
       category: 'Audio Technology',
@@ -95,8 +105,8 @@ export const MeditationDemo: React.FC = () => {
         'Web Audio API implementation for browser-native sound generation',
         'Synthetic ambient sound creation without external audio files',
         'Real-time volume control with gain node management',
-        'Cross-browser compatible audio context handling'
-      ]
+        'Cross-browser compatible audio context handling',
+      ],
     },
     {
       category: 'Progress Analytics',
@@ -104,8 +114,8 @@ export const MeditationDemo: React.FC = () => {
         'Comprehensive session tracking with detailed metrics',
         'Streak calculation with consecutive day counting',
         'Weekly goal progress with percentage completion',
-        'Achievement system with tiered unlock requirements'
-      ]
+        'Achievement system with tiered unlock requirements',
+      ],
     },
     {
       category: 'User Experience',
@@ -113,17 +123,29 @@ export const MeditationDemo: React.FC = () => {
         'Responsive design optimized for all device sizes',
         'Intuitive tab-based navigation for feature discovery',
         'Visual feedback with color-coded breathing phases',
-        'Accessibility-focused controls with keyboard navigation'
-      ]
-    }
+        'Accessibility-focused controls with keyboard navigation',
+      ],
+    },
   ];
 
   // Statistics for the demo
   const demoStats = [
     { label: 'Components Built', value: '5', icon: <Brain className="h-5 w-5 text-blue-500" /> },
-    { label: 'Breathing Techniques', value: BREATHING_EXERCISES.length.toString(), icon: <Wind className="h-5 w-5 text-green-500" /> },
-    { label: 'Ambient Sounds', value: AMBIENT_SOUNDS.length.toString(), icon: <Volume2 className="h-5 w-5 text-purple-500" /> },
-    { label: 'Achievements', value: MEDITATION_ACHIEVEMENTS.length.toString(), icon: <Award className="h-5 w-5 text-yellow-500" /> }
+    {
+      label: 'Breathing Techniques',
+      value: BREATHING_EXERCISES.length.toString(),
+      icon: <Wind className="h-5 w-5 text-green-500" />,
+    },
+    {
+      label: 'Ambient Sounds',
+      value: AMBIENT_SOUNDS.length.toString(),
+      icon: <Volume2 className="h-5 w-5 text-purple-500" />,
+    },
+    {
+      label: 'Achievements',
+      value: MEDITATION_ACHIEVEMENTS.length.toString(),
+      icon: <Award className="h-5 w-5 text-yellow-500" />,
+    },
   ];
 
   return (
@@ -176,7 +198,11 @@ export const MeditationDemo: React.FC = () => {
             {/* Feature Cards */}
             <div className="grid gap-6 lg:grid-cols-2">
               {features.map((feature) => (
-                <Card key={feature.id} className={`${feature.color} cursor-pointer hover:shadow-lg transition-all`} onClick={() => setActiveDemo(feature.id)}>
+                <Card
+                  key={feature.id}
+                  className={`${feature.color} cursor-pointer hover:shadow-lg transition-all`}
+                  onClick={() => setActiveDemo(feature.id)}
+                >
                   <CardHeader>
                     <CardTitle className="flex items-center space-x-3">
                       {feature.icon}
@@ -301,7 +327,7 @@ export const MeditationDemo: React.FC = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <MeditationTimer 
+                <MeditationTimer
                   onSessionComplete={(session) => {
                     console.log('Demo session completed:', session);
                   }}
@@ -324,7 +350,7 @@ export const MeditationDemo: React.FC = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <BreathingAnimation 
+                <BreathingAnimation
                   onSessionComplete={(session) => {
                     console.log('Demo breathing session completed:', session);
                   }}
@@ -347,7 +373,7 @@ export const MeditationDemo: React.FC = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <AmbientSoundPlayer 
+                <AmbientSoundPlayer
                   onVolumeChange={(volume) => {
                     console.log('Demo volume changed:', volume);
                   }}
@@ -371,7 +397,7 @@ export const MeditationDemo: React.FC = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <MindfulnessProgressTracker 
+                <MindfulnessProgressTracker
                   userId="demo_user"
                   onGoalUpdate={(goal) => {
                     console.log('Demo goal updated:', goal);
@@ -391,8 +417,9 @@ export const MeditationDemo: React.FC = () => {
                 <h3 className="text-xl font-semibold">Feature 7 Complete</h3>
               </div>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Real-time Guided Meditation & Breathing Exercises system fully implemented with 
-                meditation timer, breathing animations, ambient sounds, and comprehensive progress tracking.
+                Real-time Guided Meditation & Breathing Exercises system fully implemented with
+                meditation timer, breathing animations, ambient sounds, and comprehensive progress
+                tracking.
               </p>
               <div className="flex items-center justify-center space-x-6 text-sm">
                 <div className="flex items-center space-x-1">

@@ -2,16 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { 
-  X, 
-  Heart, 
-  Wind, 
-  Calendar, 
-  Quote, 
-  CheckCircle, 
-  ExternalLink,
-  Bell
-} from 'lucide-react';
+import { X, Heart, Wind, Calendar, Quote, CheckCircle, ExternalLink, Bell } from 'lucide-react';
 import { WellnessNotification } from '@/types/notifications';
 import notificationService from '@/services/notificationService';
 
@@ -21,10 +12,10 @@ interface NotificationToastProps {
   onAction: () => void;
 }
 
-const NotificationToast: React.FC<NotificationToastProps> = ({ 
-  notification, 
-  onDismiss, 
-  onAction 
+const NotificationToast: React.FC<NotificationToastProps> = ({
+  notification,
+  onDismiss,
+  onAction,
 }) => {
   const [isVisible, setIsVisible] = useState(true);
 
@@ -82,20 +73,16 @@ const NotificationToast: React.FC<NotificationToastProps> = ({
   };
 
   return (
-    <div 
+    <div
       className={`transition-all duration-300 ease-in-out transform ${
-        isVisible 
-          ? 'translate-x-0 opacity-100 scale-100' 
-          : 'translate-x-full opacity-0 scale-95'
+        isVisible ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-full opacity-0 scale-95'
       }`}
     >
       <Card className={`w-80 shadow-lg hover:shadow-xl transition-shadow ${getTypeColor()}`}>
         <CardContent className="p-4">
           <div className="flex items-start space-x-3">
-            <div className="flex-shrink-0 mt-1">
-              {getTypeIcon()}
-            </div>
-            
+            <div className="flex-shrink-0 mt-1">{getTypeIcon()}</div>
+
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between">
                 <h4 className="font-semibold text-sm text-gray-900 line-clamp-2">
@@ -110,22 +97,16 @@ const NotificationToast: React.FC<NotificationToastProps> = ({
                   <X className="h-4 w-4" />
                 </Button>
               </div>
-              
-              <p className="text-sm text-gray-600 mt-1 line-clamp-3">
-                {notification.message}
-              </p>
-              
+
+              <p className="text-sm text-gray-600 mt-1 line-clamp-3">{notification.message}</p>
+
               <div className="flex items-center justify-between mt-3">
                 <Badge variant="outline" className="text-xs">
-                  {notification.type.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                  {notification.type.replace('-', ' ').replace(/\b\w/g, (l) => l.toUpperCase())}
                 </Badge>
-                
+
                 {notification.data?.actionUrl && (
-                  <Button
-                    size="sm"
-                    onClick={handleAction}
-                    className="h-7 text-xs"
-                  >
+                  <Button size="sm" onClick={handleAction} className="h-7 text-xs">
                     Take Action
                     <ExternalLink className="h-3 w-3 ml-1" />
                   </Button>

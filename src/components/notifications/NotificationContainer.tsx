@@ -7,21 +7,17 @@ interface NotificationContainerProps {
   maxToasts?: number;
 }
 
-const NotificationContainer: React.FC<NotificationContainerProps> = ({ 
-  maxToasts = 3 
-}) => {
+const NotificationContainer: React.FC<NotificationContainerProps> = ({ maxToasts = 3 }) => {
   const [notifications, setNotifications] = useState<WellnessNotification[]>([]);
 
   useEffect(() => {
     const handleNotification = (event: CustomEvent<WellnessNotification>) => {
       const notification = event.detail;
-      
-      setNotifications(prev => {
+
+      setNotifications((prev) => {
         // Remove oldest notification if at max capacity
-        const newNotifications = prev.length >= maxToasts 
-          ? prev.slice(1) 
-          : prev;
-        
+        const newNotifications = prev.length >= maxToasts ? prev.slice(1) : prev;
+
         return [...newNotifications, notification];
       });
     };
@@ -35,9 +31,7 @@ const NotificationContainer: React.FC<NotificationContainerProps> = ({
   }, [maxToasts]);
 
   const handleDismiss = (notificationId: string) => {
-    setNotifications(prev => 
-      prev.filter(notification => notification.id !== notificationId)
-    );
+    setNotifications((prev) => prev.filter((notification) => notification.id !== notificationId));
   };
 
   const handleAction = (notification: WellnessNotification) => {

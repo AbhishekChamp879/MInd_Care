@@ -5,20 +5,30 @@ import { Button } from '@/components/ui/button';
 import { useActivityLog, useAchievements } from '@/hooks/useDashboardFeatures';
 import { useRealTimeUpdates, useSmoothAnimations } from '@/hooks/useRealTimeFeatures';
 import { ProgressFeedback, AnimatedCounter } from '@/components/dashboard/RealTimeFeedback';
-import { Activity, MessageCircle, BookOpen, Users, Calendar, Trophy, Star, Zap, TrendingUp } from 'lucide-react';
+import {
+  Activity,
+  MessageCircle,
+  BookOpen,
+  Users,
+  Calendar,
+  Trophy,
+  Star,
+  Zap,
+  TrendingUp,
+} from 'lucide-react';
 
 const activityIcons = {
   chat: MessageCircle,
   resource: BookOpen,
   forum: Users,
-  booking: Calendar
+  booking: Calendar,
 };
 
 const activityColors = {
   chat: 'bg-blue-100 text-blue-700',
   resource: 'bg-green-100 text-green-700',
   forum: 'bg-purple-100 text-purple-700',
-  booking: 'bg-orange-100 text-orange-700'
+  booking: 'bg-orange-100 text-orange-700',
 };
 
 export const ActivityTracker = () => {
@@ -36,8 +46,8 @@ export const ActivityTracker = () => {
       const checkDate = new Date(today);
       checkDate.setDate(today.getDate() - i);
       const dayString = checkDate.toDateString();
-      const hasActivity = activities.some(activity => 
-        new Date(activity.timestamp).toDateString() === dayString
+      const hasActivity = activities.some(
+        (activity) => new Date(activity.timestamp).toDateString() === dayString
       );
       if (hasActivity) {
         streak++;
@@ -76,7 +86,7 @@ export const ActivityTracker = () => {
               </CardDescription>
             </div>
           </div>
-          
+
           {activityStreak > 0 && (
             <div className="flex items-center space-x-1 text-orange-600 animate-in slide-in-from-right duration-300">
               <TrendingUp className="h-4 w-4" />
@@ -85,7 +95,7 @@ export const ActivityTracker = () => {
           )}
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {/* Weekly Stats with Progress Feedback */}
         <div className="grid grid-cols-2 gap-3">
@@ -98,14 +108,14 @@ export const ActivityTracker = () => {
               <div className="text-xl font-bold text-blue-600">
                 <AnimatedCounter value={weeklyStats.chat} />
               </div>
-              <ProgressFeedback 
-                progress={Math.min((weeklyStats.chat / 10) * 100, 100)} 
+              <ProgressFeedback
+                progress={Math.min((weeklyStats.chat / 10) * 100, 100)}
                 label={`${weeklyStats.chat}/10`}
               />
             </div>
             <div className="text-xs text-muted-foreground">this week</div>
           </div>
-          
+
           <div className="p-3 bg-gradient-to-br from-green-50 to-green-100/50 rounded-lg hover:shadow-sm transition-all duration-200">
             <div className="flex items-center space-x-2 mb-1">
               <BookOpen className="h-4 w-4 text-green-600" />
@@ -115,14 +125,14 @@ export const ActivityTracker = () => {
               <div className="text-xl font-bold text-green-600">
                 <AnimatedCounter value={weeklyStats.resource} />
               </div>
-              <ProgressFeedback 
-                progress={Math.min((weeklyStats.resource / 5) * 100, 100)} 
+              <ProgressFeedback
+                progress={Math.min((weeklyStats.resource / 5) * 100, 100)}
                 label={`${weeklyStats.resource}/5`}
               />
             </div>
             <div className="text-xs text-muted-foreground">accessed</div>
           </div>
-          
+
           <div className="p-3 bg-gradient-to-br from-purple-50 to-purple-100/50 rounded-lg hover:shadow-sm transition-all duration-200">
             <div className="flex items-center space-x-2 mb-1">
               <Users className="h-4 w-4 text-purple-600" />
@@ -132,14 +142,14 @@ export const ActivityTracker = () => {
               <div className="text-xl font-bold text-purple-600">
                 <AnimatedCounter value={weeklyStats.forum} />
               </div>
-              <ProgressFeedback 
-                progress={Math.min((weeklyStats.forum / 3) * 100, 100)} 
+              <ProgressFeedback
+                progress={Math.min((weeklyStats.forum / 3) * 100, 100)}
                 label={`${weeklyStats.forum}/3`}
               />
             </div>
             <div className="text-xs text-muted-foreground">interactions</div>
           </div>
-          
+
           <div className="p-3 bg-gradient-to-br from-orange-50 to-orange-100/50 rounded-lg hover:shadow-sm transition-all duration-200">
             <div className="flex items-center space-x-2 mb-1">
               <Calendar className="h-4 w-4 text-orange-600" />
@@ -149,8 +159,8 @@ export const ActivityTracker = () => {
               <div className="text-xl font-bold text-orange-600">
                 <AnimatedCounter value={weeklyStats.booking} />
               </div>
-              <ProgressFeedback 
-                progress={Math.min((weeklyStats.booking / 2) * 100, 100)} 
+              <ProgressFeedback
+                progress={Math.min((weeklyStats.booking / 2) * 100, 100)}
                 label={`${weeklyStats.booking}/2`}
               />
             </div>
@@ -183,7 +193,9 @@ export const ActivityTracker = () => {
                     style={{ animationDelay: `${index * 50}ms` }}
                     onClick={() => triggerUpdate('activity_viewed', { activity })}
                   >
-                    <div className={`p-1.5 rounded ${activityColors[activity.type]} transition-transform hover:scale-105`}>
+                    <div
+                      className={`p-1.5 rounded ${activityColors[activity.type]} transition-transform hover:scale-105`}
+                    >
                       <IconComponent className="h-3 w-3" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -210,7 +222,7 @@ export const AchievementTracker = () => {
   const { achievements, getUnlockedCount, getTotalCount } = useAchievements();
   const { triggerUpdate } = useRealTimeUpdates();
   const { smoothTransition } = useSmoothAnimations();
-  const unlockedAchievements = achievements.filter(a => a.unlocked);
+  const unlockedAchievements = achievements.filter((a) => a.unlocked);
   const recentUnlocked = unlockedAchievements.slice(-3);
 
   const completionPercentage = Math.round((getUnlockedCount() / getTotalCount()) * 100);
@@ -226,25 +238,31 @@ export const AchievementTracker = () => {
             <div>
               <CardTitle className="text-lg">Achievements</CardTitle>
               <CardDescription className="text-sm">
-                <AnimatedCounter value={getUnlockedCount()} suffix={` of ${getTotalCount()} unlocked`} />
+                <AnimatedCounter
+                  value={getUnlockedCount()}
+                  suffix={` of ${getTotalCount()} unlocked`}
+                />
               </CardDescription>
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-2">
-            <ProgressFeedback 
-              progress={completionPercentage} 
+            <ProgressFeedback
+              progress={completionPercentage}
               label={`${completionPercentage}%`}
               isAnimating={completionPercentage > 0}
             />
-            <Badge variant="secondary" className="bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-700 animate-in slide-in-from-right duration-300">
+            <Badge
+              variant="secondary"
+              className="bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-700 animate-in slide-in-from-right duration-300"
+            >
               <Star className="h-3 w-3 mr-1" />
               {completionPercentage}%
             </Badge>
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {getUnlockedCount() === 0 ? (
           <div className="text-center py-6 text-muted-foreground animate-in fade-in duration-500">
@@ -275,9 +293,7 @@ export const AchievementTracker = () => {
                     <div className="text-2xl animate-pulse">{achievement.icon}</div>
                     <div className="flex-1">
                       <div className="font-semibold text-sm">{achievement.title}</div>
-                      <div className="text-xs text-muted-foreground">
-                        {achievement.description}
-                      </div>
+                      <div className="text-xs text-muted-foreground">{achievement.description}</div>
                       {achievement.unlockedAt && (
                         <div className="text-xs text-yellow-600 font-medium">
                           Unlocked {formatTimeAgo(achievement.unlockedAt)}
@@ -319,9 +335,9 @@ export const AchievementTracker = () => {
           </>
         )}
 
-        <Button 
-          variant="outline" 
-          size="sm" 
+        <Button
+          variant="outline"
+          size="sm"
           className="w-full text-xs hover:bg-yellow-50 hover:border-yellow-200 transition-all duration-200"
           onClick={() => triggerUpdate('view_all_achievements')}
         >

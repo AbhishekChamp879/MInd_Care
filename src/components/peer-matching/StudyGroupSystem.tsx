@@ -5,12 +5,26 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import {
   Users,
   Plus,
   Search,
@@ -33,10 +47,10 @@ import {
   Video,
   UserPlus,
   Award,
-  TrendingUp
+  TrendingUp,
 } from 'lucide-react';
 
-import { 
+import {
   StudyGroup,
   StudyGroupFocus,
   StudyGroupStatus,
@@ -49,7 +63,7 @@ import {
   STUDY_GROUP_FOCUSES,
   MENTAL_HEALTH_CONCERNS,
   formatMeetingFrequency,
-  getStatusColor
+  getStatusColor,
 } from '@/types/peerMatching';
 
 interface StudyGroupSystemProps {
@@ -65,7 +79,7 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
   onGroupJoin,
   onGroupCreate,
   onSessionJoin,
-  className = ''
+  className = '',
 }) => {
   // Component state
   const [activeTab, setActiveTab] = useState<string>('discover');
@@ -92,7 +106,7 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
     duration: 60,
     locationType: 'online' as 'online' | 'in-person' | 'hybrid',
     platform: 'Zoom',
-    rules: [] as string[]
+    rules: [] as string[],
   });
 
   // Mock data for demonstration
@@ -100,7 +114,8 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
     {
       id: 'group_001',
       name: 'Mindful Study Circle',
-      description: 'A supportive group combining academic success with mindfulness practices. We focus on stress management techniques while maintaining high academic standards.',
+      description:
+        'A supportive group combining academic success with mindfulness practices. We focus on stress management techniques while maintaining high academic standards.',
       focus: 'mindfulness-meditation',
       mentalHealthTopics: ['stress', 'anxiety', 'academic-pressure'],
       subjectAreas: ['Psychology', 'Neuroscience', 'Philosophy'],
@@ -119,20 +134,20 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
           dayOfWeek: 'wednesday',
           time: '18:00',
           duration: 90,
-          timeZone: 'America/New_York'
+          timeZone: 'America/New_York',
         },
-        upcomingSessions: []
+        upcomingSessions: [],
       },
       location: {
         type: 'online',
         details: 'Weekly Zoom meetings',
-        platform: 'Zoom'
+        platform: 'Zoom',
       },
       rules: [
         'Maintain confidentiality and respect',
         'Be punctual and prepared',
         'Practice active listening',
-        'Support fellow members'
+        'Support fellow members',
       ],
       tags: ['mindfulness', 'academic-success', 'stress-relief'],
       successMetrics: {
@@ -141,13 +156,14 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
         averageRating: 4.6,
         completionRate: 75,
         memberSatisfaction: 88,
-        goalsAchieved: 12
-      }
+        goalsAchieved: 12,
+      },
     },
     {
       id: 'group_002',
       name: 'Exam Stress Support Group',
-      description: 'Peer support for managing exam anxiety and developing healthy study habits. Share strategies and encourage each other through challenging periods.',
+      description:
+        'Peer support for managing exam anxiety and developing healthy study habits. Share strategies and encourage each other through challenging periods.',
       focus: 'stress-management',
       mentalHealthTopics: ['anxiety', 'academic-pressure', 'perfectionism'],
       subjectAreas: ['General Studies', 'Test Prep'],
@@ -164,19 +180,19 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
         type: 'flexible',
         flexibleTimes: [
           { start: '16:00', end: '18:00' },
-          { start: '19:00', end: '21:00' }
+          { start: '19:00', end: '21:00' },
         ],
-        upcomingSessions: []
+        upcomingSessions: [],
       },
       location: {
         type: 'hybrid',
         details: 'Online with optional in-person meetups',
-        platform: 'Discord'
+        platform: 'Discord',
       },
       rules: [
         'No judgment zone',
         'Share study tips and resources',
-        'Be encouraging and supportive'
+        'Be encouraging and supportive',
       ],
       tags: ['exam-prep', 'anxiety-support', 'study-tips'],
       successMetrics: {
@@ -185,13 +201,14 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
         averageRating: 0,
         completionRate: 0,
         memberSatisfaction: 0,
-        goalsAchieved: 0
-      }
+        goalsAchieved: 0,
+      },
     },
     {
       id: 'group_003',
       name: 'Wellness Warriors',
-      description: 'Holistic approach to student wellness combining mental health awareness, physical health, and academic success. Building resilient habits together.',
+      description:
+        'Holistic approach to student wellness combining mental health awareness, physical health, and academic success. Building resilient habits together.',
       focus: 'wellness-habits',
       mentalHealthTopics: ['stress', 'self-esteem', 'burnout'],
       subjectAreas: ['Health Sciences', 'Psychology', 'Nutrition'],
@@ -210,20 +227,20 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
           dayOfWeek: 'saturday',
           time: '10:00',
           duration: 120,
-          timeZone: 'America/New_York'
+          timeZone: 'America/New_York',
         },
-        upcomingSessions: []
+        upcomingSessions: [],
       },
       location: {
         type: 'in-person',
         details: 'Student Center, Room 205',
-        address: '123 University Ave, Campus Building'
+        address: '123 University Ave, Campus Building',
       },
       rules: [
         'Attend regularly and be committed',
         'Share wellness goals and progress',
-        'Support each other\'s journey',
-        'Respect diverse wellness approaches'
+        "Support each other's journey",
+        'Respect diverse wellness approaches',
       ],
       tags: ['wellness', 'habits', 'resilience', 'holistic-health'],
       successMetrics: {
@@ -232,9 +249,9 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
         averageRating: 4.8,
         completionRate: 80,
         memberSatisfaction: 95,
-        goalsAchieved: 18
-      }
-    }
+        goalsAchieved: 18,
+      },
+    },
   ];
 
   const mockMySessions: GroupSession[] = [
@@ -242,7 +259,8 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
       id: 'session_001',
       groupId: 'group_001',
       title: 'Mindful Exam Preparation',
-      description: 'Combining mindfulness techniques with effective study strategies for upcoming midterms.',
+      description:
+        'Combining mindfulness techniques with effective study strategies for upcoming midterms.',
       scheduledAt: '2024-01-22T18:00:00Z',
       duration: 90,
       attendeeIds: ['user_123', 'user_456', 'user_789'],
@@ -254,24 +272,25 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
           title: 'Mindful Study Guide',
           type: 'document',
           url: '/materials/mindful-study-guide.pdf',
-          description: 'Comprehensive guide to mindful studying techniques'
-        }
+          description: 'Comprehensive guide to mindful studying techniques',
+        },
       ],
-      feedback: []
+      feedback: [],
     },
     {
       id: 'session_002',
       groupId: 'group_003',
       title: 'Building Healthy Sleep Habits',
-      description: 'Workshop on creating sustainable sleep routines for better academic performance.',
+      description:
+        'Workshop on creating sustainable sleep routines for better academic performance.',
       scheduledAt: '2024-01-24T10:00:00Z',
       duration: 120,
       attendeeIds: ['user_123', 'user_606', 'user_707', 'user_808'],
       facilitatorId: 'user_606',
       status: 'scheduled',
       materials: [],
-      feedback: []
-    }
+      feedback: [],
+    },
   ];
 
   useEffect(() => {
@@ -281,10 +300,11 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
   }, []);
 
   // Filter groups based on search and focus
-  const filteredGroups = availableGroups.filter(group => {
-    const matchesSearch = group.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         group.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         group.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredGroups = availableGroups.filter((group) => {
+    const matchesSearch =
+      group.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      group.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      group.tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesFocus = selectedFocus === 'all' || group.focus === selectedFocus;
     return matchesSearch && matchesFocus;
   });
@@ -308,18 +328,21 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
       lastActivity: new Date().toISOString(),
       schedule: {
         type: newGroup.scheduleType,
-        regularSchedule: newGroup.scheduleType === 'regular' ? {
-          dayOfWeek: newGroup.dayOfWeek,
-          time: newGroup.time,
-          duration: newGroup.duration,
-          timeZone: 'America/New_York'
-        } : undefined,
-        upcomingSessions: []
+        regularSchedule:
+          newGroup.scheduleType === 'regular'
+            ? {
+                dayOfWeek: newGroup.dayOfWeek,
+                time: newGroup.time,
+                duration: newGroup.duration,
+                timeZone: 'America/New_York',
+              }
+            : undefined,
+        upcomingSessions: [],
       },
       location: {
         type: newGroup.locationType,
         details: newGroup.locationType === 'online' ? `${newGroup.platform} meetings` : 'TBD',
-        platform: newGroup.locationType === 'online' ? newGroup.platform : undefined
+        platform: newGroup.locationType === 'online' ? newGroup.platform : undefined,
       },
       rules: newGroup.rules,
       tags: [newGroup.focus.replace('-', ' ')],
@@ -329,13 +352,13 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
         averageRating: 0,
         completionRate: 0,
         memberSatisfaction: 0,
-        goalsAchieved: 0
-      }
+        goalsAchieved: 0,
+      },
     };
 
     onGroupCreate?.(group);
     setShowCreateDialog(false);
-    
+
     // Reset form
     setNewGroup({
       name: '',
@@ -352,7 +375,7 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
       duration: 60,
       locationType: 'online',
       platform: 'Zoom',
-      rules: []
+      rules: [],
     });
   };
 
@@ -379,16 +402,15 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
               <Badge variant="outline">
                 {STUDY_GROUP_FOCUSES[group.focus].icon} {STUDY_GROUP_FOCUSES[group.focus].label}
               </Badge>
-              <Badge 
-                variant="secondary"
-                style={{ backgroundColor: getStatusColor(group.status) }}
-              >
+              <Badge variant="secondary" style={{ backgroundColor: getStatusColor(group.status) }}>
                 {group.status}
               </Badge>
             </div>
           </div>
           <div className="text-right text-sm text-muted-foreground">
-            <p>{group.currentMembers}/{group.maxMembers} members</p>
+            <p>
+              {group.currentMembers}/{group.maxMembers} members
+            </p>
             {group.successMetrics.averageRating > 0 && (
               <div className="flex items-center space-x-1">
                 <Star className="h-3 w-3 text-yellow-500 fill-current" />
@@ -399,16 +421,14 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground line-clamp-2">
-          {group.description}
-        </p>
+        <p className="text-sm text-muted-foreground line-clamp-2">{group.description}</p>
 
         {/* Mental Health Topics */}
         {group.mentalHealthTopics.length > 0 && (
           <div>
             <Label className="text-xs font-medium">Focus Areas</Label>
             <div className="flex flex-wrap gap-1 mt-1">
-              {group.mentalHealthTopics.slice(0, 3).map(topic => (
+              {group.mentalHealthTopics.slice(0, 3).map((topic) => (
                 <Badge key={topic} variant="outline" className="text-xs">
                   {MENTAL_HEALTH_CONCERNS[topic].icon} {MENTAL_HEALTH_CONCERNS[topic].label}
                 </Badge>
@@ -452,7 +472,9 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
               <p className="text-muted-foreground">Attendance</p>
             </div>
             <div>
-              <p className="font-semibold text-blue-600">{group.successMetrics.memberSatisfaction}%</p>
+              <p className="font-semibold text-blue-600">
+                {group.successMetrics.memberSatisfaction}%
+              </p>
               <p className="text-muted-foreground">Satisfaction</p>
             </div>
             <div>
@@ -464,7 +486,7 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
 
         {/* Tags */}
         <div className="flex flex-wrap gap-1">
-          {group.tags.slice(0, 4).map(tag => (
+          {group.tags.slice(0, 4).map((tag) => (
             <Badge key={tag} variant="secondary" className="text-xs">
               {tag}
             </Badge>
@@ -475,8 +497,8 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
         <div className="flex space-x-2 pt-2">
           {showJoinButton ? (
             <>
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 onClick={() => joinGroup(group.id)}
                 disabled={group.currentMembers >= group.maxMembers}
                 className="flex-1"
@@ -514,7 +536,7 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
   );
 
   const renderSessionCard = (session: GroupSession) => {
-    const group = availableGroups.find(g => g.id === session.groupId);
+    const group = availableGroups.find((g) => g.id === session.groupId);
     const timeUntil = new Date(session.scheduledAt).getTime() - new Date().getTime();
     const hoursUntil = Math.floor(timeUntil / (1000 * 60 * 60));
     const isUpcoming = timeUntil > 0;
@@ -526,19 +548,12 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
             <div className="space-y-2 flex-1">
               <div className="flex items-center space-x-2">
                 <h3 className="font-semibold">{session.title}</h3>
-                <Badge 
-                  variant={isUpcoming ? "default" : "secondary"}
-                  className="text-xs"
-                >
+                <Badge variant={isUpcoming ? 'default' : 'secondary'} className="text-xs">
                   {session.status}
                 </Badge>
               </div>
-              <p className="text-sm text-muted-foreground">
-                {group?.name}
-              </p>
-              <p className="text-xs text-muted-foreground line-clamp-2">
-                {session.description}
-              </p>
+              <p className="text-sm text-muted-foreground">{group?.name}</p>
+              <p className="text-xs text-muted-foreground line-clamp-2">{session.description}</p>
               <div className="flex items-center space-x-4 text-xs text-muted-foreground">
                 <div className="flex items-center space-x-1">
                   <Calendar className="h-3 w-3" />
@@ -546,7 +561,12 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
                 </div>
                 <div className="flex items-center space-x-1">
                   <Clock className="h-3 w-3" />
-                  <span>{new Date(session.scheduledAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                  <span>
+                    {new Date(session.scheduledAt).toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <Users className="h-3 w-3" />
@@ -556,18 +576,12 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
               {isUpcoming && hoursUntil <= 24 && (
                 <div className="flex items-center space-x-1 text-xs text-orange-600">
                   <AlertCircle className="h-3 w-3" />
-                  <span>
-                    {hoursUntil > 0 ? `In ${hoursUntil} hours` : 'Starting soon'}
-                  </span>
+                  <span>{hoursUntil > 0 ? `In ${hoursUntil} hours` : 'Starting soon'}</span>
                 </div>
               )}
             </div>
             <div className="ml-4">
-              <Button 
-                size="sm" 
-                onClick={() => joinSession(session.id)}
-                disabled={!isUpcoming}
-              >
+              <Button size="sm" onClick={() => joinSession(session.id)} disabled={!isUpcoming}>
                 {isUpcoming ? 'Join Session' : 'View Recording'}
               </Button>
             </div>
@@ -653,7 +667,10 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
                     />
                   </div>
                 </div>
-                <Select value={selectedFocus} onValueChange={(value) => setSelectedFocus(value as StudyGroupFocus | 'all')}>
+                <Select
+                  value={selectedFocus}
+                  onValueChange={(value) => setSelectedFocus(value as StudyGroupFocus | 'all')}
+                >
                   <SelectTrigger className="w-full md:w-48">
                     <SelectValue placeholder="Select focus area" />
                   </SelectTrigger>
@@ -695,16 +712,14 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
           ) : (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">
-                  {filteredGroups.length} Groups Available
-                </h3>
+                <h3 className="text-lg font-semibold">{filteredGroups.length} Groups Available</h3>
                 <Button variant="outline" size="sm">
                   <Filter className="h-4 w-4 mr-2" />
                   More Filters
                 </Button>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
-                {filteredGroups.map(group => renderGroupCard(group, true))}
+                {filteredGroups.map((group) => renderGroupCard(group, true))}
               </div>
             </div>
           )}
@@ -740,7 +755,7 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
                 </Button>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
-                {myGroups.map(group => renderGroupCard(group, false))}
+                {myGroups.map((group) => renderGroupCard(group, false))}
               </div>
             </div>
           )}
@@ -775,9 +790,7 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
                   View Calendar
                 </Button>
               </div>
-              <div className="space-y-3">
-                {upcomingSessions.map(renderSessionCard)}
-              </div>
+              <div className="space-y-3">{upcomingSessions.map(renderSessionCard)}</div>
             </div>
           )}
         </TabsContent>
@@ -800,7 +813,7 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
                     id="group-name"
                     placeholder="e.g., Mindful Study Circle"
                     value={newGroup.name}
-                    onChange={(e) => setNewGroup(prev => ({ ...prev, name: e.target.value }))}
+                    onChange={(e) => setNewGroup((prev) => ({ ...prev, name: e.target.value }))}
                   />
                 </div>
 
@@ -810,16 +823,20 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
                     id="group-description"
                     placeholder="Describe your group's purpose, goals, and what members can expect..."
                     value={newGroup.description}
-                    onChange={(e) => setNewGroup(prev => ({ ...prev, description: e.target.value }))}
+                    onChange={(e) =>
+                      setNewGroup((prev) => ({ ...prev, description: e.target.value }))
+                    }
                     rows={3}
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label>Primary Focus</Label>
-                  <Select 
-                    value={newGroup.focus} 
-                    onValueChange={(value) => setNewGroup(prev => ({ ...prev, focus: value as StudyGroupFocus }))}
+                  <Select
+                    value={newGroup.focus}
+                    onValueChange={(value) =>
+                      setNewGroup((prev) => ({ ...prev, focus: value as StudyGroupFocus }))
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue />
@@ -846,13 +863,15 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
               {/* Group Settings */}
               <div className="space-y-4">
                 <h4 className="font-medium">Group Settings</h4>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Maximum Members</Label>
-                    <Select 
-                      value={newGroup.maxMembers.toString()} 
-                      onValueChange={(value) => setNewGroup(prev => ({ ...prev, maxMembers: parseInt(value) }))}
+                    <Select
+                      value={newGroup.maxMembers.toString()}
+                      onValueChange={(value) =>
+                        setNewGroup((prev) => ({ ...prev, maxMembers: parseInt(value) }))
+                      }
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -869,9 +888,14 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
 
                   <div className="space-y-2">
                     <Label>Meeting Type</Label>
-                    <Select 
-                      value={newGroup.locationType} 
-                      onValueChange={(value) => setNewGroup(prev => ({ ...prev, locationType: value as 'online' | 'in-person' | 'hybrid' }))}
+                    <Select
+                      value={newGroup.locationType}
+                      onValueChange={(value) =>
+                        setNewGroup((prev) => ({
+                          ...prev,
+                          locationType: value as 'online' | 'in-person' | 'hybrid',
+                        }))
+                      }
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -905,17 +929,25 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
                     <Checkbox
                       id="private-group"
                       checked={newGroup.isPrivate}
-                      onCheckedChange={(checked) => setNewGroup(prev => ({ ...prev, isPrivate: !!checked }))}
+                      onCheckedChange={(checked) =>
+                        setNewGroup((prev) => ({ ...prev, isPrivate: !!checked }))
+                      }
                     />
-                    <Label htmlFor="private-group" className="text-sm">Private Group</Label>
+                    <Label htmlFor="private-group" className="text-sm">
+                      Private Group
+                    </Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="requires-approval"
                       checked={newGroup.requiresApproval}
-                      onCheckedChange={(checked) => setNewGroup(prev => ({ ...prev, requiresApproval: !!checked }))}
+                      onCheckedChange={(checked) =>
+                        setNewGroup((prev) => ({ ...prev, requiresApproval: !!checked }))
+                      }
                     />
-                    <Label htmlFor="requires-approval" className="text-sm">Require Approval</Label>
+                    <Label htmlFor="requires-approval" className="text-sm">
+                      Require Approval
+                    </Label>
                   </div>
                 </div>
               </div>
@@ -924,7 +956,7 @@ export const StudyGroupSystem: React.FC<StudyGroupSystemProps> = ({
                 <Button variant="outline" onClick={() => setActiveTab('discover')}>
                   Cancel
                 </Button>
-                <Button 
+                <Button
                   onClick={handleCreateGroup}
                   disabled={!newGroup.name || !newGroup.description}
                 >

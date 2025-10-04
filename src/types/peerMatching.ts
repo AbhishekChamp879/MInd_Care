@@ -19,9 +19,9 @@ export interface PeerUser {
   createdAt: string;
 }
 
-export type StudentYear = 'junior' | 'senior' | 'graduate'| 'passout' | 'other';
+export type StudentYear = 'junior' | 'senior' | 'graduate' | 'passout' | 'other';
 
-export type MentalHealthConcern = 
+export type MentalHealthConcern =
   | 'anxiety'
   | 'depression'
   | 'stress'
@@ -54,7 +54,7 @@ export interface AvailableHours {
 
 export interface TimeSlot {
   start: string; // "09:00"
-  end: string;   // "12:00"
+  end: string; // "12:00"
 }
 
 export interface PeerPreferences {
@@ -67,11 +67,31 @@ export interface PeerPreferences {
   supportType: SupportType[];
 }
 
-export type CommunicationStyle = 'text-only' | 'voice-calls' | 'video-calls' | 'in-person' | 'flexible';
-export type MeetingFrequency = 'daily' | 'few-times-week' | 'weekly' | 'bi-weekly' | 'monthly' | 'as-needed';
+export type CommunicationStyle =
+  | 'text-only'
+  | 'voice-calls'
+  | 'video-calls'
+  | 'in-person'
+  | 'flexible';
+export type MeetingFrequency =
+  | 'daily'
+  | 'few-times-week'
+  | 'weekly'
+  | 'bi-weekly'
+  | 'monthly'
+  | 'as-needed';
 export type GroupSizePreference = 'one-on-one' | 'small-group' | 'large-group' | 'any';
-export type AnonymityLevel = 'fully-anonymous' | 'first-name-only' | 'partial-info' | 'open-profile';
-export type SupportType = 'emotional-support' | 'study-buddy' | 'accountability' | 'social-connection' | 'crisis-support';
+export type AnonymityLevel =
+  | 'fully-anonymous'
+  | 'first-name-only'
+  | 'partial-info'
+  | 'open-profile';
+export type SupportType =
+  | 'emotional-support'
+  | 'study-buddy'
+  | 'accountability'
+  | 'social-connection'
+  | 'crisis-support';
 
 // Peer Buddy System
 export interface PeerBuddy {
@@ -92,7 +112,7 @@ export interface PeerBuddy {
   endReason?: string;
 }
 
-export type PeerBuddyStatus = 
+export type PeerBuddyStatus =
   | 'pending-acceptance'
   | 'active'
   | 'paused'
@@ -141,7 +161,7 @@ export interface StudyGroup {
   successMetrics: GroupSuccessMetrics;
 }
 
-export type StudyGroupFocus = 
+export type StudyGroupFocus =
   | 'mental-health-awareness'
   | 'stress-management'
   | 'academic-success'
@@ -176,7 +196,7 @@ export interface GroupLocation {
   type: 'online' | 'in-person' | 'hybrid';
   details: string;
   platform?: string; // for online meetings
-  address?: string;   // for in-person meetings
+  address?: string; // for in-person meetings
 }
 
 export interface GroupSession {
@@ -261,7 +281,7 @@ export interface MentorAvailability {
   sessionTypes: SessionType[];
 }
 
-export type SessionType = 
+export type SessionType =
   | 'one-time-advice'
   | 'ongoing-mentorship'
   | 'crisis-support'
@@ -318,7 +338,7 @@ export interface MentorshipMatch {
   satisfaction: MentorshipSatisfaction;
 }
 
-export type MentorshipStatus = 
+export type MentorshipStatus =
   | 'pending-mentor-approval'
   | 'pending-mentee-approval'
   | 'active'
@@ -389,7 +409,7 @@ export interface RealTimeConnection {
   connectionQuality: number; // 0-100
 }
 
-export type ConnectionType = 
+export type ConnectionType =
   | 'peer-buddy-chat'
   | 'study-group-session'
   | 'mentor-mentee-session'
@@ -398,7 +418,7 @@ export type ConnectionType =
   | 'emergency-support'
   | 'anonymous-chat';
 
-export type ConnectionStatus = 
+export type ConnectionStatus =
   | 'connecting'
   | 'connected'
   | 'active'
@@ -428,7 +448,7 @@ export interface ParticipantState {
   deviceType: 'mobile' | 'desktop' | 'tablet';
 }
 
-export type ConnectionFeature = 
+export type ConnectionFeature =
   | 'text-chat'
   | 'voice-call'
   | 'video-call'
@@ -451,7 +471,7 @@ export interface ConnectionMessage {
   attachments: MessageAttachment[];
 }
 
-export type MessageType = 
+export type MessageType =
   | 'text'
   | 'system'
   | 'file'
@@ -544,7 +564,7 @@ export interface SafetyReport {
   actions: ModerationAction[];
 }
 
-export type SafetyReportType = 
+export type SafetyReportType =
   | 'inappropriate-behavior'
   | 'harassment'
   | 'spam'
@@ -632,52 +652,122 @@ export interface PeerMatchingTrend {
 }
 
 // Utility Functions
-export const MENTAL_HEALTH_CONCERNS: { [K in MentalHealthConcern]: { label: string; color: string; icon: string } } = {
-  'anxiety': { label: 'Anxiety', color: '#3B82F6', icon: '😰' },
-  'depression': { label: 'Depression', color: '#6366F1', icon: '😔' },
-  'stress': { label: 'Stress', color: '#EF4444', icon: '😫' },
+export const MENTAL_HEALTH_CONCERNS: {
+  [K in MentalHealthConcern]: { label: string; color: string; icon: string };
+} = {
+  anxiety: { label: 'Anxiety', color: '#3B82F6', icon: '😰' },
+  depression: { label: 'Depression', color: '#6366F1', icon: '😔' },
+  stress: { label: 'Stress', color: '#EF4444', icon: '😫' },
   'academic-pressure': { label: 'Academic Pressure', color: '#F59E0B', icon: '📚' },
   'social-anxiety': { label: 'Social Anxiety', color: '#8B5CF6', icon: '😳' },
-  'loneliness': { label: 'Loneliness', color: '#6B7280', icon: '😞' },
+  loneliness: { label: 'Loneliness', color: '#6B7280', icon: '😞' },
   'sleep-issues': { label: 'Sleep Issues', color: '#1F2937', icon: '😴' },
   'eating-concerns': { label: 'Eating Concerns', color: '#EC4899', icon: '🍽️' },
   'relationship-issues': { label: 'Relationship Issues', color: '#F97316', icon: '💔' },
   'family-problems': { label: 'Family Problems', color: '#84CC16', icon: '👨‍👩‍👧‍👦' },
   'financial-stress': { label: 'Financial Stress', color: '#10B981', icon: '💰' },
-  'perfectionism': { label: 'Perfectionism', color: '#06B6D4', icon: '⭐' },
+  perfectionism: { label: 'Perfectionism', color: '#06B6D4', icon: '⭐' },
   'self-esteem': { label: 'Self-Esteem', color: '#8B5CF6', icon: '🪞' },
-  'burnout': { label: 'Burnout', color: '#DC2626', icon: '🔥' },
+  burnout: { label: 'Burnout', color: '#DC2626', icon: '🔥' },
   'grief-loss': { label: 'Grief & Loss', color: '#374151', icon: '😢' },
   'substance-concerns': { label: 'Substance Concerns', color: '#7C2D12', icon: '🚫' },
   'identity-questions': { label: 'Identity Questions', color: '#BE185D', icon: '🤔' },
   'trauma-ptsd': { label: 'Trauma/PTSD', color: '#991B1B', icon: '⚡' },
-  'adjustment-issues': { label: 'Adjustment Issues', color: '#059669', icon: '🔄' }
+  'adjustment-issues': { label: 'Adjustment Issues', color: '#059669', icon: '🔄' },
 };
 
-export const STUDY_GROUP_FOCUSES: { [K in StudyGroupFocus]: { label: string; description: string; icon: string } } = {
-  'mental-health-awareness': { label: 'Mental Health Awareness', description: 'Learning about mental health topics', icon: '🧠' },
-  'stress-management': { label: 'Stress Management', description: 'Techniques for managing academic and personal stress', icon: '🧘' },
-  'academic-success': { label: 'Academic Success', description: 'Strategies for academic achievement', icon: '🎓' },
-  'mindfulness-meditation': { label: 'Mindfulness & Meditation', description: 'Practicing mindfulness and meditation together', icon: '🧘‍♀️' },
-  'peer-support': { label: 'Peer Support', description: 'Mutual support and encouragement', icon: '🤝' },
-  'wellness-habits': { label: 'Wellness Habits', description: 'Building healthy lifestyle habits', icon: '💪' },
-  'exam-preparation': { label: 'Exam Preparation', description: 'Collaborative exam study and preparation', icon: '📝' },
-  'time-management': { label: 'Time Management', description: 'Learning effective time management skills', icon: '⏰' },
-  'social-skills': { label: 'Social Skills', description: 'Developing interpersonal and social skills', icon: '👥' },
-  'self-care-practices': { label: 'Self-Care Practices', description: 'Learning and practicing self-care', icon: '🌸' },
-  'crisis-prevention': { label: 'Crisis Prevention', description: 'Building resilience and prevention strategies', icon: '🛡️' },
-  'healthy-relationships': { label: 'Healthy Relationships', description: 'Building and maintaining healthy relationships', icon: '💝' },
-  'emotional-regulation': { label: 'Emotional Regulation', description: 'Managing emotions effectively', icon: '❤️' },
-  'goal-setting': { label: 'Goal Setting', description: 'Setting and achieving personal goals', icon: '🎯' },
-  'resilience-building': { label: 'Resilience Building', description: 'Developing mental resilience', icon: '💎' }
+export const STUDY_GROUP_FOCUSES: {
+  [K in StudyGroupFocus]: { label: string; description: string; icon: string };
+} = {
+  'mental-health-awareness': {
+    label: 'Mental Health Awareness',
+    description: 'Learning about mental health topics',
+    icon: '🧠',
+  },
+  'stress-management': {
+    label: 'Stress Management',
+    description: 'Techniques for managing academic and personal stress',
+    icon: '🧘',
+  },
+  'academic-success': {
+    label: 'Academic Success',
+    description: 'Strategies for academic achievement',
+    icon: '🎓',
+  },
+  'mindfulness-meditation': {
+    label: 'Mindfulness & Meditation',
+    description: 'Practicing mindfulness and meditation together',
+    icon: '🧘‍♀️',
+  },
+  'peer-support': {
+    label: 'Peer Support',
+    description: 'Mutual support and encouragement',
+    icon: '🤝',
+  },
+  'wellness-habits': {
+    label: 'Wellness Habits',
+    description: 'Building healthy lifestyle habits',
+    icon: '💪',
+  },
+  'exam-preparation': {
+    label: 'Exam Preparation',
+    description: 'Collaborative exam study and preparation',
+    icon: '📝',
+  },
+  'time-management': {
+    label: 'Time Management',
+    description: 'Learning effective time management skills',
+    icon: '⏰',
+  },
+  'social-skills': {
+    label: 'Social Skills',
+    description: 'Developing interpersonal and social skills',
+    icon: '👥',
+  },
+  'self-care-practices': {
+    label: 'Self-Care Practices',
+    description: 'Learning and practicing self-care',
+    icon: '🌸',
+  },
+  'crisis-prevention': {
+    label: 'Crisis Prevention',
+    description: 'Building resilience and prevention strategies',
+    icon: '🛡️',
+  },
+  'healthy-relationships': {
+    label: 'Healthy Relationships',
+    description: 'Building and maintaining healthy relationships',
+    icon: '💝',
+  },
+  'emotional-regulation': {
+    label: 'Emotional Regulation',
+    description: 'Managing emotions effectively',
+    icon: '❤️',
+  },
+  'goal-setting': {
+    label: 'Goal Setting',
+    description: 'Setting and achieving personal goals',
+    icon: '🎯',
+  },
+  'resilience-building': {
+    label: 'Resilience Building',
+    description: 'Developing mental resilience',
+    icon: '💎',
+  },
 };
 
-export const calculateCompatibilityScore = (user1: PeerUser, user2: PeerUser): CompatibilityScore => {
+export const calculateCompatibilityScore = (
+  user1: PeerUser,
+  user2: PeerUser
+): CompatibilityScore => {
   // Simplified compatibility calculation
-  const sharedConcerns = user1.mentalHealthConcerns.filter(concern => 
+  const sharedConcerns = user1.mentalHealthConcerns.filter((concern) =>
     user2.mentalHealthConcerns.includes(concern)
   ).length;
-  const maxConcerns = Math.max(user1.mentalHealthConcerns.length, user2.mentalHealthConcerns.length);
+  const maxConcerns = Math.max(
+    user1.mentalHealthConcerns.length,
+    user2.mentalHealthConcerns.length
+  );
   const concernsMatch = maxConcerns > 0 ? (sharedConcerns / maxConcerns) * 100 : 0;
 
   // Calculate schedule overlap (simplified)
@@ -688,8 +778,12 @@ export const calculateCompatibilityScore = (user1: PeerUser, user2: PeerUser): C
   const communicationMatch = 85; // Based on communication preferences
   const goalAlignment = 70; // Based on stated goals and preferences
 
-  const overall = (concernsMatch * 0.3 + scheduleMatch * 0.2 + personalityMatch * 0.2 + 
-                  communicationMatch * 0.15 + goalAlignment * 0.15);
+  const overall =
+    concernsMatch * 0.3 +
+    scheduleMatch * 0.2 +
+    personalityMatch * 0.2 +
+    communicationMatch * 0.15 +
+    goalAlignment * 0.15;
 
   return {
     overall: Math.round(overall),
@@ -701,11 +795,12 @@ export const calculateCompatibilityScore = (user1: PeerUser, user2: PeerUser): C
     breakdown: {
       sharedConcerns: sharedConcerns,
       availableHours: 15, // Hours of overlap per week
-      communicationStyle: user1.preferences.communicationStyle === user2.preferences.communicationStyle ? 100 : 60,
+      communicationStyle:
+        user1.preferences.communicationStyle === user2.preferences.communicationStyle ? 100 : 60,
       yearLevel: Math.abs(getYearNumber(user1.year) - getYearNumber(user2.year)) <= 1 ? 100 : 70,
       institution: user1.institution === user2.institution ? 100 : 0,
-      preferences: 80 // Based on other preference alignments
-    }
+      preferences: 80, // Based on other preference alignments
+    },
   };
 };
 
@@ -720,33 +815,42 @@ export const formatTimeSlot = (slot: TimeSlot): string => {
 
 export const formatMeetingFrequency = (frequency: MeetingFrequency): string => {
   const frequencyMap = {
-    'daily': 'Daily',
+    daily: 'Daily',
     'few-times-week': 'Few times a week',
-    'weekly': 'Weekly',
+    weekly: 'Weekly',
     'bi-weekly': 'Bi-weekly',
-    'monthly': 'Monthly',
-    'as-needed': 'As needed'
+    monthly: 'Monthly',
+    'as-needed': 'As needed',
   };
   return frequencyMap[frequency];
 };
 
 export const getStatusColor = (status: string): string => {
   const statusColors: Record<string, string> = {
-    'pending': '#F59E0B',
-    'active': '#10B981',
-    'paused': '#6B7280',
-    'completed': '#3B82F6',
-    'ended': '#EF4444',
-    'online': '#10B981',
-    'offline': '#6B7280',
-    'away': '#F59E0B',
-    'busy': '#EF4444'
+    pending: '#F59E0B',
+    active: '#10B981',
+    paused: '#6B7280',
+    completed: '#3B82F6',
+    ended: '#EF4444',
+    online: '#10B981',
+    offline: '#6B7280',
+    away: '#F59E0B',
+    busy: '#EF4444',
   };
   return statusColors[status] || '#6B7280';
 };
 
 export const generateAnonymousDisplayName = (): string => {
-  const adjectives = ['Helpful', 'Kind', 'Supportive', 'Caring', 'Understanding', 'Friendly', 'Wise', 'Calm'];
+  const adjectives = [
+    'Helpful',
+    'Kind',
+    'Supportive',
+    'Caring',
+    'Understanding',
+    'Friendly',
+    'Wise',
+    'Calm',
+  ];
   const animals = ['Owl', 'Butterfly', 'Dolphin', 'Elephant', 'Turtle', 'Rabbit', 'Bear', 'Fox'];
   const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
   const randomAnimal = animals[Math.floor(Math.random() * animals.length)];

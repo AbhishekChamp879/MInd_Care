@@ -1,4 +1,3 @@
-
 #### 🤝MInd_Care is dedicated to building a supportive, inclusive community focused on improving mental health accessibility. As a mental health platform, we hold ourselves to the highest standards of empathy, respect, and understanding.
 
 ## 🌟 Our Pledge
@@ -20,6 +19,7 @@ We pledge to act and interact in ways that contribute to an open, welcoming, div
 ### 🌈 Examples of Positive Behavior
 
 **Community Building:**
+
 - Using welcoming and inclusive language
 - Being respectful of differing viewpoints and experiences
 - Gracefully accepting constructive criticism
@@ -27,6 +27,7 @@ We pledge to act and interact in ways that contribute to an open, welcoming, div
 - Showing empathy and kindness towards other community members
 
 **Professional Conduct:**
+
 - Providing constructive and helpful feedback
 - Acknowledging and learning from mistakes
 - Taking responsibility for our actions and their impact
@@ -34,6 +35,7 @@ We pledge to act and interact in ways that contribute to an open, welcoming, div
 - Sharing knowledge and helping others learn
 
 **Mental Health Awareness:**
+
 - Being sensitive to mental health discussions and experiences
 - Avoiding stigmatizing language around mental health
 - Respecting privacy and personal boundaries
@@ -43,6 +45,7 @@ We pledge to act and interact in ways that contribute to an open, welcoming, div
 ### ❌ Unacceptable Behavior
 
 **Harassment and Discrimination:**
+
 - The use of sexualized language or imagery and unwelcome sexual attention or advances
 - Trolling, insulting or derogatory comments, and personal or political attacks
 - Public or private harassment, stalking, or unwanted contact
@@ -50,6 +53,7 @@ We pledge to act and interact in ways that contribute to an open, welcoming, div
 - Discriminatory jokes, slurs, or language
 
 **Unprofessional Conduct:**
+
 - Publishing others' private information without explicit permission
 - Doxxing or sharing personal information
 - Spamming, flooding, or deliberately derailing conversations
@@ -57,6 +61,7 @@ We pledge to act and interact in ways that contribute to an open, welcoming, div
 - Persistent disruption of discussions or events
 
 **Mental Health Specific:**
+
 - Minimizing, dismissing, or mocking mental health experiences
 - Providing unsolicited medical or therapeutic advice
 - Sharing graphic content related to self-harm or suicide without warnings
@@ -64,6 +69,7 @@ We pledge to act and interact in ways that contribute to an open, welcoming, div
 - Pressuring individuals to share personal mental health information
 
 **Hacktoberfest Specific:**
+
 - Submitting spam or low-quality pull requests for personal gain
 - Creating fake issues or contributions
 - Harassing maintainers for quick reviews or merges
@@ -73,26 +79,30 @@ We pledge to act and interact in ways that contribute to an open, welcoming, div
 
 MInd_Care is dedicated to building a supportive, inclusive community focused on improving mental health accessibility. As a mental health platform, we hold ourselves to the highest standards of empathy, respect, and understanding.
 
-## Our Standards  
+## Our Standards
+
 Examples of positive behavior:
-- Using inclusive, respectful language  
-- Being constructive and kind in feedback  
-- Accepting disagreement gracefully  
-- Focusing on the project’s goals  
-- Showing empathy and patience  
+
+- Using inclusive, respectful language
+- Being constructive and kind in feedback
+- Accepting disagreement gracefully
+- Focusing on the project’s goals
+- Showing empathy and patience
 
 Unacceptable behavior includes:
-- Harassment, insults, or derogatory statements  
-- Personal attacks or shaming  
-- Discrimination or exclusionary remarks  
-- Bullying or intimidation  
-- Any other behavior that could be considered unprofessional or harmful  
+
+- Harassment, insults, or derogatory statements
+- Personal attacks or shaming
+- Discrimination or exclusionary remarks
+- Bullying or intimidation
+- Any other behavior that could be considered unprofessional or harmful
 
 ## 🛡️ Enforcement Responsibilities
 
 Community leaders and maintainers are responsible for clarifying and enforcing our standards of acceptable behavior. They will take appropriate and fair corrective action in response to any behavior they deem inappropriate, threatening, offensive, or harmful.
 
 Community leaders have the right and responsibility to:
+
 - Remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions
 - Temporarily or permanently ban any contributor for behaviors they deem inappropriate
 - Communicate reasons for enforcement decisions when appropriate
@@ -102,6 +112,7 @@ Community leaders have the right and responsibility to:
 This Code of Conduct applies within all community spaces, including but not limited to:
 
 **Online Spaces:**
+
 - GitHub repository (issues, pull requests, discussions, wiki)
 - Project communication channels (Discord, Slack, etc.)
 - Social media accounts and posts related to the project
@@ -109,6 +120,7 @@ This Code of Conduct applies within all community spaces, including but not limi
 - Email communications related to the project
 
 **Offline Spaces:**
+
 - Conferences, meetups, or hackathons where the project is represented
 - Any event where community members represent the project
 
@@ -117,6 +129,7 @@ This Code of Conduct also applies when an individual is officially representing 
 ## 🚨 Reporting Guidelines
 
 ### How to Report
+
 If you experience or witness unacceptable behavior, please report it using one of these methods:
 
 1. **GitHub Issues**: Create a private issue and tag maintainers
@@ -124,7 +137,9 @@ If you experience or witness unacceptable behavior, please report it using one o
 3. **Direct Message**: Contact any maintainer directly
 
 ### What to Include
+
 When reporting, please include:
+
 - Description of the incident
 - Where and when it occurred
 - Any screenshots or evidence (if safe to collect)
@@ -132,6 +147,7 @@ When reporting, please include:
 - Any previous related incidents
 
 ### Confidentiality
+
 All reports will be handled with discretion and confidentiality. We will not share reporter information without explicit consent, except where required by law.
 
 ## ⚖️ Enforcement Guidelines
@@ -139,21 +155,25 @@ All reports will be handled with discretion and confidentiality. We will not sha
 Community leaders will follow these Community Impact Guidelines in determining consequences:
 
 ### 1. 🔔 Correction
+
 **Community Impact**: Use of inappropriate language or other behavior deemed unprofessional.
 
 **Consequence**: A private, written warning with clarity around the violation and explanation of why the behavior was inappropriate. A public apology may be requested.
 
 ### 2. ⚠️ Warning
+
 **Community Impact**: A violation through a single incident or series of actions.
 
 **Consequence**: A warning with consequences for continued behavior. No interaction with the people involved for a specified period. This includes unsolicited interaction in community spaces and external channels.
 
 ### 3. 🚫 Temporary Ban
+
 **Community Impact**: A serious violation of community standards, including sustained inappropriate behavior.
 
 **Consequence**: A temporary ban from any sort of interaction or public communication with the community for a specified period. No public or private interaction with the people involved is allowed during this period.
 
 ### 4. 🚷 Permanent Ban
+
 **Community Impact**: Demonstrating a pattern of violation of community standards, including sustained inappropriate behavior, harassment, or aggression toward individuals or classes of individuals.
 
 **Consequence**: A permanent ban from any sort of public interaction within the community.
@@ -161,6 +181,7 @@ Community leaders will follow these Community Impact Guidelines in determining c
 ## 🌱 Building a Positive Community
 
 ### For Contributors
+
 - **Be welcoming**: Help newcomers feel welcome and supported
 - **Be patient**: Remember everyone has different experience levels
 - **Be respectful**: Treat all community members with dignity
@@ -168,6 +189,7 @@ Community leaders will follow these Community Impact Guidelines in determining c
 - **Be mindful**: Consider the impact of your words and actions
 
 ### For Maintainers
+
 - **Lead by example**: Demonstrate the behavior you want to see
 - **Be responsive**: Address issues and concerns promptly
 - **Be fair**: Apply rules consistently and transparently
@@ -175,7 +197,9 @@ Community leaders will follow these Community Impact Guidelines in determining c
 - **Be empathetic**: Consider the mental health impact of your decisions
 
 ### For Mental Health Discussions
+
 Given our project's focus on mental health:
+
 - Use content warnings for sensitive topics
 - Respect personal boundaries and privacy
 - Avoid giving medical advice unless qualified
@@ -185,6 +209,7 @@ Given our project's focus on mental health:
 ## 🎃 Hacktoberfest Guidelines
 
 During Hacktoberfest and similar events:
+
 - Focus on meaningful contributions over quantity
 - Be patient with increased activity and newcomers
 - Help others understand project goals and standards
@@ -194,6 +219,7 @@ During Hacktoberfest and similar events:
 ## 🆘 Resources & Support
 
 ### Community Support
+
 - Check our [Contributing Guidelines](CONTRIBUTING.md) for help getting started
 - Join our discussions for questions and collaboration
 - Reach out to maintainers for guidance

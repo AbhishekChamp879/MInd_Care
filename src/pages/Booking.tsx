@@ -8,15 +8,21 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import notificationService from '@/services/notificationService';
-import { 
-  Calendar as CalendarIcon, 
-  Clock, 
-  Video, 
-  MapPin, 
+import {
+  Calendar as CalendarIcon,
+  Clock,
+  Video,
+  MapPin,
   Phone,
   Heart,
   User,
@@ -47,7 +53,7 @@ import {
   Shuffle,
   Key,
   Database,
-  AlertCircle
+  AlertCircle,
 } from 'lucide-react';
 import { format, addDays, isSameDay, isToday, isTomorrow } from 'date-fns';
 
@@ -101,8 +107,17 @@ const mockCounselors: Counselor[] = [
     },
     bio: 'Dr. Sharma specializes in helping students navigate academic stress and develop healthy coping strategies. She uses evidence-based approaches including CBT and mindfulness techniques rooted in both Western and Eastern practices.',
     education: ['PhD in Clinical Psychology - AIIMS', 'MS in Counseling Psychology - JNU'],
-    certifications: ['Licensed Clinical Psychologist (India)', 'Certified CBT Therapist', 'Mindfulness-Based Stress Reduction Practitioner'],
-    approaches: ['Cognitive Behavioral Therapy', 'Mindfulness-Based Therapy', 'Solution-Focused Therapy', 'Cultural Integration Therapy'],
+    certifications: [
+      'Licensed Clinical Psychologist (India)',
+      'Certified CBT Therapist',
+      'Mindfulness-Based Stress Reduction Practitioner',
+    ],
+    approaches: [
+      'Cognitive Behavioral Therapy',
+      'Mindfulness-Based Therapy',
+      'Solution-Focused Therapy',
+      'Cultural Integration Therapy',
+    ],
     nextAvailable: new Date('2025-09-22T09:00:00'),
     responseTime: '< 2 hours',
     isOnline: true,
@@ -112,19 +127,21 @@ const mockCounselors: Counselor[] = [
         id: '1',
         clientInitials: 'A.K.',
         rating: 5,
-        comment: 'डॉ. शर्मा ने मेरी चिंता के साथ बहुत मदद की। उनका दृष्टिकोण दयालु और व्यावहारिक है।',
+        comment:
+          'डॉ. शर्मा ने मेरी चिंता के साथ बहुत मदद की। उनका दृष्टिकोण दयालु और व्यावहारिक है।',
         date: '2025-09-15',
-        verified: true
+        verified: true,
       },
       {
         id: '2',
         clientInitials: 'R.M.',
         rating: 5,
-        comment: 'Excellent therapist. Very understanding of Indian family dynamics and cultural context.',
+        comment:
+          'Excellent therapist. Very understanding of Indian family dynamics and cultural context.',
         date: '2025-09-10',
-        verified: true
-      }
-    ]
+        verified: true,
+      },
+    ],
   },
   {
     id: '2',
@@ -143,9 +160,21 @@ const mockCounselors: Counselor[] = [
       '2025-09-25': ['09:00', '12:00', '15:00'],
     },
     bio: 'Dr. Patel is an expert in ADHD support and helping students develop effective study strategies and social confidence. He combines traditional therapy with innovative coaching techniques, incorporating mindfulness practices from Indian traditions.',
-    education: ['PhD in Counseling Psychology - NIMHANS', 'MA in Educational Psychology - Tata Institute'],
-    certifications: ['Licensed Professional Counselor', 'ADHD Clinical Services Provider', 'Certified Executive Function Coach'],
-    approaches: ['Cognitive Behavioral Therapy', 'Executive Function Coaching', 'Mindfulness Training', 'Social Skills Training'],
+    education: [
+      'PhD in Counseling Psychology - NIMHANS',
+      'MA in Educational Psychology - Tata Institute',
+    ],
+    certifications: [
+      'Licensed Professional Counselor',
+      'ADHD Clinical Services Provider',
+      'Certified Executive Function Coach',
+    ],
+    approaches: [
+      'Cognitive Behavioral Therapy',
+      'Executive Function Coaching',
+      'Mindfulness Training',
+      'Social Skills Training',
+    ],
     nextAvailable: new Date('2025-09-22T10:00:00'),
     responseTime: '< 4 hours',
     isOnline: true,
@@ -155,11 +184,12 @@ const mockCounselors: Counselor[] = [
         id: '3',
         clientInitials: 'S.G.',
         rating: 5,
-        comment: 'Dr. Patel understood my ADHD challenges and provided practical tools that really work in Indian academic environment.',
+        comment:
+          'Dr. Patel understood my ADHD challenges and provided practical tools that really work in Indian academic environment.',
         date: '2025-09-12',
-        verified: true
-      }
-    ]
+        verified: true,
+      },
+    ],
   },
   {
     id: '3',
@@ -178,9 +208,21 @@ const mockCounselors: Counselor[] = [
       '2025-09-25': ['09:00', '13:00', '16:00', '18:00'],
     },
     bio: 'Dr. Menon specializes in trauma-informed care and crisis intervention with deep understanding of Indian cultural contexts. She creates a safe, supportive environment for healing and recovery using evidence-based approaches.',
-    education: ['PhD in Clinical Psychology - AIIMS', 'MA in Trauma Counseling - Christ University'],
-    certifications: ['Licensed Clinical Psychologist', 'Certified EMDR Therapist', 'DBT Intensive Training'],
-    approaches: ['Trauma-Informed Therapy', 'EMDR', 'Dialectical Behavior Therapy', 'Somatic Therapy'],
+    education: [
+      'PhD in Clinical Psychology - AIIMS',
+      'MA in Trauma Counseling - Christ University',
+    ],
+    certifications: [
+      'Licensed Clinical Psychologist',
+      'Certified EMDR Therapist',
+      'DBT Intensive Training',
+    ],
+    approaches: [
+      'Trauma-Informed Therapy',
+      'EMDR',
+      'Dialectical Behavior Therapy',
+      'Somatic Therapy',
+    ],
     nextAvailable: new Date('2025-09-22T08:00:00'),
     responseTime: '< 1 hour',
     isOnline: true,
@@ -190,19 +232,21 @@ const mockCounselors: Counselor[] = [
         id: '4',
         clientInitials: 'M.N.',
         rating: 5,
-        comment: 'Dr. Menon helped me through a very difficult time with incredible compassion and cultural understanding.',
+        comment:
+          'Dr. Menon helped me through a very difficult time with incredible compassion and cultural understanding.',
         date: '2025-09-08',
-        verified: true
+        verified: true,
       },
       {
         id: '5',
         clientInitials: 'L.S.',
         rating: 5,
-        comment: 'Professional, caring, and highly skilled. She understands Indian family dynamics perfectly.',
+        comment:
+          'Professional, caring, and highly skilled. She understands Indian family dynamics perfectly.',
         date: '2025-09-05',
-        verified: true
-      }
-    ]
+        verified: true,
+      },
+    ],
   },
   {
     id: '4',
@@ -222,8 +266,17 @@ const mockCounselors: Counselor[] = [
     },
     bio: 'Dr. Kumar specializes in couples and family therapy with deep understanding of Indian joint family systems, helping clients build stronger relationships and improve communication patterns within cultural contexts.',
     education: ['PhD in Marriage & Family Therapy - TISS', 'MA in Clinical Psychology - DU'],
-    certifications: ['Licensed Marriage & Family Therapist', 'Certified Family Systems Therapist', 'EFT Certified'],
-    approaches: ['Family Systems Therapy', 'Emotionally Focused Therapy', 'Solution-Focused Therapy', 'Cultural Integration Therapy'],
+    certifications: [
+      'Licensed Marriage & Family Therapist',
+      'Certified Family Systems Therapist',
+      'EFT Certified',
+    ],
+    approaches: [
+      'Family Systems Therapy',
+      'Emotionally Focused Therapy',
+      'Solution-Focused Therapy',
+      'Cultural Integration Therapy',
+    ],
     nextAvailable: new Date('2025-09-22T11:00:00'),
     responseTime: '< 6 hours',
     isOnline: true,
@@ -233,17 +286,24 @@ const mockCounselors: Counselor[] = [
         id: '6',
         clientInitials: 'P.V.',
         rating: 5,
-        comment: 'Dr. Kumar helped us navigate complex family relationships with great cultural sensitivity.',
+        comment:
+          'Dr. Kumar helped us navigate complex family relationships with great cultural sensitivity.',
         date: '2025-09-01',
-        verified: true
-      }
-    ]
+        verified: true,
+      },
+    ],
   },
   {
     id: '5',
     name: 'Dr. Sneha Joshi',
     title: 'Child & Adolescent Psychologist',
-    specialties: ['Teen Counseling', 'Academic Pressure', 'Self-Esteem', 'Anxiety', 'Career Guidance'],
+    specialties: [
+      'Teen Counseling',
+      'Academic Pressure',
+      'Self-Esteem',
+      'Anxiety',
+      'Career Guidance',
+    ],
     avatar: '/api/placeholder/150/150',
     rating: 4.8,
     reviewCount: 94,
@@ -256,9 +316,21 @@ const mockCounselors: Counselor[] = [
       '2025-09-25': ['11:00', '15:00', '17:30'],
     },
     bio: 'Dr. Joshi specializes in adolescent mental health and academic stress management. She understands the unique pressures faced by Indian students and provides culturally relevant support for teens and young adults.',
-    education: ['PhD in Child Psychology - NIMHANS', 'MA in Developmental Psychology - Mumbai University'],
-    certifications: ['Licensed Child Psychologist', 'Adolescent Therapy Specialist', 'Career Counseling Certification'],
-    approaches: ['Cognitive Behavioral Therapy', 'Play Therapy', 'Narrative Therapy', 'Strength-Based Counseling'],
+    education: [
+      'PhD in Child Psychology - NIMHANS',
+      'MA in Developmental Psychology - Mumbai University',
+    ],
+    certifications: [
+      'Licensed Child Psychologist',
+      'Adolescent Therapy Specialist',
+      'Career Counseling Certification',
+    ],
+    approaches: [
+      'Cognitive Behavioral Therapy',
+      'Play Therapy',
+      'Narrative Therapy',
+      'Strength-Based Counseling',
+    ],
     nextAvailable: new Date('2025-09-22T09:30:00'),
     responseTime: '< 3 hours',
     isOnline: true,
@@ -268,9 +340,10 @@ const mockCounselors: Counselor[] = [
         id: '7',
         clientInitials: 'A.D.',
         rating: 5,
-        comment: 'Dr. Joshi really understands the pressure of competitive exams and helped me cope better.',
+        comment:
+          'Dr. Joshi really understands the pressure of competitive exams and helped me cope better.',
         date: '2025-09-14',
-        verified: true
+        verified: true,
       },
       {
         id: '8',
@@ -278,10 +351,10 @@ const mockCounselors: Counselor[] = [
         rating: 4,
         comment: 'Great with teenagers. My daughter felt comfortable talking to her immediately.',
         date: '2025-09-11',
-        verified: true
-      }
-    ]
-  }
+        verified: true,
+      },
+    ],
+  },
 ];
 
 const Booking = () => {
@@ -305,16 +378,20 @@ const Booking = () => {
     notes: '',
     emergencyContact: '',
     dateOfBirth: '',
-    preferredContactMethod: 'email'
+    preferredContactMethod: 'email',
   });
-  const [step, setStep] = useState<'counselor' | 'datetime' | 'details' | 'confirmation'>('counselor');
+  const [step, setStep] = useState<'counselor' | 'datetime' | 'details' | 'confirmation'>(
+    'counselor'
+  );
 
   // Anonymous booking state management
   const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
   const [anonymousId, setAnonymousId] = useState<string>('');
   const [privacyLevel, setPrivacyLevel] = useState<'basic' | 'enhanced' | 'maximum'>('basic');
   const [useEncryption, setUseEncryption] = useState<boolean>(false);
-  const [dataRetention, setDataRetention] = useState<'session-only' | '30-days' | '90-days'>('30-days');
+  const [dataRetention, setDataRetention] = useState<'session-only' | '30-days' | '90-days'>(
+    '30-days'
+  );
   const [anonymousForm, setAnonymousForm] = useState({
     alias: '',
     ageRange: '',
@@ -323,15 +400,17 @@ const Booking = () => {
     communicationStyle: '',
     sessionNotes: '',
     emergencyCode: '',
-    preferredAnonymity: 'partial'
+    preferredAnonymity: 'partial',
   });
 
   // Real-time state management
-  const [liveAvailability, setLiveAvailability] = useState<{[key: string]: string[]}>({});
-  const [counselorStatus, setCounselorStatus] = useState<{[key: string]: 'online' | 'busy' | 'offline'}>({});
+  const [liveAvailability, setLiveAvailability] = useState<{ [key: string]: string[] }>({});
+  const [counselorStatus, setCounselorStatus] = useState<{
+    [key: string]: 'online' | 'busy' | 'offline';
+  }>({});
   const [bookingProgress, setBookingProgress] = useState(0);
   const [isLiveUpdate, setIsLiveUpdate] = useState(false);
-  const [slotWatchers, setSlotWatchers] = useState<{[key: string]: number}>({});
+  const [slotWatchers, setSlotWatchers] = useState<{ [key: string]: number }>({});
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const [autoRefresh, setAutoRefresh] = useState(true);
 
@@ -339,42 +418,46 @@ const Booking = () => {
   useEffect(() => {
     const updateAvailability = () => {
       setIsLiveUpdate(true);
-      
+
       // Simulate real-time slot updates
-      const newAvailability: {[key: string]: string[]} = {};
-      const newStatus: {[key: string]: 'online' | 'busy' | 'offline'} = {};
-      const newWatchers: {[key: string]: number} = {};
-      
-      mockCounselors.forEach(counselor => {
+      const newAvailability: { [key: string]: string[] } = {};
+      const newStatus: { [key: string]: 'online' | 'busy' | 'offline' } = {};
+      const newWatchers: { [key: string]: number } = {};
+
+      mockCounselors.forEach((counselor) => {
         // Random status updates
         const statuses: ('online' | 'busy' | 'offline')[] = ['online', 'busy', 'offline'];
         const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-        newStatus[counselor.id] = counselor.isOnline ? (Math.random() > 0.3 ? 'online' : 'busy') : 'offline';
-        
+        newStatus[counselor.id] = counselor.isOnline
+          ? Math.random() > 0.3
+            ? 'online'
+            : 'busy'
+          : 'offline';
+
         // Update available slots based on current time
         const today = format(new Date(), 'yyyy-MM-dd');
         const currentSlots = counselor.availableSlots[today] || [];
-        
+
         // Simulate some slots being booked in real-time
         const updatedSlots = currentSlots.filter(() => Math.random() > 0.1); // 10% chance slot gets booked
         newAvailability[counselor.id] = updatedSlots;
-        
+
         // Simulate people watching slots
         newWatchers[counselor.id] = Math.floor(Math.random() * 5) + 1;
       });
-      
+
       setLiveAvailability(newAvailability);
       setCounselorStatus(newStatus);
       setSlotWatchers(newWatchers);
       setLastUpdate(new Date());
-      
+
       setTimeout(() => setIsLiveUpdate(false), 500);
     };
 
     if (autoRefresh) {
       const interval = setInterval(updateAvailability, 15000); // Update every 15 seconds
       updateAvailability(); // Initial update
-      
+
       return () => clearInterval(interval);
     }
   }, [autoRefresh]);
@@ -385,17 +468,19 @@ const Booking = () => {
       const generateAnonymousId = () => {
         const prefixes = ['ANON', 'PRIV', 'CONF', 'SAFE', 'PEER'];
         const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
-        const randomNum = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
+        const randomNum = Math.floor(Math.random() * 99999)
+          .toString()
+          .padStart(5, '0');
         return `${prefix}-${randomNum}`;
       };
       setAnonymousId(generateAnonymousId());
-      
+
       // Generate random alias suggestions
       const aliasOptions = ['Student', 'Learner', 'Friend', 'Peer', 'Seeker'];
       const randomAlias = aliasOptions[Math.floor(Math.random() * aliasOptions.length)];
-      setAnonymousForm(prev => ({ 
-        ...prev, 
-        alias: prev.alias || `${randomAlias}${Math.floor(Math.random() * 999)}` 
+      setAnonymousForm((prev) => ({
+        ...prev,
+        alias: prev.alias || `${randomAlias}${Math.floor(Math.random() * 999)}`,
       }));
     }
   }, [isAnonymous, anonymousId]);
@@ -407,21 +492,21 @@ const Booking = () => {
     if (selectedDate && selectedTime) progress += 25;
     if (bookingForm.name && bookingForm.email && bookingForm.reason) progress += 30;
     if (step === 'confirmation') progress = 100;
-    
+
     setBookingProgress(progress);
   }, [selectedCounselor, selectedDate, selectedTime, bookingForm, step]);
 
-  const selectedCounselorData = mockCounselors.find(c => c.id === selectedCounselor);
+  const selectedCounselorData = mockCounselors.find((c) => c.id === selectedCounselor);
 
   // Get available time slots for selected date with real-time updates
   const getAvailableSlots = (counselor: Counselor, date: Date) => {
     const dateKey = format(date, 'yyyy-MM-dd');
     const liveSlots = liveAvailability[counselor.id];
-    
+
     if (liveSlots !== undefined) {
       return liveSlots; // Use real-time data if available
     }
-    
+
     return counselor.availableSlots[dateKey] || [];
   };
 
@@ -439,12 +524,14 @@ const Booking = () => {
 
   // Filter and sort counselors
   const filteredCounselors = mockCounselors
-    .filter(counselor => {
-      const matchesSearch = counselor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           counselor.specialties.some(s => s.toLowerCase().includes(searchTerm.toLowerCase()));
-      
-      const matchesSpecialty = filterSpecialty === 'all' || counselor.specialties.includes(filterSpecialty);
-      
+    .filter((counselor) => {
+      const matchesSearch =
+        counselor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        counselor.specialties.some((s) => s.toLowerCase().includes(searchTerm.toLowerCase()));
+
+      const matchesSpecialty =
+        filterSpecialty === 'all' || counselor.specialties.includes(filterSpecialty);
+
       return matchesSearch && matchesSpecialty;
     })
     .sort((a, b) => {
@@ -459,19 +546,32 @@ const Booking = () => {
     });
 
   // Get all unique specialties for filter
-  const allSpecialties = Array.from(new Set(mockCounselors.flatMap(c => c.specialties))).sort();
+  const allSpecialties = Array.from(new Set(mockCounselors.flatMap((c) => c.specialties))).sort();
 
   const handleBooking = async () => {
     // Validate required fields based on booking type
     if (isAnonymous) {
-      if (!selectedCounselor || !selectedTime || !selectedDate || 
-          !anonymousForm.alias || !anonymousForm.ageRange || !anonymousForm.concerns) {
+      if (
+        !selectedCounselor ||
+        !selectedTime ||
+        !selectedDate ||
+        !anonymousForm.alias ||
+        !anonymousForm.ageRange ||
+        !anonymousForm.concerns
+      ) {
         alert('Please complete all required fields for anonymous booking.');
         return;
       }
     } else {
-      if (!selectedCounselor || !selectedTime || !selectedDate || 
-          !bookingForm.name || !bookingForm.email || !bookingForm.phone || !bookingForm.reason) {
+      if (
+        !selectedCounselor ||
+        !selectedTime ||
+        !selectedDate ||
+        !bookingForm.name ||
+        !bookingForm.email ||
+        !bookingForm.phone ||
+        !bookingForm.reason
+      ) {
         alert('Please fill in all required fields and select a counselor and time slot.');
         return;
       }
@@ -480,8 +580,8 @@ const Booking = () => {
     try {
       // Show instant loading state
       setBookingProgress(80);
-      
-      const bookingData = isAnonymous 
+
+      const bookingData = isAnonymous
         ? {
             anonymousId,
             counselor: selectedCounselorData?.name,
@@ -492,22 +592,22 @@ const Booking = () => {
             privacySettings: {
               level: privacyLevel,
               encryption: useEncryption,
-              dataRetention: dataRetention
-            }
+              dataRetention: dataRetention,
+            },
           }
         : {
             counselor: selectedCounselorData?.name,
             date: selectedDate ? format(selectedDate, 'yyyy-MM-dd') : '',
             time: selectedTime,
             sessionType,
-            client: bookingForm
+            client: bookingForm,
           };
 
       console.log(`Processing ${isAnonymous ? 'anonymous' : 'standard'} booking...`, bookingData);
 
       // Simulate real-time slot verification
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       // Check if slot is still available (simulate real-time conflict)
       const currentSlots = getAvailableSlots(selectedCounselorData!, selectedDate);
       if (!currentSlots.includes(selectedTime)) {
@@ -515,7 +615,7 @@ const Booking = () => {
         setSelectedTime('');
         return;
       }
-      
+
       // Enhanced privacy processing for anonymous bookings
       if (isAnonymous) {
         console.log('Applying privacy protections...');
@@ -523,7 +623,7 @@ const Booking = () => {
         if (useEncryption) {
           console.log('Data encrypted with end-to-end encryption');
         }
-        
+
         // Simulate privacy-level processing
         switch (privacyLevel) {
           case 'maximum':
@@ -536,26 +636,26 @@ const Booking = () => {
             console.log('Basic privacy: Standard protections applied');
         }
       }
-      
+
       // Simulate booking processing
       setBookingProgress(90);
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
       // Update live availability (remove booked slot)
-      setLiveAvailability(prev => ({
+      setLiveAvailability((prev) => ({
         ...prev,
-        [selectedCounselor]: currentSlots.filter(slot => slot !== selectedTime)
+        [selectedCounselor]: currentSlots.filter((slot) => slot !== selectedTime),
       }));
 
       // Success - navigate to confirmation with instant feedback
       setBookingProgress(100);
-      
+
       // Schedule session reminder notification
       if (selectedCounselorData && selectedDate && selectedTime) {
         const sessionDateTime = new Date(selectedDate);
         const [hours, minutes] = selectedTime.split(':').map(Number);
         sessionDateTime.setHours(hours, minutes, 0, 0);
-        
+
         const sessionId = `session-${Date.now()}`;
         notificationService.scheduleSessionReminder(
           sessionId,
@@ -563,9 +663,8 @@ const Booking = () => {
           selectedCounselorData.name
         );
       }
-      
+
       setStep('confirmation');
-      
     } catch (error) {
       console.error(`${isAnonymous ? 'Anonymous' : 'Standard'} booking failed:`, error);
       alert('Booking failed. Please try again.');
@@ -595,7 +694,7 @@ const Booking = () => {
               className="pl-10"
             />
           </div>
-          
+
           {/* Filters Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             <Select value={filterSpecialty} onValueChange={setFilterSpecialty}>
@@ -605,13 +704,18 @@ const Booking = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Specialties</SelectItem>
-                {allSpecialties.map(specialty => (
-                  <SelectItem key={specialty} value={specialty}>{specialty}</SelectItem>
+                {allSpecialties.map((specialty) => (
+                  <SelectItem key={specialty} value={specialty}>
+                    {specialty}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            
-            <Select value={sortBy} onValueChange={(value: 'rating' | 'availability') => setSortBy(value)}>
+
+            <Select
+              value={sortBy}
+              onValueChange={(value: 'rating' | 'availability') => setSortBy(value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Sort By" />
               </SelectTrigger>
@@ -648,8 +752,8 @@ const Booking = () => {
       {/* Enhanced Counselor Cards */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6">
         {filteredCounselors.map((counselor) => (
-          <Card 
-            key={counselor.id} 
+          <Card
+            key={counselor.id}
             className={`cursor-pointer transition-all duration-300 hover:shadow-medium ${
               selectedCounselor === counselor.id ? 'ring-2 ring-primary shadow-glow' : ''
             }`}
@@ -661,33 +765,38 @@ const Booking = () => {
                   <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-hero rounded-full flex items-center justify-center">
                     <User className="h-7 w-7 md:h-8 md:w-8 text-white" />
                   </div>
-                  
+
                   {/* Real-time status indicator */}
-                  <div className={`absolute -bottom-1 -right-1 w-4 h-4 md:w-5 md:h-5 rounded-full border-2 border-background flex items-center justify-center ${
-                    getCounselorStatus(counselor.id) === 'online' 
-                      ? 'bg-green-500' 
-                      : getCounselorStatus(counselor.id) === 'busy' 
-                        ? 'bg-yellow-500' 
-                        : 'bg-gray-400'
-                  }`}>
+                  <div
+                    className={`absolute -bottom-1 -right-1 w-4 h-4 md:w-5 md:h-5 rounded-full border-2 border-background flex items-center justify-center ${
+                      getCounselorStatus(counselor.id) === 'online'
+                        ? 'bg-green-500'
+                        : getCounselorStatus(counselor.id) === 'busy'
+                          ? 'bg-yellow-500'
+                          : 'bg-gray-400'
+                    }`}
+                  >
                     <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full" />
                   </div>
                 </div>
-                
+
                 <div className="flex-1 space-y-2 min-w-0">
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between space-y-1 sm:space-y-0">
                     <div className="min-w-0 flex-1">
                       <CardTitle className="text-base md:text-lg flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
                         <span className="truncate">{counselor.name}</span>
                         {getCounselorStatus(counselor.id) === 'online' && (
-                          <Badge variant="secondary" className="text-xs bg-green-100 text-green-700 flex-shrink-0 w-fit">
+                          <Badge
+                            variant="secondary"
+                            className="text-xs bg-green-100 text-green-700 flex-shrink-0 w-fit"
+                          >
                             Available Now
                           </Badge>
                         )}
                       </CardTitle>
                       <p className="text-xs md:text-sm text-muted-foreground">{counselor.title}</p>
                     </div>
-                    
+
                     {/* Live activity indicator */}
                     {slotWatchers[counselor.id] > 0 && (
                       <div className="flex items-center text-xs text-orange-600 flex-shrink-0">
@@ -696,15 +805,15 @@ const Booking = () => {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs md:text-sm">
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
                           className={`h-3 w-3 ${
-                            i < Math.floor(counselor.rating) 
-                              ? 'text-yellow-400 fill-current' 
+                            i < Math.floor(counselor.rating)
+                              ? 'text-yellow-400 fill-current'
                               : 'text-muted-foreground'
                           }`}
                         />
@@ -716,7 +825,7 @@ const Booking = () => {
                     <span className="text-muted-foreground">•</span>
                     <span>{counselor.experience}</span>
                   </div>
-                  
+
                   <div className="flex flex-col sm:flex-row gap-1 sm:gap-3 text-xs text-muted-foreground">
                     <div className="flex items-center">
                       <Clock className="h-3 w-3 mr-1 flex-shrink-0" />
@@ -726,7 +835,7 @@ const Booking = () => {
                       <CalIcon className="h-3 w-3 mr-1 flex-shrink-0" />
                       <span>Next: {format(counselor.nextAvailable, 'MMM d, h:mm a')}</span>
                     </div>
-                    
+
                     {/* Real-time slots available */}
                     <div className="flex items-center">
                       <Zap className="h-3 w-3 mr-1 text-blue-500 flex-shrink-0" />
@@ -741,7 +850,7 @@ const Booking = () => {
 
             <CardContent className="space-y-3 md:space-y-4 p-4 md:p-6 pt-0">
               <p className="text-sm text-muted-foreground line-clamp-2">{counselor.bio}</p>
-              
+
               <div className="space-y-3">
                 {/* Specialties */}
                 <div>
@@ -806,8 +915,8 @@ const Booking = () => {
           <p className="text-sm md:text-base text-muted-foreground mb-4">
             Try adjusting your search criteria or filters
           </p>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={() => {
               setSearchTerm('');
               setFilterSpecialty('all');
@@ -820,7 +929,7 @@ const Booking = () => {
 
       {/* Continue Button */}
       <div className="flex justify-center md:justify-end pt-4">
-        <Button 
+        <Button
           onClick={() => setStep('datetime')}
           disabled={!selectedCounselor}
           variant="hero"
@@ -871,11 +980,9 @@ const Booking = () => {
                 <div className="flex items-center space-x-2">
                   <Clock className="h-5 w-5" />
                   <span>Available Times</span>
-                  {isLiveUpdate && (
-                    <Loader className="h-4 w-4 animate-spin text-blue-500" />
-                  )}
+                  {isLiveUpdate && <Loader className="h-4 w-4 animate-spin text-blue-500" />}
                 </div>
-                
+
                 {selectedDate && selectedCounselorData && (
                   <Badge variant="outline" className="text-xs">
                     {getAvailableSlots(selectedCounselorData, selectedDate).length} slots
@@ -887,21 +994,21 @@ const Booking = () => {
               {selectedDate && selectedCounselorData && (
                 <div className="space-y-4">
                   <div className="text-sm text-muted-foreground flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-1 sm:space-y-0">
-                    <span className="text-xs md:text-sm">Available slots for {format(selectedDate, 'EEE, MMM d')}</span>
-                    <span className="text-xs">
-                      Last updated: {format(lastUpdate, 'HH:mm')}
+                    <span className="text-xs md:text-sm">
+                      Available slots for {format(selectedDate, 'EEE, MMM d')}
                     </span>
+                    <span className="text-xs">Last updated: {format(lastUpdate, 'HH:mm')}</span>
                   </div>
-                  
+
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                     {getAvailableSlots(selectedCounselorData, selectedDate).map((time) => {
                       const isSelected = selectedTime === time;
                       const isPopular = Math.random() > 0.7; // Simulate popular times
-                      
+
                       return (
                         <Button
                           key={time}
-                          variant={isSelected ? "default" : "outline"}
+                          variant={isSelected ? 'default' : 'outline'}
                           onClick={() => setSelectedTime(time)}
                           className={`h-10 md:h-12 relative transition-all duration-200 text-xs md:text-sm ${
                             isSelected ? 'ring-2 ring-primary' : ''
@@ -913,7 +1020,7 @@ const Booking = () => {
                               <span className="text-xs text-orange-600">Popular</span>
                             )}
                           </div>
-                          
+
                           {/* Live booking indicator */}
                           {isPopular && (
                             <div className="absolute top-1 right-1 w-1.5 h-1.5 md:w-2 md:h-2 bg-orange-500 rounded-full animate-pulse" />
@@ -922,7 +1029,7 @@ const Booking = () => {
                       );
                     })}
                   </div>
-                  
+
                   {getAvailableSlots(selectedCounselorData, selectedDate).length === 0 && (
                     <div className="text-center py-4 space-y-3">
                       <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto">
@@ -941,13 +1048,15 @@ const Booking = () => {
                           onClick={refreshAvailability}
                           disabled={isLiveUpdate}
                         >
-                          <RefreshCw className={`h-3 w-3 mr-1 ${isLiveUpdate ? 'animate-spin' : ''}`} />
+                          <RefreshCw
+                            className={`h-3 w-3 mr-1 ${isLiveUpdate ? 'animate-spin' : ''}`}
+                          />
                           Check Again
                         </Button>
                       </div>
                     </div>
                   )}
-                  
+
                   {/* Real-time availability notice */}
                   {selectedTime && (
                     <Alert>
@@ -968,8 +1077,8 @@ const Booking = () => {
               <CardTitle>Session Type</CardTitle>
             </CardHeader>
             <CardContent>
-              <RadioGroup 
-                value={sessionType} 
+              <RadioGroup
+                value={sessionType}
                 onValueChange={(value: 'online' | 'in-person') => setSessionType(value)}
                 className="space-y-3"
               >
@@ -1026,7 +1135,7 @@ const Booking = () => {
         <Button variant="outline" onClick={() => setStep('counselor')} className="w-full sm:w-auto">
           Back to Counselors
         </Button>
-        <Button 
+        <Button
           onClick={() => setStep('details')}
           disabled={!selectedDate || !selectedTime}
           variant="hero"
@@ -1055,7 +1164,8 @@ const Booking = () => {
             Privacy & Anonymity Options
           </CardTitle>
           <CardDescription>
-            Protect your privacy with anonymous booking features designed for sensitive conversations.
+            Protect your privacy with anonymous booking features designed for sensitive
+            conversations.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -1074,7 +1184,8 @@ const Booking = () => {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm text-muted-foreground">
-                Use anonymous booking to protect your identity while still receiving professional support.
+                Use anonymous booking to protect your identity while still receiving professional
+                support.
               </p>
             </div>
           </div>
@@ -1096,7 +1207,9 @@ const Booking = () => {
                     onClick={() => {
                       const prefixes = ['ANON', 'PRIV', 'CONF', 'SAFE', 'PEER'];
                       const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
-                      const randomNum = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
+                      const randomNum = Math.floor(Math.random() * 99999)
+                        .toString()
+                        .padStart(5, '0');
                       setAnonymousId(`${prefix}-${randomNum}`);
                     }}
                   >
@@ -1112,15 +1225,19 @@ const Booking = () => {
               {/* Privacy Level Selection */}
               <div className="space-y-3">
                 <Label className="font-medium">Privacy Protection Level</Label>
-                <RadioGroup 
-                  value={privacyLevel} 
-                  onValueChange={(value: 'basic' | 'enhanced' | 'maximum') => setPrivacyLevel(value)}
+                <RadioGroup
+                  value={privacyLevel}
+                  onValueChange={(value: 'basic' | 'enhanced' | 'maximum') =>
+                    setPrivacyLevel(value)
+                  }
                   className="space-y-3"
                 >
                   <div className="flex items-start space-x-3 p-3 border rounded-lg">
                     <RadioGroupItem value="basic" id="basic" className="mt-1" />
                     <div className="flex-1">
-                      <Label htmlFor="basic" className="font-medium cursor-pointer">Basic Privacy</Label>
+                      <Label htmlFor="basic" className="font-medium cursor-pointer">
+                        Basic Privacy
+                      </Label>
                       <p className="text-sm text-muted-foreground">
                         Standard data protection with minimal personal information required.
                       </p>
@@ -1129,7 +1246,9 @@ const Booking = () => {
                   <div className="flex items-start space-x-3 p-3 border rounded-lg border-blue-200 bg-blue-50">
                     <RadioGroupItem value="enhanced" id="enhanced" className="mt-1" />
                     <div className="flex-1">
-                      <Label htmlFor="enhanced" className="font-medium cursor-pointer">Enhanced Privacy</Label>
+                      <Label htmlFor="enhanced" className="font-medium cursor-pointer">
+                        Enhanced Privacy
+                      </Label>
                       <p className="text-sm text-muted-foreground">
                         Encrypted communication, minimal data retention, secure session management.
                       </p>
@@ -1138,9 +1257,14 @@ const Booking = () => {
                   <div className="flex items-start space-x-3 p-3 border rounded-lg border-green-200 bg-green-50">
                     <RadioGroupItem value="maximum" id="maximum" className="mt-1" />
                     <div className="flex-1">
-                      <Label htmlFor="maximum" className="font-medium cursor-pointer flex items-center">
-                        Maximum Privacy 
-                        <Badge variant="secondary" className="ml-2 text-xs">Recommended</Badge>
+                      <Label
+                        htmlFor="maximum"
+                        className="font-medium cursor-pointer flex items-center"
+                      >
+                        Maximum Privacy
+                        <Badge variant="secondary" className="ml-2 text-xs">
+                          Recommended
+                        </Badge>
                       </Label>
                       <p className="text-sm text-muted-foreground">
                         No logs, immediate data deletion post-session, end-to-end encryption.
@@ -1165,10 +1289,15 @@ const Booking = () => {
                     End-to-end encrypt all communications
                   </Label>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label className="text-sm font-medium">Data Retention Period</Label>
-                  <Select value={dataRetention} onValueChange={(value: 'session-only' | '30-days' | '90-days') => setDataRetention(value)}>
+                  <Select
+                    value={dataRetention}
+                    onValueChange={(value: 'session-only' | '30-days' | '90-days') =>
+                      setDataRetention(value)
+                    }
+                  >
                     <SelectTrigger>
                       <Database className="h-4 w-4 mr-2" />
                       <SelectValue />
@@ -1199,13 +1328,15 @@ const Booking = () => {
           <CardContent className="space-y-4 p-4 md:p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="alias" className="text-sm font-medium">Preferred Alias *</Label>
+                <Label htmlFor="alias" className="text-sm font-medium">
+                  Preferred Alias *
+                </Label>
                 <div className="flex space-x-2">
                   <Input
                     id="alias"
                     placeholder="How should we address you?"
                     value={anonymousForm.alias}
-                    onChange={(e) => setAnonymousForm({...anonymousForm, alias: e.target.value})}
+                    onChange={(e) => setAnonymousForm({ ...anonymousForm, alias: e.target.value })}
                     className={`flex-1 ${!anonymousForm.alias ? 'border-red-200 focus-visible:ring-red-500' : ''}`}
                     required
                   />
@@ -1214,9 +1345,20 @@ const Booking = () => {
                     size="sm"
                     type="button"
                     onClick={() => {
-                      const aliases = ['Student', 'Learner', 'Friend', 'Peer', 'Seeker', 'Helper', 'Traveler'];
+                      const aliases = [
+                        'Student',
+                        'Learner',
+                        'Friend',
+                        'Peer',
+                        'Seeker',
+                        'Helper',
+                        'Traveler',
+                      ];
                       const randomAlias = aliases[Math.floor(Math.random() * aliases.length)];
-                      setAnonymousForm({...anonymousForm, alias: `${randomAlias}${Math.floor(Math.random() * 999)}`});
+                      setAnonymousForm({
+                        ...anonymousForm,
+                        alias: `${randomAlias}${Math.floor(Math.random() * 999)}`,
+                      });
                     }}
                   >
                     <Shuffle className="h-4 w-4" />
@@ -1226,10 +1368,15 @@ const Booking = () => {
                   This name will only be used during your session for a personal touch.
                 </p>
               </div>
-              
+
               <div className="space-y-2">
-                <Label htmlFor="ageRange" className="text-sm font-medium">Age Range *</Label>
-                <Select value={anonymousForm.ageRange} onValueChange={(value) => setAnonymousForm({...anonymousForm, ageRange: value})}>
+                <Label htmlFor="ageRange" className="text-sm font-medium">
+                  Age Range *
+                </Label>
+                <Select
+                  value={anonymousForm.ageRange}
+                  onValueChange={(value) => setAnonymousForm({ ...anonymousForm, ageRange: value })}
+                >
                   <SelectTrigger className={!anonymousForm.ageRange ? 'border-red-200' : ''}>
                     <SelectValue placeholder="Select age range" />
                   </SelectTrigger>
@@ -1251,7 +1398,7 @@ const Booking = () => {
                 id="concerns"
                 placeholder="Describe your concerns or what you'd like to work on. No personal details needed."
                 value={anonymousForm.concerns}
-                onChange={(e) => setAnonymousForm({...anonymousForm, concerns: e.target.value})}
+                onChange={(e) => setAnonymousForm({ ...anonymousForm, concerns: e.target.value })}
                 rows={3}
                 className={`flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
                   !anonymousForm.concerns ? 'border-red-200 focus-visible:ring-red-500' : ''
@@ -1266,7 +1413,12 @@ const Booking = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="previousExperience">Previous Therapy Experience</Label>
-                <Select value={anonymousForm.previousExperience} onValueChange={(value) => setAnonymousForm({...anonymousForm, previousExperience: value})}>
+                <Select
+                  value={anonymousForm.previousExperience}
+                  onValueChange={(value) =>
+                    setAnonymousForm({ ...anonymousForm, previousExperience: value })
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select experience level" />
                   </SelectTrigger>
@@ -1278,10 +1430,15 @@ const Booking = () => {
                   </SelectContent>
                 </Select>
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="communicationStyle">Communication Preference</Label>
-                <Select value={anonymousForm.communicationStyle} onValueChange={(value) => setAnonymousForm({...anonymousForm, communicationStyle: value})}>
+                <Select
+                  value={anonymousForm.communicationStyle}
+                  onValueChange={(value) =>
+                    setAnonymousForm({ ...anonymousForm, communicationStyle: value })
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="How do you like to communicate?" />
                   </SelectTrigger>
@@ -1302,19 +1459,23 @@ const Booking = () => {
                 id="emergencyCode"
                 placeholder="A code word for emergency situations"
                 value={anonymousForm.emergencyCode}
-                onChange={(e) => setAnonymousForm({...anonymousForm, emergencyCode: e.target.value})}
+                onChange={(e) =>
+                  setAnonymousForm({ ...anonymousForm, emergencyCode: e.target.value })
+                }
                 type="password"
               />
               <p className="text-xs text-muted-foreground">
-                Optional: A private code that can be used to identify you in emergency situations only.
+                Optional: A private code that can be used to identify you in emergency situations
+                only.
               </p>
             </div>
 
             <Alert>
               <Shield className="h-4 w-4" />
               <AlertDescription>
-                <span className="font-medium">Privacy Guarantee:</span> Your session information is protected by our anonymous booking system. 
-                Only your chosen alias and anonymous ID will be used during the session.
+                <span className="font-medium">Privacy Guarantee:</span> Your session information is
+                protected by our anonymous booking system. Only your chosen alias and anonymous ID
+                will be used during the session.
               </AlertDescription>
             </Alert>
           </CardContent>
@@ -1331,27 +1492,31 @@ const Booking = () => {
           <CardContent className="space-y-4 p-4 md:p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-sm font-medium">Full Name *</Label>
+                <Label htmlFor="name" className="text-sm font-medium">
+                  Full Name *
+                </Label>
                 <Input
                   id="name"
                   placeholder="Your full name"
                   value={bookingForm.name}
-                  onChange={(e) => setBookingForm({...bookingForm, name: e.target.value})}
+                  onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
                   className={`${!bookingForm.name ? 'border-red-200 focus-visible:ring-red-500' : ''}`}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="dateOfBirth" className="text-sm font-medium">Date of Birth</Label>
+                <Label htmlFor="dateOfBirth" className="text-sm font-medium">
+                  Date of Birth
+                </Label>
                 <Input
                   id="dateOfBirth"
                   type="date"
                   value={bookingForm.dateOfBirth}
-                  onChange={(e) => setBookingForm({...bookingForm, dateOfBirth: e.target.value})}
+                  onChange={(e) => setBookingForm({ ...bookingForm, dateOfBirth: e.target.value })}
                 />
               </div>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email *</Label>
@@ -1360,7 +1525,7 @@ const Booking = () => {
                   type="email"
                   placeholder="your.email@example.com"
                   value={bookingForm.email}
-                  onChange={(e) => setBookingForm({...bookingForm, email: e.target.value})}
+                  onChange={(e) => setBookingForm({ ...bookingForm, email: e.target.value })}
                   className={!bookingForm.email ? 'border-red-200 focus-visible:ring-red-500' : ''}
                   required
                 />
@@ -1371,7 +1536,7 @@ const Booking = () => {
                   id="phone"
                   placeholder="+91 98765 43210"
                   value={bookingForm.phone}
-                  onChange={(e) => setBookingForm({...bookingForm, phone: e.target.value})}
+                  onChange={(e) => setBookingForm({ ...bookingForm, phone: e.target.value })}
                   className={!bookingForm.phone ? 'border-red-200 focus-visible:ring-red-500' : ''}
                   required
                 />
@@ -1384,7 +1549,7 @@ const Booking = () => {
                 id="reason"
                 placeholder="Please describe what you'd like to discuss or work on during your session..."
                 value={bookingForm.reason}
-                onChange={(e) => setBookingForm({...bookingForm, reason: e.target.value})}
+                onChange={(e) => setBookingForm({ ...bookingForm, reason: e.target.value })}
                 rows={3}
                 className={`flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
                   !bookingForm.reason ? 'border-red-200 focus-visible:ring-red-500' : ''
@@ -1392,14 +1557,20 @@ const Booking = () => {
                 required
               />
               <p className="text-xs text-muted-foreground">
-                This information helps your counselor prepare for your session and is kept confidential.
+                This information helps your counselor prepare for your session and is kept
+                confidential.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="preferredContactMethod">Preferred Contact Method</Label>
-                <Select value={bookingForm.preferredContactMethod} onValueChange={(value) => setBookingForm({...bookingForm, preferredContactMethod: value})}>
+                <Select
+                  value={bookingForm.preferredContactMethod}
+                  onValueChange={(value) =>
+                    setBookingForm({ ...bookingForm, preferredContactMethod: value })
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -1425,7 +1596,9 @@ const Booking = () => {
                   id="emergencyContact"
                   placeholder="Name and phone number"
                   value={bookingForm.emergencyContact}
-                  onChange={(e) => setBookingForm({...bookingForm, emergencyContact: e.target.value})}
+                  onChange={(e) =>
+                    setBookingForm({ ...bookingForm, emergencyContact: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -1467,7 +1640,9 @@ const Booking = () => {
               <div className="flex items-center space-x-2">
                 <input type="checkbox" id="reminders" className="rounded" defaultChecked />
                 <Label htmlFor="reminders" className="text-sm">
-                  {isAnonymous ? 'Send anonymous reminders to session platform' : 'Send me reminders 24hrs and 1hr before'}
+                  {isAnonymous
+                    ? 'Send anonymous reminders to session platform'
+                    : 'Send me reminders 24hrs and 1hr before'}
                 </Label>
               </div>
             </div>
@@ -1479,7 +1654,8 @@ const Booking = () => {
                 <div>
                   <p className="font-medium">Session Details</p>
                   <p className="text-sm text-muted-foreground">
-                    {sessionType === 'online' ? 'Online' : 'In-Person'} Session with {selectedCounselorData.name}
+                    {sessionType === 'online' ? 'Online' : 'In-Person'} Session with{' '}
+                    {selectedCounselorData.name}
                     {isAnonymous && ' (Anonymous Booking)'}
                   </p>
                 </div>
@@ -1505,24 +1681,43 @@ const Booking = () => {
           <CalendarIcon className="h-4 w-4 mr-2" />
           Back to Date & Time
         </Button>
-        <Button 
+        <Button
           onClick={handleBooking}
           disabled={
-            isAnonymous 
-              ? (!selectedCounselor || !selectedTime || !selectedDate || !anonymousForm.alias || !anonymousForm.ageRange || !anonymousForm.concerns)
-              : (!selectedCounselor || !selectedTime || !selectedDate || !bookingForm.name || !bookingForm.email || !bookingForm.phone || !bookingForm.reason)
+            isAnonymous
+              ? !selectedCounselor ||
+                !selectedTime ||
+                !selectedDate ||
+                !anonymousForm.alias ||
+                !anonymousForm.ageRange ||
+                !anonymousForm.concerns
+              : !selectedCounselor ||
+                !selectedTime ||
+                !selectedDate ||
+                !bookingForm.name ||
+                !bookingForm.email ||
+                !bookingForm.phone ||
+                !bookingForm.reason
           }
           variant="hero"
           size="lg"
           className="w-full sm:w-auto"
         >
           <span className="truncate">
-            {!selectedCounselor ? 'Select Counselor First' :
-             !selectedTime ? 'Select Time Slot First' :
-             isAnonymous 
-               ? (!anonymousForm.alias || !anonymousForm.ageRange || !anonymousForm.concerns) ? 'Complete Required Fields' : 'Book Anonymous Session'
-               : (!bookingForm.name || !bookingForm.email || !bookingForm.phone || !bookingForm.reason) ? 'Complete Required Fields' : 'Book Session'
-            }
+            {!selectedCounselor
+              ? 'Select Counselor First'
+              : !selectedTime
+                ? 'Select Time Slot First'
+                : isAnonymous
+                  ? !anonymousForm.alias || !anonymousForm.ageRange || !anonymousForm.concerns
+                    ? 'Complete Required Fields'
+                    : 'Book Anonymous Session'
+                  : !bookingForm.name ||
+                      !bookingForm.email ||
+                      !bookingForm.phone ||
+                      !bookingForm.reason
+                    ? 'Complete Required Fields'
+                    : 'Book Session'}
           </span>
           <CheckCircle className="h-4 w-4 ml-2 flex-shrink-0" />
         </Button>
@@ -1536,16 +1731,15 @@ const Booking = () => {
       <div className="mx-auto w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center animate-pulse">
         <CheckCircle className="h-8 w-8 md:h-10 md:w-10 text-white animate-bounce" />
       </div>
-      
+
       <div className="space-y-2 px-4">
         <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
           {isAnonymous ? 'Anonymous Booking Confirmed!' : 'Instant Booking Confirmed!'}
         </h2>
         <p className="text-muted-foreground text-sm md:text-base">
-          {isAnonymous 
+          {isAnonymous
             ? 'Your confidential anonymous session was secured with maximum privacy protection.'
-            : 'Your confidential session was booked in real-time and confirmed instantly.'
-          }
+            : 'Your confidential session was booked in real-time and confirmed instantly.'}
         </p>
         <div className="flex items-center justify-center space-x-2 text-sm text-green-600">
           <Zap className="h-4 w-4" />
@@ -1554,14 +1748,20 @@ const Booking = () => {
         {isAnonymous && (
           <div className="flex items-center justify-center space-x-2 text-sm text-blue-600">
             <Shield className="h-4 w-4" />
-            <span>Privacy level: {privacyLevel.charAt(0).toUpperCase() + privacyLevel.slice(1)}</span>
+            <span>
+              Privacy level: {privacyLevel.charAt(0).toUpperCase() + privacyLevel.slice(1)}
+            </span>
           </div>
         )}
       </div>
 
       {/* Session Details with Enhanced Info */}
-      <Card className={`text-left max-w-lg mx-auto ${isAnonymous ? 'border-blue-200 bg-blue-50/30' : 'border-green-200 bg-green-50/30'}`}>
-        <CardHeader className={`${isAnonymous ? 'bg-gradient-to-r from-blue-500 to-cyan-500' : 'bg-gradient-to-r from-green-500 to-emerald-500'} text-white rounded-t-lg`}>
+      <Card
+        className={`text-left max-w-lg mx-auto ${isAnonymous ? 'border-blue-200 bg-blue-50/30' : 'border-green-200 bg-green-50/30'}`}
+      >
+        <CardHeader
+          className={`${isAnonymous ? 'bg-gradient-to-r from-blue-500 to-cyan-500' : 'bg-gradient-to-r from-green-500 to-emerald-500'} text-white rounded-t-lg`}
+        >
           <CardTitle className="flex items-center space-x-2">
             {isAnonymous ? <Shield className="h-5 w-5" /> : <Zap className="h-5 w-5" />}
             <span>{isAnonymous ? 'Anonymous Session Details' : 'Live Session Details'}</span>
@@ -1572,9 +1772,7 @@ const Booking = () => {
             <div className="bg-blue-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-blue-700 font-medium">Your Anonymous ID</span>
-                <Badge className="bg-blue-100 text-blue-700 text-xs">
-                  Save This ID
-                </Badge>
+                <Badge className="bg-blue-100 text-blue-700 text-xs">Save This ID</Badge>
               </div>
               <code className="text-sm bg-white px-2 py-1 rounded border text-blue-700 font-mono block text-center">
                 {anonymousId}
@@ -1584,26 +1782,36 @@ const Booking = () => {
               </p>
             </div>
           )}
-          
+
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
               <span className="text-sm text-muted-foreground">
                 {isAnonymous ? 'Your Counselor' : 'Counselor'}
               </span>
               <div className="font-medium flex items-center space-x-2">
-                <div className={`w-2 h-2 ${isAnonymous ? 'bg-blue-500' : 'bg-green-500'} rounded-full`} />
+                <div
+                  className={`w-2 h-2 ${isAnonymous ? 'bg-blue-500' : 'bg-green-500'} rounded-full`}
+                />
                 <span>{selectedCounselorData?.name}</span>
               </div>
             </div>
-            
+
             <div className="space-y-1">
               <span className="text-sm text-muted-foreground">Status</span>
-              <Badge className={isAnonymous ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'}>
-                {isAnonymous ? 'Anonymous Session' : getCounselorStatus(selectedCounselor) === 'online' ? 'Available Now' : 'Confirmed'}
+              <Badge
+                className={
+                  isAnonymous ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'
+                }
+              >
+                {isAnonymous
+                  ? 'Anonymous Session'
+                  : getCounselorStatus(selectedCounselor) === 'online'
+                    ? 'Available Now'
+                    : 'Confirmed'}
               </Badge>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
               <span className="text-sm text-muted-foreground">Date & Time</span>
@@ -1611,14 +1819,18 @@ const Booking = () => {
                 {selectedDate ? format(selectedDate, 'MMM d, yyyy') : ''} at {selectedTime}
               </div>
             </div>
-            
+
             <div className="space-y-1">
               <span className="text-sm text-muted-foreground">Session Type</span>
               <div className="font-medium flex items-center">
                 {sessionType === 'online' ? (
-                  <><Video className="h-4 w-4 mr-1" /> Online</>
+                  <>
+                    <Video className="h-4 w-4 mr-1" /> Online
+                  </>
                 ) : (
-                  <><MapPin className="h-4 w-4 mr-1" /> In-Person</>
+                  <>
+                    <MapPin className="h-4 w-4 mr-1" /> In-Person
+                  </>
                 )}
               </div>
             </div>
@@ -1630,9 +1842,13 @@ const Booking = () => {
               <div className="space-y-1 text-xs text-blue-700">
                 <div className="flex items-center space-x-2">
                   <Lock className="h-3 w-3" />
-                  <span>{privacyLevel === 'maximum' ? 'Maximum privacy with no data retention' : 
-                         privacyLevel === 'enhanced' ? 'Enhanced privacy with encrypted communication' : 
-                         'Basic privacy with standard protections'}</span>
+                  <span>
+                    {privacyLevel === 'maximum'
+                      ? 'Maximum privacy with no data retention'
+                      : privacyLevel === 'enhanced'
+                        ? 'Enhanced privacy with encrypted communication'
+                        : 'Basic privacy with standard protections'}
+                  </span>
                 </div>
                 {useEncryption && (
                   <div className="flex items-center space-x-2">
@@ -1642,11 +1858,14 @@ const Booking = () => {
                 )}
                 <div className="flex items-center space-x-2">
                   <Database className="h-3 w-3" />
-                  <span>Data retention: {
-                    dataRetention === 'session-only' ? 'Deleted immediately after session' :
-                    dataRetention === '30-days' ? 'Kept for 30 days' :
-                    'Kept for 90 days'
-                  }</span>
+                  <span>
+                    Data retention:{' '}
+                    {dataRetention === 'session-only'
+                      ? 'Deleted immediately after session'
+                      : dataRetention === '30-days'
+                        ? 'Kept for 30 days'
+                        : 'Kept for 90 days'}
+                  </span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <UserX className="h-3 w-3" />
@@ -1655,14 +1874,16 @@ const Booking = () => {
               </div>
             </div>
           )}
-          
+
           {/* Live booking ID */}
           <div className="bg-gray-50 p-3 rounded-lg">
             <div className="text-sm text-muted-foreground mb-1">
               {isAnonymous ? 'Session Reference' : 'Booking Reference'}
             </div>
             <div className="font-mono text-sm font-medium">
-              {isAnonymous ? `ANON-${anonymousId.split('-')[1]}` : `MB-${Date.now().toString().slice(-6)}-${selectedCounselor}`}
+              {isAnonymous
+                ? `ANON-${anonymousId.split('-')[1]}`
+                : `MB-${Date.now().toString().slice(-6)}-${selectedCounselor}`}
             </div>
           </div>
         </CardContent>
@@ -1689,8 +1910,8 @@ const Booking = () => {
       {/* Instant Action Buttons */}
       <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-lg mx-auto">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className={`flex items-center space-x-2 ${isAnonymous ? 'border-blue-200 hover:bg-blue-50' : 'border-green-200 hover:bg-green-50'}`}
             onClick={() => window.open('https://meet.google.com/new', '_blank')}
           >
@@ -1698,8 +1919,8 @@ const Booking = () => {
             <span>{isAnonymous ? 'Join Anonymous Session' : 'Join Session Now'}</span>
             <Zap className={`h-3 w-3 ml-1 ${isAnonymous ? 'text-blue-500' : 'text-green-500'}`} />
           </Button>
-          
-          <Button 
+
+          <Button
             variant="outline"
             className="flex items-center space-x-2"
             onClick={() => alert('Calendar event created!')}
@@ -1708,21 +1929,23 @@ const Booking = () => {
             <span>Add to Calendar</span>
           </Button>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-lg mx-auto text-sm">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             size="sm"
             onClick={() => alert('Reminder set!')}
-            className={isAnonymous ? 'text-blue-600 hover:bg-blue-50' : 'text-green-600 hover:bg-green-50'}
+            className={
+              isAnonymous ? 'text-blue-600 hover:bg-blue-50' : 'text-green-600 hover:bg-green-50'
+            }
           >
             <Bell className="h-4 w-4 mr-1" />
             {isAnonymous ? 'Anonymous Reminder' : 'Set Reminder'}
           </Button>
-          
+
           {isAnonymous ? (
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="sm"
               onClick={() => alert('Accessing anonymous portal...')}
               className="text-blue-600 hover:bg-blue-50"
@@ -1731,8 +1954,8 @@ const Booking = () => {
               Privacy Portal
             </Button>
           ) : (
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="sm"
               onClick={() => alert('Details shared!')}
               className="text-green-600 hover:bg-green-50"
@@ -1741,9 +1964,9 @@ const Booking = () => {
               Share Details
             </Button>
           )}
-          
-          <Button 
-            variant="ghost" 
+
+          <Button
+            variant="ghost"
             size="sm"
             onClick={() => window.print()}
             className="text-purple-600 hover:bg-purple-50"
@@ -1755,28 +1978,36 @@ const Booking = () => {
       </div>
 
       <div className="space-y-3">
-        <Alert className={`max-w-lg mx-auto ${isAnonymous ? 'border-blue-200 bg-blue-50' : 'border-green-200 bg-green-50'}`}>
+        <Alert
+          className={`max-w-lg mx-auto ${isAnonymous ? 'border-blue-200 bg-blue-50' : 'border-green-200 bg-green-50'}`}
+        >
           {isAnonymous ? <Shield className="h-4 w-4" /> : <Zap className="h-4 w-4" />}
           <AlertDescription>
             <div className="text-sm">
-              <strong>Next Steps:</strong> {isAnonymous 
-                ? 'You will receive anonymous session access instructions through the secure portal. Your counselor has your alias and session preferences.' 
-                : 'You will receive instant WhatsApp and email confirmations. Your counselor will contact you 10 minutes before the session.'
-              }
+              <strong>Next Steps:</strong>{' '}
+              {isAnonymous
+                ? 'You will receive anonymous session access instructions through the secure portal. Your counselor has your alias and session preferences.'
+                : 'You will receive instant WhatsApp and email confirmations. Your counselor will contact you 10 minutes before the session.'}
             </div>
           </AlertDescription>
         </Alert>
-        
+
         <p className="text-sm text-muted-foreground">
-          {isAnonymous ? 'Anonymous booking secured • Identity protected • Privacy guaranteed' : 'Real-time booking confirmed • Session protected • Privacy guaranteed'}
+          {isAnonymous
+            ? 'Anonymous booking secured • Identity protected • Privacy guaranteed'
+            : 'Real-time booking confirmed • Session protected • Privacy guaranteed'}
         </p>
-        
+
         <div className="flex flex-col sm:flex-row justify-center gap-3 max-w-md mx-auto">
-          <Button variant="hero" onClick={() => window.location.href = '/'} className="w-full sm:w-auto">
+          <Button
+            variant="hero"
+            onClick={() => (window.location.href = '/')}
+            className="w-full sm:w-auto"
+          >
             Return Home
           </Button>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={() => {
               setStep('counselor');
               setSelectedCounselor('');
@@ -1791,15 +2022,21 @@ const Booking = () => {
                   communicationStyle: '',
                   sessionNotes: '',
                   emergencyCode: '',
-                  preferredAnonymity: 'partial'
+                  preferredAnonymity: 'partial',
                 });
                 setAnonymousId('');
                 setIsAnonymous(false);
               } else {
                 setBookingForm({
-                  name: '', email: '', phone: '', reason: '',
-                  previousTherapy: '', notes: '', emergencyContact: '',
-                  dateOfBirth: '', preferredContactMethod: 'email'
+                  name: '',
+                  email: '',
+                  phone: '',
+                  reason: '',
+                  previousTherapy: '',
+                  notes: '',
+                  emergencyContact: '',
+                  dateOfBirth: '',
+                  preferredContactMethod: 'email',
                 });
               }
             }}
@@ -1820,9 +2057,10 @@ const Booking = () => {
           Confidential Counseling
         </h1>
         <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-          Book a private session with a licensed mental health professional. Your privacy and confidentiality are our top priority.
+          Book a private session with a licensed mental health professional. Your privacy and
+          confidentiality are our top priority.
         </p>
-        
+
         {/* Trust Indicators */}
         <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 text-xs md:text-sm text-muted-foreground">
           <div className="flex items-center space-x-1">
@@ -1858,12 +2096,14 @@ const Booking = () => {
               {/* Live Status */}
               <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <div className="flex items-center space-x-2">
-                  <div className={`w-3 h-3 rounded-full ${isLiveUpdate ? 'bg-yellow-500 animate-pulse' : 'bg-green-500'}`} />
+                  <div
+                    className={`w-3 h-3 rounded-full ${isLiveUpdate ? 'bg-yellow-500 animate-pulse' : 'bg-green-500'}`}
+                  />
                   <span className="text-sm font-medium">
                     {isLiveUpdate ? 'Updating...' : 'Live Availability'}
                   </span>
                 </div>
-                
+
                 <div className="text-xs text-muted-foreground">
                   Last updated: {format(lastUpdate, 'HH:mm:ss')}
                 </div>
@@ -1906,7 +2146,8 @@ const Booking = () => {
             <div className="flex-1 min-w-0">
               <p className="font-medium text-severity-high">In Crisis? Get Immediate Help</p>
               <p className="text-sm text-muted-foreground mt-1">
-                If you're having thoughts of self-harm, call 988 (Suicide & Crisis Lifeline) or visit your nearest emergency room.
+                If you're having thoughts of self-harm, call 988 (Suicide & Crisis Lifeline) or
+                visit your nearest emergency room.
               </p>
             </div>
             <Button variant="destructive" size="sm" className="flex-shrink-0">
@@ -1924,16 +2165,25 @@ const Booking = () => {
           <div className="flex justify-between items-center">
             {['counselor', 'datetime', 'details', 'confirmation'].map((s, index) => (
               <div key={s} className="flex items-center flex-1">
-                <div className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs md:text-sm font-medium ${
-                  step === s ? 'bg-primary text-primary-foreground' : 
-                  ['counselor', 'datetime', 'details', 'confirmation'].indexOf(step) > index ? 'bg-severity-low text-white' : 'bg-muted text-muted-foreground'
-                }`}>
+                <div
+                  className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs md:text-sm font-medium ${
+                    step === s
+                      ? 'bg-primary text-primary-foreground'
+                      : ['counselor', 'datetime', 'details', 'confirmation'].indexOf(step) > index
+                        ? 'bg-severity-low text-white'
+                        : 'bg-muted text-muted-foreground'
+                  }`}
+                >
                   {index + 1}
                 </div>
                 {index < 3 && (
-                  <div className={`flex-1 h-1 mx-1 md:mx-2 ${
-                    ['counselor', 'datetime', 'details', 'confirmation'].indexOf(step) > index ? 'bg-severity-low' : 'bg-muted'
-                  }`} />
+                  <div
+                    className={`flex-1 h-1 mx-1 md:mx-2 ${
+                      ['counselor', 'datetime', 'details', 'confirmation'].indexOf(step) > index
+                        ? 'bg-severity-low'
+                        : 'bg-muted'
+                    }`}
+                  />
                 )}
               </div>
             ))}

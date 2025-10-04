@@ -1,15 +1,38 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useMoodTracking, useActivityLog, useGoals, useSleepTracking } from '@/hooks/useDashboardFeatures';
+import {
+  useMoodTracking,
+  useActivityLog,
+  useGoals,
+  useSleepTracking,
+} from '@/hooks/useDashboardFeatures';
 import { AnimatedCounter } from '@/components/dashboard/RealTimeFeedback';
-import { 
-  BarChart3, TrendingUp, Calendar, Eye, Activity, Heart, 
-  Brain, Target, Moon, Zap, ArrowUp, ArrowDown, Minus
+import {
+  BarChart3,
+  TrendingUp,
+  Calendar,
+  Eye,
+  Activity,
+  Heart,
+  Brain,
+  Target,
+  Moon,
+  Zap,
+  ArrowUp,
+  ArrowDown,
+  Minus,
 } from 'lucide-react';
 
 export const InteractiveAnalytics = () => {
@@ -41,7 +64,7 @@ export const InteractiveAnalytics = () => {
       icon: Heart,
       color: 'text-red-500',
       bgColor: 'from-red-50 to-red-100',
-      description: 'Average mood rating this week'
+      description: 'Average mood rating this week',
     },
     {
       title: 'Activity Level',
@@ -52,7 +75,7 @@ export const InteractiveAnalytics = () => {
       icon: Activity,
       color: 'text-blue-500',
       bgColor: 'from-blue-50 to-blue-100',
-      description: 'Total wellness activities this week'
+      description: 'Total wellness activities this week',
     },
     {
       title: 'Goal Progress',
@@ -63,7 +86,7 @@ export const InteractiveAnalytics = () => {
       icon: Target,
       color: 'text-green-500',
       bgColor: 'from-green-50 to-green-100',
-      description: 'Weekly goal completion rate'
+      description: 'Weekly goal completion rate',
     },
     {
       title: 'Sleep Quality',
@@ -74,15 +97,18 @@ export const InteractiveAnalytics = () => {
       icon: Moon,
       color: 'text-purple-500',
       bgColor: 'from-purple-50 to-purple-100',
-      description: 'Average sleep duration'
-    }
+      description: 'Average sleep duration',
+    },
   ];
 
   const getTrendIcon = (trend: string) => {
     switch (trend) {
-      case 'improving': return <TrendingUp className="h-4 w-4 text-green-500" />;
-      case 'declining': return <ArrowDown className="h-4 w-4 text-red-500" />;
-      default: return <Minus className="h-4 w-4 text-gray-500" />;
+      case 'improving':
+        return <TrendingUp className="h-4 w-4 text-green-500" />;
+      case 'declining':
+        return <ArrowDown className="h-4 w-4 text-red-500" />;
+      default:
+        return <Minus className="h-4 w-4 text-gray-500" />;
     }
   };
 
@@ -109,7 +135,7 @@ export const InteractiveAnalytics = () => {
               </CardDescription>
             </div>
           </div>
-          
+
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline" size="sm" className="text-xs">
@@ -124,18 +150,21 @@ export const InteractiveAnalytics = () => {
                   In-depth view of your wellness metrics and trends
                 </DialogDescription>
               </DialogHeader>
-              
+
               <Tabs value={selectedTimeframe} onValueChange={(v) => setSelectedTimeframe(v as any)}>
                 <TabsList className="grid grid-cols-3 w-full">
                   <TabsTrigger value="week">This Week</TabsTrigger>
                   <TabsTrigger value="month">This Month</TabsTrigger>
                   <TabsTrigger value="3months">3 Months</TabsTrigger>
                 </TabsList>
-                
+
                 <TabsContent value={selectedTimeframe} className="space-y-4 mt-6">
                   <div className="grid grid-cols-2 gap-4">
                     {analyticsData.map((metric, index) => (
-                      <div key={index} className={`p-4 bg-gradient-to-br ${metric.bgColor} rounded-lg border`}>
+                      <div
+                        key={index}
+                        className={`p-4 bg-gradient-to-br ${metric.bgColor} rounded-lg border`}
+                      >
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center space-x-2">
                             <metric.icon className={`h-5 w-5 ${metric.color}`} />
@@ -143,26 +172,24 @@ export const InteractiveAnalytics = () => {
                           </div>
                           {getTrendIcon(metric.trend)}
                         </div>
-                        
+
                         <div className="space-y-2">
                           <div className="flex items-baseline space-x-2">
                             <span className="text-2xl font-bold">{metric.value}</span>
                             <span className="text-sm text-muted-foreground">{metric.unit}</span>
                           </div>
-                          
-                          <Progress 
-                            value={(metric.value / metric.maxValue) * 100} 
+
+                          <Progress
+                            value={(metric.value / metric.maxValue) * 100}
                             className="h-2"
                           />
-                          
-                          <p className="text-xs text-muted-foreground">
-                            {metric.description}
-                          </p>
+
+                          <p className="text-xs text-muted-foreground">{metric.description}</p>
                         </div>
                       </div>
                     ))}
                   </div>
-                  
+
                   {/* Mood History Chart Placeholder */}
                   {moods.length > 0 && (
                     <div className="p-4 border rounded-lg">
@@ -173,7 +200,7 @@ export const InteractiveAnalytics = () => {
                       <div className="flex items-end space-x-2 h-24">
                         {moods.slice(-7).map((mood, index) => (
                           <div key={index} className="flex flex-col items-center flex-1">
-                            <div 
+                            <div
                               className="bg-gradient-to-t from-primary to-secondary rounded-t opacity-70"
                               style={{ height: `${(mood.mood / 5) * 100}%`, minHeight: '4px' }}
                             />
@@ -185,7 +212,7 @@ export const InteractiveAnalytics = () => {
                       </div>
                     </div>
                   )}
-                  
+
                   {/* Activity Breakdown */}
                   <div className="p-4 border rounded-lg">
                     <h4 className="font-semibold mb-3 flex items-center">
@@ -217,7 +244,7 @@ export const InteractiveAnalytics = () => {
           </Dialog>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           {analyticsData.slice(0, 4).map((metric, index) => (
@@ -229,45 +256,42 @@ export const InteractiveAnalytics = () => {
                 </div>
                 {getTrendIcon(metric.trend)}
               </div>
-              
+
               <div className="space-y-1">
                 <div className="flex justify-between">
                   <span className="text-xs text-muted-foreground">
-                    {metric.value}{metric.unit}
+                    {metric.value}
+                    {metric.unit}
                   </span>
                   <span className="text-xs text-muted-foreground">
                     {Math.round((metric.value / metric.maxValue) * 100)}%
                   </span>
                 </div>
-                <Progress 
-                  value={(metric.value / metric.maxValue) * 100} 
-                  className="h-1.5"
-                />
+                <Progress value={(metric.value / metric.maxValue) * 100} className="h-1.5" />
               </div>
             </div>
           ))}
         </div>
-        
+
         <div className="pt-3 border-t text-center">
-          <div className="text-xs text-muted-foreground mb-2">
-            Overall Wellness Score
-          </div>
+          <div className="text-xs text-muted-foreground mb-2">Overall Wellness Score</div>
           <div className="flex items-center justify-center space-x-2">
-            <Progress 
+            <Progress
               value={
-                analyticsData.reduce((acc, metric) => 
-                  acc + (metric.value / metric.maxValue), 0
-                ) / analyticsData.length * 100
-              } 
+                (analyticsData.reduce((acc, metric) => acc + metric.value / metric.maxValue, 0) /
+                  analyticsData.length) *
+                100
+              }
               className="flex-1 h-2"
             />
             <Badge variant="outline" className="text-xs">
               <Zap className="h-3 w-3 mr-1" />
               {Math.round(
-                analyticsData.reduce((acc, metric) => 
-                  acc + (metric.value / metric.maxValue), 0
-                ) / analyticsData.length * 100
-              )}%
+                (analyticsData.reduce((acc, metric) => acc + metric.value / metric.maxValue, 0) /
+                  analyticsData.length) *
+                  100
+              )}
+              %
             </Badge>
           </div>
         </div>

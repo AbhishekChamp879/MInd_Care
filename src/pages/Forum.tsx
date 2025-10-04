@@ -7,15 +7,21 @@ import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { toast } from '@/components/ui/sonner';
 import { useAuth } from '@/contexts/AuthContext';
-import { 
-  MessageCircle, 
-  ThumbsUp, 
-  Reply, 
-  Shield, 
-  Heart, 
+import {
+  MessageCircle,
+  ThumbsUp,
+  Reply,
+  Shield,
+  Heart,
   Clock,
   Users,
   Search,
@@ -36,7 +42,7 @@ import {
   Zap,
   Award,
   List,
-  Grid
+  Grid,
 } from 'lucide-react';
 
 interface ForumReply {
@@ -95,7 +101,8 @@ const mockPosts: ForumPost[] = [
   {
     id: '1',
     title: 'Dealing with exam anxiety - any tips?',
-    content: 'I have finals coming up next week and I\'m feeling overwhelmed. My heart races every time I think about the exams. Has anyone found effective ways to manage this?',
+    content:
+      "I have finals coming up next week and I'm feeling overwhelmed. My heart races every time I think about the exams. Has anyone found effective ways to manage this?",
     author: 'Anonymous Student',
     isAnonymous: true,
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
@@ -107,7 +114,7 @@ const mockPosts: ForumPost[] = [
         author: 'StudyBuddy',
         isAnonymous: false,
         timestamp: new Date(Date.now() - 1 * 60 * 60 * 1000),
-        likes: 5
+        likes: 5,
       },
       {
         id: 'r2',
@@ -115,20 +122,21 @@ const mockPosts: ForumPost[] = [
         author: 'Anonymous Student',
         isAnonymous: true,
         timestamp: new Date(Date.now() - 30 * 60 * 1000),
-        likes: 3
-      }
+        likes: 3,
+      },
     ],
     likes: 18,
     views: 156,
     tags: ['anxiety', 'exams', 'stress-management'],
     isPinned: false,
     likedBy: [],
-    bookmarkedBy: []
+    bookmarkedBy: [],
   },
   {
     id: '2',
     title: 'Meditation apps that actually work?',
-    content: 'I\'ve tried several meditation apps but haven\'t found one that clicks with me. Looking for recommendations, especially for beginners.',
+    content:
+      "I've tried several meditation apps but haven't found one that clicks with me. Looking for recommendations, especially for beginners.",
     author: 'MindfulStudent22',
     isAnonymous: false,
     timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000),
@@ -136,24 +144,26 @@ const mockPosts: ForumPost[] = [
     replies: [
       {
         id: 'r3',
-        content: 'Headspace worked great for me as a beginner. The guided sessions are very helpful.',
+        content:
+          'Headspace worked great for me as a beginner. The guided sessions are very helpful.',
         author: 'ZenMaster',
         isAnonymous: false,
         timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000),
-        likes: 7
-      }
+        likes: 7,
+      },
     ],
     likes: 14,
     views: 89,
     tags: ['meditation', 'apps', 'mindfulness'],
     isPinned: false,
     likedBy: [],
-    bookmarkedBy: []
+    bookmarkedBy: [],
   },
   {
     id: '3',
     title: 'How I improved my sleep schedule as a college student',
-    content: 'After struggling with insomnia for months, I finally found a routine that works. Sharing what helped me in case it helps others...',
+    content:
+      'After struggling with insomnia for months, I finally found a routine that works. Sharing what helped me in case it helps others...',
     author: 'Dr. Sarah Wilson',
     isAnonymous: false,
     timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
@@ -165,7 +175,7 @@ const mockPosts: ForumPost[] = [
         author: 'NightOwl',
         isAnonymous: false,
         timestamp: new Date(Date.now() - 20 * 60 * 60 * 1000),
-        likes: 2
+        likes: 2,
       },
       {
         id: 'r5',
@@ -173,8 +183,8 @@ const mockPosts: ForumPost[] = [
         author: 'Anonymous Student',
         isAnonymous: true,
         timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000),
-        likes: 4
-      }
+        likes: 4,
+      },
     ],
     likes: 45,
     views: 234,
@@ -182,12 +192,13 @@ const mockPosts: ForumPost[] = [
     tags: ['sleep', 'routine', 'self-care'],
     isPinned: true,
     likedBy: [],
-    bookmarkedBy: []
+    bookmarkedBy: [],
   },
   {
     id: '4',
     title: 'Support group for social anxiety?',
-    content: 'Is there interest in starting a weekly virtual support group for students dealing with social anxiety? I think it could be really helpful.',
+    content:
+      'Is there interest in starting a weekly virtual support group for students dealing with social anxiety? I think it could be really helpful.',
     author: 'Anonymous Student',
     isAnonymous: true,
     timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000),
@@ -199,16 +210,16 @@ const mockPosts: ForumPost[] = [
         author: 'ShyStudent',
         isAnonymous: false,
         timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
-        likes: 3
-      }
+        likes: 3,
+      },
     ],
     likes: 11,
     views: 67,
     tags: ['social-anxiety', 'support-group', 'community'],
     isPinned: false,
     likedBy: [],
-    bookmarkedBy: []
-  }
+    bookmarkedBy: [],
+  },
 ];
 
 const Forum = () => {
@@ -231,61 +242,86 @@ const Forum = () => {
     content: '',
     category: 'General Discussion',
     isAnonymous: true,
-    tags: ''
+    tags: '',
   });
 
   // AI-powered content analysis
-  const analyzeContent = (content: string): { sentiment: number, supportive: number, helpful: number } => {
+  const analyzeContent = (
+    content: string
+  ): { sentiment: number; supportive: number; helpful: number } => {
     // Simplified AI analysis - in real app would use actual AI service
-    const supportiveWords = ['support', 'help', 'understand', 'care', 'listen', 'here for you', 'not alone'];
+    const supportiveWords = [
+      'support',
+      'help',
+      'understand',
+      'care',
+      'listen',
+      'here for you',
+      'not alone',
+    ];
     const negativeWords = ['hate', 'stupid', 'worthless', 'terrible', 'awful'];
     const helpfulWords = ['advice', 'tip', 'suggest', 'recommend', 'experience', 'worked for me'];
 
     const words = content.toLowerCase().split(' ');
-    const supportiveCount = supportiveWords.filter(word => content.toLowerCase().includes(word)).length;
-    const negativeCount = negativeWords.filter(word => content.toLowerCase().includes(word)).length;
-    const helpfulCount = helpfulWords.filter(word => content.toLowerCase().includes(word)).length;
+    const supportiveCount = supportiveWords.filter((word) =>
+      content.toLowerCase().includes(word)
+    ).length;
+    const negativeCount = negativeWords.filter((word) =>
+      content.toLowerCase().includes(word)
+    ).length;
+    const helpfulCount = helpfulWords.filter((word) => content.toLowerCase().includes(word)).length;
 
     return {
-      sentiment: Math.max(0, Math.min(1, (supportiveCount - negativeCount) / words.length * 10 + 0.5)),
+      sentiment: Math.max(
+        0,
+        Math.min(1, ((supportiveCount - negativeCount) / words.length) * 10 + 0.5)
+      ),
       supportive: Math.min(1, supportiveCount / 3),
-      helpful: Math.min(1, helpfulCount / 2)
+      helpful: Math.min(1, helpfulCount / 2),
     };
   };
 
   // Enhanced moderation actions
-  const moderatePost = (postId: string, action: 'approve' | 'hide' | 'warn' | 'ban', reason: string) => {
-    setPosts(prev => prev.map(post => 
-      post.id === postId 
-        ? { ...post, isModerated: true, isHidden: action === 'hide' }
-        : post
-    ));
+  const moderatePost = (
+    postId: string,
+    action: 'approve' | 'hide' | 'warn' | 'ban',
+    reason: string
+  ) => {
+    setPosts((prev) =>
+      prev.map((post) =>
+        post.id === postId ? { ...post, isModerated: true, isHidden: action === 'hide' } : post
+      )
+    );
   };
 
   const reportPost = (postId: string, reason: string) => {
-    setPosts(prev => prev.map(post => 
-      post.id === postId 
-        ? { ...post, isReported: true, reportCount: (post.reportCount || 0) + 1 }
-        : post
-    ));
+    setPosts((prev) =>
+      prev.map((post) =>
+        post.id === postId
+          ? { ...post, isReported: true, reportCount: (post.reportCount || 0) + 1 }
+          : post
+      )
+    );
     setReportDialogOpen(null);
     setReportReason('');
   };
 
   // Community interaction features
   const toggleBookmark = (postId: string) => {
-    setPosts(prev => prev.map(post => {
-      if (post.id === postId) {
-        const bookmarked = post.bookmarkedBy.includes(user?.id || '');
-        return {
-          ...post,
-          bookmarkedBy: bookmarked 
-            ? post.bookmarkedBy.filter(id => id !== user?.id)
-            : [...post.bookmarkedBy, user?.id || '']
-        };
-      }
-      return post;
-    }));
+    setPosts((prev) =>
+      prev.map((post) => {
+        if (post.id === postId) {
+          const bookmarked = post.bookmarkedBy.includes(user?.id || '');
+          return {
+            ...post,
+            bookmarkedBy: bookmarked
+              ? post.bookmarkedBy.filter((id) => id !== user?.id)
+              : [...post.bookmarkedBy, user?.id || ''],
+          };
+        }
+        return post;
+      })
+    );
   };
 
   const categories = [
@@ -295,7 +331,7 @@ const Forum = () => {
     'Sleep Health',
     'Peer Support',
     'General Discussion',
-    'Crisis Support'
+    'Crisis Support',
   ];
 
   const sortOptions = [
@@ -303,15 +339,16 @@ const Forum = () => {
     { value: 'oldest', label: 'Oldest First' },
     { value: 'most-liked', label: 'Most Liked' },
     { value: 'most-replies', label: 'Most Replies' },
-    { value: 'trending', label: 'Trending' }
+    { value: 'trending', label: 'Trending' },
   ];
 
   // Enhanced filtering and sorting
   const filteredPosts = posts
-    .filter(post => {
-      const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    .filter((post) => {
+      const matchesSearch =
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
       const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory;
       return matchesSearch && matchesCategory;
     })
@@ -325,8 +362,12 @@ const Forum = () => {
           return b.replies.length - a.replies.length;
         case 'trending': {
           // Simple trending algorithm based on recent activity and engagement
-          const aScore = (a.likes * 2 + a.replies.length * 3 + a.views) / Math.max(1, (Date.now() - a.timestamp.getTime()) / (1000 * 60 * 60));
-          const bScore = (b.likes * 2 + b.replies.length * 3 + b.views) / Math.max(1, (Date.now() - b.timestamp.getTime()) / (1000 * 60 * 60));
+          const aScore =
+            (a.likes * 2 + a.replies.length * 3 + a.views) /
+            Math.max(1, (Date.now() - a.timestamp.getTime()) / (1000 * 60 * 60));
+          const bScore =
+            (b.likes * 2 + b.replies.length * 3 + b.views) /
+            Math.max(1, (Date.now() - b.timestamp.getTime()) / (1000 * 60 * 60));
           return bScore - aScore;
         }
         default: // newest
@@ -342,20 +383,16 @@ const Forum = () => {
 
   // Update views when post is expanded
   useEffect(() => {
-    expandedPosts.forEach(postId => {
-      setPosts(prevPosts => 
-        prevPosts.map(post => 
-          post.id === postId 
-            ? { ...post, views: post.views + 1 }
-            : post
-        )
+    expandedPosts.forEach((postId) => {
+      setPosts((prevPosts) =>
+        prevPosts.map((post) => (post.id === postId ? { ...post, views: post.views + 1 } : post))
       );
     });
   }, [expandedPosts]);
 
   const handleCreatePost = () => {
     if (!newPost.title.trim() || !newPost.content.trim()) {
-      toast.error("Please fill in both title and content to create your post.");
+      toast.error('Please fill in both title and content to create your post.');
       return;
     }
 
@@ -363,54 +400,63 @@ const Forum = () => {
       id: Date.now().toString(),
       title: newPost.title,
       content: newPost.content,
-      author: newPost.isAnonymous ? 'Anonymous Student' : (user?.name || 'Current User'),
+      author: newPost.isAnonymous ? 'Anonymous Student' : user?.name || 'Current User',
       isAnonymous: newPost.isAnonymous,
       timestamp: new Date(),
       category: newPost.category,
       replies: [],
       likes: 0,
       views: 0,
-      tags: newPost.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0),
+      tags: newPost.tags
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter((tag) => tag.length > 0),
       isPinned: false,
       likedBy: [],
-      bookmarkedBy: []
+      bookmarkedBy: [],
     };
 
     setPosts([post, ...posts]);
-    setNewPost({ title: '', content: '', category: 'General Discussion', isAnonymous: true, tags: '' });
+    setNewPost({
+      title: '',
+      content: '',
+      category: 'General Discussion',
+      isAnonymous: true,
+      tags: '',
+    });
     setShowNewPostForm(false);
-    
+
     // Success notification
-    toast.success("Your post has been created successfully!", {
+    toast.success('Your post has been created successfully!', {
       description: `"${post.title}" is now live in the ${post.category} category.`,
       duration: 4000,
       action: {
-        label: "View Post",
+        label: 'View Post',
         onClick: () => {
           const postElement = document.getElementById(`post-${post.id}`);
           if (postElement) {
             postElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
-        }
-      }
+        },
+      },
     });
   };
 
   const handleLikePost = (postId: string) => {
     const userId = user?.id || 'anonymous-user';
-    const targetPost = posts.find(post => post.id === postId);
+    const targetPost = posts.find((post) => post.id === postId);
     const isCurrentlyLiked = targetPost?.likedBy.includes(userId);
-    
-    setPosts(prevPosts =>
-      prevPosts.map(post => {
+
+    setPosts((prevPosts) =>
+      prevPosts.map((post) => {
         if (post.id === postId) {
           const isLiked = post.likedBy.includes(userId);
           return {
             ...post,
             likes: isLiked ? post.likes - 1 : post.likes + 1,
-            likedBy: isLiked 
-              ? post.likedBy.filter(id => id !== userId)
-              : [...post.likedBy, userId]
+            likedBy: isLiked
+              ? post.likedBy.filter((id) => id !== userId)
+              : [...post.likedBy, userId],
           };
         }
         return post;
@@ -419,32 +465,32 @@ const Forum = () => {
 
     // Show feedback notification
     if (isCurrentlyLiked) {
-      toast("Like removed", {
+      toast('Like removed', {
         description: `You've unliked "${targetPost?.title}".`,
-        duration: 2000
+        duration: 2000,
       });
     } else {
-      toast.success("Post liked!", {
+      toast.success('Post liked!', {
         description: `You liked "${targetPost?.title}".`,
-        duration: 2000
+        duration: 2000,
       });
     }
   };
 
   const handleBookmarkPost = (postId: string) => {
     const userId = user?.id || 'anonymous-user';
-    const targetPost = posts.find(post => post.id === postId);
+    const targetPost = posts.find((post) => post.id === postId);
     const isCurrentlyBookmarked = targetPost?.bookmarkedBy.includes(userId);
-    
-    setPosts(prevPosts =>
-      prevPosts.map(post => {
+
+    setPosts((prevPosts) =>
+      prevPosts.map((post) => {
         if (post.id === postId) {
           const isBookmarked = post.bookmarkedBy.includes(userId);
           return {
             ...post,
-            bookmarkedBy: isBookmarked 
-              ? post.bookmarkedBy.filter(id => id !== userId)
-              : [...post.bookmarkedBy, userId]
+            bookmarkedBy: isBookmarked
+              ? post.bookmarkedBy.filter((id) => id !== userId)
+              : [...post.bookmarkedBy, userId],
           };
         }
         return post;
@@ -453,41 +499,39 @@ const Forum = () => {
 
     // Show feedback notification
     if (isCurrentlyBookmarked) {
-      toast("Bookmark removed", {
+      toast('Bookmark removed', {
         description: `"${targetPost?.title}" has been removed from your bookmarks.`,
-        duration: 2000
+        duration: 2000,
       });
     } else {
-      toast.success("Post bookmarked!", {
+      toast.success('Post bookmarked!', {
         description: `"${targetPost?.title}" has been saved to your bookmarks.`,
-        duration: 2000
+        duration: 2000,
       });
     }
   };
 
   const handleReply = (postId: string) => {
     if (!replyContent.trim()) {
-      toast.error("Please enter a reply before submitting.");
+      toast.error('Please enter a reply before submitting.');
       return;
     }
 
     const reply: ForumReply = {
       id: Date.now().toString(),
       content: replyContent,
-      author: isReplyAnonymous ? 'Anonymous Student' : (user?.name || 'Current User'),
+      author: isReplyAnonymous ? 'Anonymous Student' : user?.name || 'Current User',
       isAnonymous: isReplyAnonymous,
       timestamp: new Date(),
-      likes: 0
+      likes: 0,
     };
 
     // Find the post to get its title for the notification
-    const targetPost = posts.find(post => post.id === postId);
+    const targetPost = posts.find((post) => post.id === postId);
 
-    setPosts(prevPosts =>
-      prevPosts.map(post =>
-        post.id === postId
-          ? { ...post, replies: [...post.replies, reply] }
-          : post
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId ? { ...post, replies: [...post.replies, reply] } : post
       )
     );
 
@@ -496,14 +540,14 @@ const Forum = () => {
     setIsReplyAnonymous(true);
 
     // Success notification for reply
-    toast.success("Reply posted successfully!", {
+    toast.success('Reply posted successfully!', {
       description: `Your response has been added to "${targetPost?.title || 'the discussion'}".`,
-      duration: 3000
+      duration: 3000,
     });
   };
 
   const togglePostExpansion = (postId: string) => {
-    setExpandedPosts(prev => {
+    setExpandedPosts((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(postId)) {
         newSet.delete(postId);
@@ -517,13 +561,13 @@ const Forum = () => {
   const timeAgo = (date: Date) => {
     const now = new Date();
     const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
-    
+
     if (diffInMinutes < 1) return 'Just now';
     if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-    
+
     const diffInHours = Math.floor(diffInMinutes / 60);
     if (diffInHours < 24) return `${diffInHours}h ago`;
-    
+
     const diffInDays = Math.floor(diffInHours / 24);
     return `${diffInDays}d ago`;
   };
@@ -540,14 +584,13 @@ const Forum = () => {
             <div className="absolute inset-0 bg-gradient-hero rounded-full blur-sm opacity-0 group-hover:opacity-30 transition-opacity" />
           </div>
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-heading mb-2">
-              Peer Support Forum
-            </h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-heading mb-2">Peer Support Forum</h1>
             <div className="h-1 w-20 bg-gradient-primary rounded-full mx-auto"></div>
           </div>
         </div>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          Connect with fellow students in a safe, anonymous space. Share experiences, get support, and help others on their mental wellness journey.
+          Connect with fellow students in a safe, anonymous space. Share experiences, get support,
+          and help others on their mental wellness journey.
         </p>
         <div className="flex items-center justify-center flex-wrap gap-3">
           <Badge variant="secondary" className="bg-gradient-primary text-white shadow-soft">
@@ -577,7 +620,7 @@ const Forum = () => {
               className="pl-10 focus-enhanced"
             />
           </div>
-          
+
           <div className="flex gap-2">
             <Select value={sortBy} onValueChange={setSortBy}>
               <SelectTrigger className="w-[160px]">
@@ -585,14 +628,14 @@ const Forum = () => {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {sortOptions.map(option => (
+                {sortOptions.map((option) => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            
+
             <Button
               onClick={() => setShowNewPostForm(!showNewPostForm)}
               className="bg-gradient-primary hover:shadow-glow btn-enhanced"
@@ -608,7 +651,7 @@ const Forum = () => {
           {categories.map((category) => (
             <Button
               key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
+              variant={selectedCategory === category ? 'default' : 'outline'}
               size="sm"
               onClick={() => setSelectedCategory(category)}
               className="capitalize transition-all duration-300"
@@ -639,23 +682,28 @@ const Forum = () => {
                   id="post-title"
                   placeholder="What would you like to discuss?"
                   value={newPost.title}
-                  onChange={(e) => setNewPost({...newPost, title: e.target.value})}
+                  onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
                   className="focus-enhanced"
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="post-category">Category</Label>
-                <Select value={newPost.category} onValueChange={(value) => setNewPost({...newPost, category: value})}>
+                <Select
+                  value={newPost.category}
+                  onValueChange={(value) => setNewPost({ ...newPost, category: value })}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.filter(cat => cat !== 'all').map(category => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
+                    {categories
+                      .filter((cat) => cat !== 'all')
+                      .map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -668,7 +716,7 @@ const Forum = () => {
                 placeholder="Share your thoughts, experiences, or questions... Be respectful and supportive."
                 rows={6}
                 value={newPost.content}
-                onChange={(e) => setNewPost({...newPost, content: e.target.value})}
+                onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
                 className="focus-enhanced"
               />
             </div>
@@ -679,7 +727,7 @@ const Forum = () => {
                 id="post-tags"
                 placeholder="e.g., anxiety, study-tips, self-care"
                 value={newPost.tags}
-                onChange={(e) => setNewPost({...newPost, tags: e.target.value})}
+                onChange={(e) => setNewPost({ ...newPost, tags: e.target.value })}
                 className="focus-enhanced"
               />
             </div>
@@ -688,7 +736,7 @@ const Forum = () => {
               <Switch
                 id="anonymous"
                 checked={newPost.isAnonymous}
-                onCheckedChange={(checked) => setNewPost({...newPost, isAnonymous: checked})}
+                onCheckedChange={(checked) => setNewPost({ ...newPost, isAnonymous: checked })}
               />
               <Label htmlFor="anonymous" className="flex items-center space-x-2">
                 <Shield className="h-4 w-4" />
@@ -700,7 +748,7 @@ const Forum = () => {
               <Button variant="outline" onClick={() => setShowNewPostForm(false)}>
                 Cancel
               </Button>
-              <Button 
+              <Button
                 onClick={handleCreatePost}
                 disabled={!newPost.title.trim() || !newPost.content.trim()}
                 className="bg-gradient-primary hover:shadow-glow btn-enhanced"
@@ -718,9 +766,13 @@ const Forum = () => {
           const isExpanded = expandedPosts.has(post.id);
           const isLiked = post.likedBy.includes(user?.id || 'anonymous-user');
           const isBookmarked = post.bookmarkedBy.includes(user?.id || 'anonymous-user');
-          
+
           return (
-            <Card key={post.id} id={`post-${post.id}`} className="enhanced-card group hover:shadow-aurora transition-all duration-500">
+            <Card
+              key={post.id}
+              id={`post-${post.id}`}
+              className="enhanced-card group hover:shadow-aurora transition-all duration-500"
+            >
               {post.isPinned && (
                 <div className="bg-gradient-primary text-primary-foreground px-4 py-2 rounded-t-lg">
                   <div className="flex items-center space-x-2 text-sm font-medium">
@@ -729,16 +781,17 @@ const Forum = () => {
                   </div>
                 </div>
               )}
-              
+
               <CardHeader className="space-y-4">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-2 flex-wrap">
                     <div className="flex items-center space-x-2">
-                      <span className="font-medium text-sm">
-                        {post.author}
-                      </span>
+                      <span className="font-medium text-sm">{post.author}</span>
                       {post.isVerifiedMentor && (
-                        <Badge variant="secondary" className="bg-gradient-secondary text-white shadow-soft">
+                        <Badge
+                          variant="secondary"
+                          className="bg-gradient-secondary text-white shadow-soft"
+                        >
                           <Shield className="h-3 w-3 mr-1" />
                           Verified Mentor
                         </Badge>
@@ -758,20 +811,27 @@ const Forum = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <CardTitle 
+                  <CardTitle
                     className="text-lg leading-tight hover:text-primary cursor-pointer transition-colors group-hover:text-primary"
                     onClick={() => togglePostExpansion(post.id)}
                   >
                     {post.title}
                   </CardTitle>
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="secondary" className="w-fit bg-gradient-to-r from-primary/10 to-secondary/10 text-primary">
+                    <Badge
+                      variant="secondary"
+                      className="w-fit bg-gradient-to-r from-primary/10 to-secondary/10 text-primary"
+                    >
                       {post.category}
                     </Badge>
                     {post.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1">
                         {post.tags.map((tag, index) => (
-                          <Badge key={index} variant="outline" className="text-xs hover:bg-primary/10 cursor-pointer transition-colors">
+                          <Badge
+                            key={index}
+                            variant="outline"
+                            className="text-xs hover:bg-primary/10 cursor-pointer transition-colors"
+                          >
                             #{tag}
                           </Badge>
                         ))}
@@ -783,11 +843,11 @@ const Forum = () => {
 
               <CardContent className="space-y-4">
                 <CardDescription className="text-sm leading-relaxed">
-                  {isExpanded ? post.content : 
-                   post.content.length > 200 ? 
-                   `${post.content.substring(0, 200)}...` : 
-                   post.content
-                  }
+                  {isExpanded
+                    ? post.content
+                    : post.content.length > 200
+                      ? `${post.content.substring(0, 200)}...`
+                      : post.content}
                   {post.content.length > 200 && (
                     <Button
                       variant="link"
@@ -829,8 +889,8 @@ const Forum = () => {
                   </div>
 
                   <div className="flex items-center space-x-2">
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       size="sm"
                       onClick={() => handleLikePost(post.id)}
                       className={`hover:shadow-soft transition-all duration-300 ${
@@ -840,9 +900,9 @@ const Forum = () => {
                       <ThumbsUp className={`h-4 w-4 mr-1 ${isLiked ? 'fill-current' : ''}`} />
                       {isLiked ? 'Liked' : 'Like'}
                     </Button>
-                    
-                    <Button 
-                      variant="ghost" 
+
+                    <Button
+                      variant="ghost"
                       size="sm"
                       onClick={() => setReplyingTo(post.id)}
                       className="hover:shadow-soft transition-all duration-300"
@@ -850,9 +910,9 @@ const Forum = () => {
                       <Reply className="h-4 w-4 mr-1" />
                       Reply
                     </Button>
-                    
-                    <Button 
-                      variant="ghost" 
+
+                    <Button
+                      variant="ghost"
                       size="sm"
                       onClick={() => toggleBookmark(post.id)}
                       className={`hover:shadow-soft transition-all duration-300 ${
@@ -863,8 +923,8 @@ const Forum = () => {
                       {isBookmarked ? 'Saved' : 'Save'}
                     </Button>
 
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       size="sm"
                       onClick={() => setReportDialogOpen(post.id)}
                       className="hover:shadow-soft transition-all duration-300 text-orange-600 hover:text-orange-700"
@@ -876,8 +936,8 @@ const Forum = () => {
                     {/* Moderation controls for admins/counselors */}
                     {user?.role === 'admin' || user?.role === 'counselor' ? (
                       <>
-                        <Button 
-                          variant="ghost" 
+                        <Button
+                          variant="ghost"
                           size="sm"
                           onClick={() => setShowModeration(!showModeration)}
                           className="hover:shadow-soft transition-all duration-300 text-red-600 hover:text-red-700"
@@ -888,11 +948,13 @@ const Forum = () => {
                       </>
                     ) : null}
 
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       size="sm"
                       onClick={() => {
-                        navigator.clipboard.writeText(`${window.location.origin}/forum/post/${post.id}`);
+                        navigator.clipboard.writeText(
+                          `${window.location.origin}/forum/post/${post.id}`
+                        );
                       }}
                       className="hover:shadow-soft transition-all duration-300"
                     >
@@ -919,24 +981,24 @@ const Forum = () => {
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4 mt-3">
                     <h4 className="font-medium text-red-800 mb-2">Moderation Actions</h4>
                     <div className="flex space-x-2">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         onClick={() => moderatePost(post.id, 'approve', 'Approved by moderator')}
                         className="text-green-600 border-green-300 hover:bg-green-50"
                       >
                         Approve
                       </Button>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         onClick={() => moderatePost(post.id, 'hide', 'Hidden by moderator')}
                         className="text-orange-600 border-orange-300 hover:bg-orange-50"
                       >
                         Hide
                       </Button>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         onClick={() => moderatePost(post.id, 'warn', 'User warned')}
                         className="text-red-600 border-red-300 hover:bg-red-50"
@@ -959,7 +1021,7 @@ const Forum = () => {
                       <Reply className="h-4 w-4" />
                       <span>Replying to this discussion</span>
                     </div>
-                    
+
                     <Textarea
                       placeholder="Share your thoughts or advice..."
                       value={replyContent}
@@ -967,7 +1029,7 @@ const Forum = () => {
                       rows={3}
                       className="focus-enhanced"
                     />
-                    
+
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <Switch
@@ -979,7 +1041,7 @@ const Forum = () => {
                           Reply anonymously
                         </Label>
                       </div>
-                      
+
                       <div className="flex space-x-2">
                         <Button
                           variant="outline"
@@ -1020,16 +1082,20 @@ const Forum = () => {
                         onClick={() => setThreadedView(!threadedView)}
                         className="text-xs"
                       >
-                        {threadedView ? <List className="h-3 w-3 mr-1" /> : <Grid className="h-3 w-3 mr-1" />}
+                        {threadedView ? (
+                          <List className="h-3 w-3 mr-1" />
+                        ) : (
+                          <Grid className="h-3 w-3 mr-1" />
+                        )}
                         {threadedView ? 'Linear View' : 'Threaded View'}
                       </Button>
                     </div>
-                    
+
                     {post.replies.map((reply) => {
                       const replyAnalysis = analyzeContent(reply.content);
                       return (
-                        <div 
-                          key={reply.id} 
+                        <div
+                          key={reply.id}
                           className={`${
                             reply.parentId && threadedView ? 'ml-8' : 'ml-4'
                           } p-3 bg-background/50 rounded-lg border border-border/40 hover:shadow-sm transition-shadow group`}
@@ -1043,13 +1109,19 @@ const Forum = () => {
                                 </Badge>
                               )}
                               {reply.isVerifiedMentor && (
-                                <Badge variant="secondary" className="text-xs bg-gradient-secondary text-white">
+                                <Badge
+                                  variant="secondary"
+                                  className="text-xs bg-gradient-secondary text-white"
+                                >
                                   <Shield className="h-3 w-3 mr-1" />
                                   Verified
                                 </Badge>
                               )}
                               {reply.supportiveScore && reply.supportiveScore > 0.8 && (
-                                <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
+                                <Badge
+                                  variant="outline"
+                                  className="text-xs bg-green-50 text-green-700 border-green-200"
+                                >
                                   <Heart className="h-3 w-3 mr-1" />
                                   Helpful
                                 </Badge>
@@ -1072,7 +1144,9 @@ const Forum = () => {
                                   variant="ghost"
                                   size="sm"
                                   className="h-6 w-6 p-0"
-                                  onClick={() => {/* Reply to this specific reply */}}
+                                  onClick={() => {
+                                    /* Reply to this specific reply */
+                                  }}
                                 >
                                   <Reply className="h-3 w-3" />
                                 </Button>
@@ -1086,7 +1160,7 @@ const Forum = () => {
                                 <ThumbsUp className="h-3 w-3" />
                                 <span>{reply.likes}</span>
                               </button>
-                              <button 
+                              <button
                                 className="flex items-center space-x-1 hover:text-primary transition-colors"
                                 onClick={() => setReplyingTo(reply.id)}
                               >
@@ -1102,7 +1176,7 @@ const Forum = () => {
                               </div>
                             )}
                           </div>
-                          
+
                           {/* Moderation warning for reported replies */}
                           {reply.reportCount && reply.reportCount > 0 && (
                             <div className="mt-2 bg-orange-50 border border-orange-200 rounded p-2">
@@ -1135,14 +1209,13 @@ const Forum = () => {
             <div className="space-y-2">
               <h3 className="text-xl font-semibold text-heading">No discussions found</h3>
               <p className="text-muted-foreground max-w-md mx-auto leading-relaxed">
-                {searchQuery || selectedCategory !== 'all' 
-                  ? "Try adjusting your search terms or category filters, or be the first to start a discussion on this topic!"
-                  : "Be the first to start a meaningful conversation in our supportive community!"
-                }
+                {searchQuery || selectedCategory !== 'all'
+                  ? 'Try adjusting your search terms or category filters, or be the first to start a discussion on this topic!'
+                  : 'Be the first to start a meaningful conversation in our supportive community!'}
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button 
+              <Button
                 onClick={() => setShowNewPostForm(true)}
                 className="bg-gradient-primary hover:shadow-glow btn-enhanced"
               >
@@ -1150,7 +1223,7 @@ const Forum = () => {
                 Start a Discussion
               </Button>
               {(searchQuery || selectedCategory !== 'all') && (
-                <Button 
+                <Button
                   variant="outline"
                   onClick={() => {
                     setSearchQuery('');
@@ -1178,7 +1251,8 @@ const Forum = () => {
             </div>
           </div>
           <CardDescription className="text-base leading-relaxed">
-            Our forum is a safe, supportive space for everyone. Together, we create a community where students can find help, hope, and healing.
+            Our forum is a safe, supportive space for everyone. Together, we create a community
+            where students can find help, hope, and healing.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -1190,11 +1264,12 @@ const Forum = () => {
               <div>
                 <h4 className="font-semibold text-heading mb-2">Stay Safe & Secure</h4>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Protect your privacy by not sharing personal information. Use anonymous posting when discussing sensitive topics.
+                  Protect your privacy by not sharing personal information. Use anonymous posting
+                  when discussing sensitive topics.
                 </p>
               </div>
             </div>
-            
+
             <div className="text-center space-y-3 group">
               <div className="p-4 rounded-full bg-gradient-to-br from-secondary/10 to-secondary/20 w-fit mx-auto group-hover:scale-110 transition-transform duration-300">
                 <Heart className="h-8 w-8 text-secondary" />
@@ -1202,11 +1277,12 @@ const Forum = () => {
               <div>
                 <h4 className="font-semibold text-heading mb-2">Be Supportive & Kind</h4>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Offer encouragement, empathy, and hope. Share your experiences to help others feel less alone in their journey.
+                  Offer encouragement, empathy, and hope. Share your experiences to help others feel
+                  less alone in their journey.
                 </p>
               </div>
             </div>
-            
+
             <div className="text-center space-y-3 group">
               <div className="p-4 rounded-full bg-gradient-to-br from-accent/10 to-accent/20 w-fit mx-auto group-hover:scale-110 transition-transform duration-300">
                 <Users className="h-8 w-8 text-accent" />
@@ -1214,23 +1290,30 @@ const Forum = () => {
               <div>
                 <h4 className="font-semibold text-heading mb-2">Respect & Include</h4>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Treat everyone with dignity and respect. No judgment, discrimination, hate speech, or harmful content allowed.
+                  Treat everyone with dignity and respect. No judgment, discrimination, hate speech,
+                  or harmful content allowed.
                 </p>
               </div>
             </div>
           </div>
-          
+
           <Separator className="my-6" />
-          
+
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center space-x-2 text-sm text-muted-foreground">
               <AlertCircle className="h-4 w-4" />
               <span>Need immediate help? Crisis resources are available 24/7</span>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 justify-center">
-              <Badge variant="outline" className="text-xs">Crisis Line: 988</Badge>
-              <Badge variant="outline" className="text-xs">Crisis Text: HOME to 741741</Badge>
-              <Badge variant="outline" className="text-xs">Campus Counseling Available</Badge>
+              <Badge variant="outline" className="text-xs">
+                Crisis Line: 988
+              </Badge>
+              <Badge variant="outline" className="text-xs">
+                Crisis Text: HOME to 741741
+              </Badge>
+              <Badge variant="outline" className="text-xs">
+                Campus Counseling Available
+              </Badge>
             </div>
           </div>
         </CardContent>

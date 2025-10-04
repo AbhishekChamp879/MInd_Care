@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { 
+import {
   MessageCircle,
   Send,
   Phone,
@@ -30,7 +30,7 @@ import {
   Star,
   Zap,
   Signal,
-  RadioIcon as Reconnecting
+  RadioIcon as Reconnecting,
 } from 'lucide-react';
 
 import {
@@ -43,7 +43,7 @@ import {
   ConnectionFeature,
   PeerUser,
   generateAnonymousDisplayName,
-  getStatusColor
+  getStatusColor,
 } from '@/types/peerMatching';
 
 interface RealTimeConnectionSystemProps {
@@ -66,10 +66,13 @@ class MockWebSocket {
     setTimeout(() => {
       this.connected = true;
       this.emit('open', { type: 'connection_established' });
-      
+
       // Simulate periodic connection quality changes
       setInterval(() => {
-        this.connectionQuality = Math.max(60, Math.min(100, this.connectionQuality + (Math.random() - 0.5) * 20));
+        this.connectionQuality = Math.max(
+          60,
+          Math.min(100, this.connectionQuality + (Math.random() - 0.5) * 20)
+        );
         this.emit('quality_update', { quality: this.connectionQuality });
       }, 5000);
     }, 1000);
@@ -84,33 +87,39 @@ class MockWebSocket {
 
   off(event: string, callback: (data: any) => void) {
     if (this.listeners[event]) {
-      this.listeners[event] = this.listeners[event].filter(cb => cb !== callback);
+      this.listeners[event] = this.listeners[event].filter((cb) => cb !== callback);
     }
   }
 
   send(data: any) {
     if (this.connected) {
       // Simulate network delay
-      setTimeout(() => {
-        this.emit('message_sent', { ...data, timestamp: new Date().toISOString() });
-        
-        // Simulate incoming response for demo
-        if (data.type === 'message' && Math.random() > 0.3) {
-          setTimeout(() => {
-            this.emit('message_received', {
-              id: `msg_${Date.now()}`,
-              senderId: 'peer_user',
-              content: this.generateResponse(data.content),
-              timestamp: new Date().toISOString(),
-              type: 'text',
-              isEncrypted: true,
-              readBy: [],
-              reactions: [],
-              attachments: []
-            });
-          }, 1000 + Math.random() * 3000);
-        }
-      }, 100 + Math.random() * 200);
+      setTimeout(
+        () => {
+          this.emit('message_sent', { ...data, timestamp: new Date().toISOString() });
+
+          // Simulate incoming response for demo
+          if (data.type === 'message' && Math.random() > 0.3) {
+            setTimeout(
+              () => {
+                this.emit('message_received', {
+                  id: `msg_${Date.now()}`,
+                  senderId: 'peer_user',
+                  content: this.generateResponse(data.content),
+                  timestamp: new Date().toISOString(),
+                  type: 'text',
+                  isEncrypted: true,
+                  readBy: [],
+                  reactions: [],
+                  attachments: [],
+                });
+              },
+              1000 + Math.random() * 3000
+            );
+          }
+        },
+        100 + Math.random() * 200
+      );
     }
   }
 
@@ -118,12 +127,12 @@ class MockWebSocket {
     const responses = [
       "I understand how you're feeling. Can you tell me more about that?",
       "That sounds really challenging. You're not alone in this.",
-      "Thank you for sharing that with me. How has that been affecting you?",
+      'Thank you for sharing that with me. How has that been affecting you?',
       "I've experienced something similar. Would you like to hear what helped me?",
       "That's a great insight. How do you think we can build on that?",
-      "I appreciate you being so open. What would be most helpful right now?",
+      'I appreciate you being so open. What would be most helpful right now?',
       "That resonates with me too. Let's explore some strategies together.",
-      "You're showing a lot of strength by reaching out. What's your biggest concern right now?"
+      "You're showing a lot of strength by reaching out. What's your biggest concern right now?",
     ];
     return responses[Math.floor(Math.random() * responses.length)];
   }
@@ -135,7 +144,7 @@ class MockWebSocket {
 
   private emit(event: string, data: any) {
     if (this.listeners[event]) {
-      this.listeners[event].forEach(callback => callback(data));
+      this.listeners[event].forEach((callback) => callback(data));
     }
   }
 
@@ -150,7 +159,7 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
   connectionType = 'peer-buddy-chat',
   onConnectionEnd,
   onMessageSent,
-  className = ''
+  className = '',
 }) => {
   // Connection state
   const [connection, setConnection] = useState<RealTimeConnection | null>(null);
@@ -158,27 +167,29 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
   const [connectionQuality, setConnectionQuality] = useState(100);
   const [messages, setMessages] = useState<ConnectionMessage[]>([]);
   const [participants, setParticipants] = useState<ParticipantState[]>([]);
-  
+
   // UI state
   const [newMessage, setNewMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [peerTyping, setPeerTyping] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
-  
+
   // Refs
   const websocketRef = useRef<MockWebSocket | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Mock user data
-  const user = currentUser || {
-    id: 'user_123',
-    anonymousId: 'anonymous_123',
-    displayName: generateAnonymousDisplayName(),
-    isOnline: true,
-    lastActive: new Date().toISOString()
-  } as PeerUser;
+  const user =
+    currentUser ||
+    ({
+      id: 'user_123',
+      anonymousId: 'anonymous_123',
+      displayName: generateAnonymousDisplayName(),
+      isOnline: true,
+      lastActive: new Date().toISOString(),
+    } as PeerUser);
 
   // Initialize connection
   useEffect(() => {
@@ -199,7 +210,7 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
             lastSeen: new Date().toISOString(),
             isTyping: false,
             connectionQuality: 100,
-            deviceType: 'desktop'
+            deviceType: 'desktop',
           },
           {
             userId: 'peer_user_456',
@@ -207,14 +218,14 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
             lastSeen: new Date().toISOString(),
             isTyping: false,
             connectionQuality: 95,
-            deviceType: 'mobile'
-          }
+            deviceType: 'mobile',
+          },
         ],
-        features: ['text-chat', 'voice-call', 'video-call', 'end-to-end-encryption']
+        features: ['text-chat', 'voice-call', 'video-call', 'end-to-end-encryption'],
       },
       messages: [],
       isEncrypted: true,
-      connectionQuality: 100
+      connectionQuality: 100,
     };
 
     setConnection(mockConnection);
@@ -230,7 +241,7 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
     });
 
     ws.on('message_received', (message: ConnectionMessage) => {
-      setMessages(prev => [...prev, message]);
+      setMessages((prev) => [...prev, message]);
       setPeerTyping(false);
     });
 
@@ -289,10 +300,10 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
       isEncrypted: true,
       readBy: [user.id],
       reactions: [],
-      attachments: []
+      attachments: [],
     };
 
-    setMessages(prev => [...prev, message]);
+    setMessages((prev) => [...prev, message]);
     websocketRef.current.send({ type: 'message', ...message });
     onMessageSent?.(message);
     setNewMessage('');
@@ -300,27 +311,34 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
   };
 
   const addReaction = (messageId: string, emoji: string) => {
-    setMessages(prev => prev.map(msg => {
-      if (msg.id === messageId) {
-        const existingReaction = msg.reactions.find(r => r.emoji === emoji && r.userId === user.id);
-        if (existingReaction) {
-          return {
-            ...msg,
-            reactions: msg.reactions.filter(r => !(r.emoji === emoji && r.userId === user.id))
-          };
-        } else {
-          return {
-            ...msg,
-            reactions: [...msg.reactions, {
-              emoji,
-              userId: user.id,
-              addedAt: new Date().toISOString()
-            }]
-          };
+    setMessages((prev) =>
+      prev.map((msg) => {
+        if (msg.id === messageId) {
+          const existingReaction = msg.reactions.find(
+            (r) => r.emoji === emoji && r.userId === user.id
+          );
+          if (existingReaction) {
+            return {
+              ...msg,
+              reactions: msg.reactions.filter((r) => !(r.emoji === emoji && r.userId === user.id)),
+            };
+          } else {
+            return {
+              ...msg,
+              reactions: [
+                ...msg.reactions,
+                {
+                  emoji,
+                  userId: user.id,
+                  addedAt: new Date().toISOString(),
+                },
+              ],
+            };
+          }
         }
-      }
-      return msg;
-    }));
+        return msg;
+      })
+    );
   };
 
   const endConnection = () => {
@@ -330,24 +348,37 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
 
   const getConnectionTypeIcon = (type: ConnectionType) => {
     switch (type) {
-      case 'peer-buddy-chat': return <MessageCircle className="h-4 w-4" />;
-      case 'study-group-session': return <Users className="h-4 w-4" />;
-      case 'mentor-mentee-session': return <Star className="h-4 w-4" />;
-      case 'one-on-one-call': return <Phone className="h-4 w-4" />;
-      case 'group-video-call': return <Video className="h-4 w-4" />;
-      case 'emergency-support': return <Heart className="h-4 w-4" />;
-      default: return <MessageCircle className="h-4 w-4" />;
+      case 'peer-buddy-chat':
+        return <MessageCircle className="h-4 w-4" />;
+      case 'study-group-session':
+        return <Users className="h-4 w-4" />;
+      case 'mentor-mentee-session':
+        return <Star className="h-4 w-4" />;
+      case 'one-on-one-call':
+        return <Phone className="h-4 w-4" />;
+      case 'group-video-call':
+        return <Video className="h-4 w-4" />;
+      case 'emergency-support':
+        return <Heart className="h-4 w-4" />;
+      default:
+        return <MessageCircle className="h-4 w-4" />;
     }
   };
 
   const getConnectionStatusIcon = (status: ConnectionStatus) => {
     switch (status) {
-      case 'connecting': return <Reconnecting className="h-4 w-4 animate-pulse text-yellow-500" />;
-      case 'connected': return <Wifi className="h-4 w-4 text-green-500" />;
-      case 'active': return <Circle className="h-4 w-4 text-green-500 fill-current" />;
-      case 'reconnecting': return <Reconnecting className="h-4 w-4 animate-pulse text-orange-500" />;
-      case 'disconnected': return <WifiOff className="h-4 w-4 text-red-500" />;
-      default: return <Circle className="h-4 w-4 text-gray-500" />;
+      case 'connecting':
+        return <Reconnecting className="h-4 w-4 animate-pulse text-yellow-500" />;
+      case 'connected':
+        return <Wifi className="h-4 w-4 text-green-500" />;
+      case 'active':
+        return <Circle className="h-4 w-4 text-green-500 fill-current" />;
+      case 'reconnecting':
+        return <Reconnecting className="h-4 w-4 animate-pulse text-orange-500" />;
+      case 'disconnected':
+        return <WifiOff className="h-4 w-4 text-red-500" />;
+      default:
+        return <Circle className="h-4 w-4 text-gray-500" />;
     }
   };
 
@@ -363,7 +394,7 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
 
   const renderMessage = (message: ConnectionMessage) => {
     const isOwnMessage = message.senderId === user.id;
-    const peer = participants.find(p => p.userId === message.senderId);
+    const peer = participants.find((p) => p.userId === message.senderId);
 
     return (
       <div
@@ -381,7 +412,7 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
               <span className="text-xs text-muted-foreground">Anonymous Peer</span>
             </div>
           )}
-          
+
           <div className={`group relative`}>
             <div
               className={`px-4 py-2 rounded-2xl ${
@@ -391,11 +422,9 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
               }`}
             >
               <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-              {message.isEncrypted && (
-                <Shield className="h-3 w-3 inline-block ml-2 opacity-50" />
-              )}
+              {message.isEncrypted && <Shield className="h-3 w-3 inline-block ml-2 opacity-50" />}
             </div>
-            
+
             {/* Reactions */}
             {message.reactions.length > 0 && (
               <div className="flex space-x-1 mt-1">
@@ -410,10 +439,10 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
                 ))}
               </div>
             )}
-            
+
             {/* Quick reactions (on hover) */}
             <div className="absolute -top-8 right-0 hidden group-hover:flex space-x-1 bg-background border rounded-lg px-2 py-1">
-              {['❤️', '👍', '😊', '🎯'].map(emoji => (
+              {['❤️', '👍', '😊', '🎯'].map((emoji) => (
                 <button
                   key={emoji}
                   onClick={() => addReaction(message.id, emoji)}
@@ -424,8 +453,10 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
               ))}
             </div>
           </div>
-          
-          <div className={`flex items-center space-x-1 mt-1 ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
+
+          <div
+            className={`flex items-center space-x-1 mt-1 ${isOwnMessage ? 'justify-end' : 'justify-start'}`}
+          >
             <span className="text-xs text-muted-foreground">{formatTime(message.timestamp)}</span>
             {isOwnMessage && message.readBy.length > 1 && (
               <CheckCircle className="h-3 w-3 text-green-500" />
@@ -460,7 +491,7 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
               {getConnectionTypeIcon(connection.type)}
               <div>
                 <CardTitle className="text-lg">
-                  {connectionType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                  {connectionType.replace('-', ' ').replace(/\b\w/g, (l) => l.toUpperCase())}
                 </CardTitle>
                 <CardDescription className="flex items-center space-x-2">
                   {getConnectionStatusIcon(connectionStatus)}
@@ -483,7 +514,7 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
             {/* Voice Controls */}
             <Button
               size="sm"
-              variant={isMuted ? "destructive" : "outline"}
+              variant={isMuted ? 'destructive' : 'outline'}
               onClick={() => setIsMuted(!isMuted)}
             >
               {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
@@ -492,7 +523,7 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
             {/* Video Controls */}
             <Button
               size="sm"
-              variant={isVideoEnabled ? "default" : "outline"}
+              variant={isVideoEnabled ? 'default' : 'outline'}
               onClick={() => setIsVideoEnabled(!isVideoEnabled)}
             >
               <Video className="h-4 w-4" />
@@ -550,8 +581,14 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
               <div className="flex items-center space-x-2 bg-muted rounded-full px-4 py-2">
                 <div className="flex space-x-1">
                   <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div
+                    className="w-2 h-2 bg-primary rounded-full animate-bounce"
+                    style={{ animationDelay: '0.1s' }}
+                  ></div>
+                  <div
+                    className="w-2 h-2 bg-primary rounded-full animate-bounce"
+                    style={{ animationDelay: '0.2s' }}
+                  ></div>
                 </div>
                 <span className="text-xs text-muted-foreground">Peer is typing...</span>
               </div>
@@ -587,8 +624,8 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
               </Button>
             </div>
           </div>
-          <Button 
-            onClick={sendMessage} 
+          <Button
+            onClick={sendMessage}
             disabled={!newMessage.trim() || connectionStatus !== 'active'}
             size="sm"
           >
@@ -599,14 +636,16 @@ export const RealTimeConnectionSystem: React.FC<RealTimeConnectionSystemProps> =
         {/* Connection Status Footer */}
         <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">
           <div className="flex items-center space-x-2">
-            <Circle className={`h-2 w-2 ${connectionStatus === 'active' ? 'fill-green-500 text-green-500' : 'fill-gray-400 text-gray-400'}`} />
-            <span>
-              {connectionStatus === 'active' ? 'Connected securely' : 'Connecting...'}
-            </span>
+            <Circle
+              className={`h-2 w-2 ${connectionStatus === 'active' ? 'fill-green-500 text-green-500' : 'fill-gray-400 text-gray-400'}`}
+            />
+            <span>{connectionStatus === 'active' ? 'Connected securely' : 'Connecting...'}</span>
           </div>
           <div className="flex items-center space-x-1">
             <Clock className="h-3 w-3" />
-            <span>{Math.floor((Date.now() - new Date(connection.createdAt).getTime()) / 60000)} min</span>
+            <span>
+              {Math.floor((Date.now() - new Date(connection.createdAt).getTime()) / 60000)} min
+            </span>
           </div>
         </div>
       </div>

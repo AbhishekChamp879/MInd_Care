@@ -4,14 +4,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import ReadingModeButton from '@/components/ui/reading-mode-button';
 import { useTheme } from '@/contexts/ThemeContext';
-import { 
-  BookOpen, 
-  Play, 
-  Volume2, 
-  Download, 
+import {
+  BookOpen,
+  Play,
+  Volume2,
+  Download,
   Search,
   Clock,
   Users,
@@ -31,7 +37,7 @@ import {
   Grid,
   List,
   Bookmark,
-  Share2
+  Share2,
 } from 'lucide-react';
 
 // Enhanced language support
@@ -48,82 +54,82 @@ const languages = {
   german: { name: 'Deutsch', icon: '🇩🇪', code: 'de' },
   portuguese: { name: 'Português', icon: '🇵🇹', code: 'pt' },
   chinese: { name: '中文', icon: '🇨🇳', code: 'zh' },
-  arabic: { name: 'العربية', icon: '🇸🇦', code: 'ar' }
+  arabic: { name: 'العربية', icon: '🇸🇦', code: 'ar' },
 };
 
 // Enhanced categories with multi-language labels
 const categories = {
-  all: { 
-    en: 'All Resources', 
+  all: {
+    en: 'All Resources',
     hi: 'सभी संसाधन',
     es: 'Todos los Recursos',
     ta: 'அனைத்து வளங்கள்',
     color: 'bg-blue-100 text-blue-800',
-    icon: BookOpen
+    icon: BookOpen,
   },
-  stress: { 
-    en: 'Stress Management', 
+  stress: {
+    en: 'Stress Management',
     hi: 'तनाव प्रबंधन',
     es: 'Manejo del Estrés',
     ta: 'மன அழுத்த மேலாண்மை',
     color: 'bg-red-100 text-red-800',
-    icon: Heart
+    icon: Heart,
   },
-  mindfulness: { 
-    en: 'Mindfulness & Meditation', 
+  mindfulness: {
+    en: 'Mindfulness & Meditation',
     hi: 'ध्यान और सचेतता',
     es: 'Mindfulness y Meditación',
     ta: 'மனநிறைவு மற்றும் தியானம்',
     color: 'bg-purple-100 text-purple-800',
-    icon: Brain
+    icon: Brain,
   },
-  sleep: { 
-    en: 'Sleep Health', 
+  sleep: {
+    en: 'Sleep Health',
     hi: 'नींद की स्वास्थ्य',
     es: 'Salud del Sueño',
     ta: 'தூக்க ஆரோக்கியம்',
     color: 'bg-indigo-100 text-indigo-800',
-    icon: Moon
+    icon: Moon,
   },
-  anxiety: { 
-    en: 'Anxiety & Panic', 
+  anxiety: {
+    en: 'Anxiety & Panic',
     hi: 'चिंता और घबराहट',
     es: 'Ansiedad y Pánico',
     ta: 'கவலை மற்றும் பீதி',
     color: 'bg-orange-100 text-orange-800',
-    icon: Zap
+    icon: Zap,
   },
-  depression: { 
-    en: 'Depression Support', 
+  depression: {
+    en: 'Depression Support',
     hi: 'अवसाद सहायता',
     es: 'Apoyo para la Depresión',
     ta: 'மன அழுத்தத்திற்கான ஆதரவு',
     color: 'bg-gray-100 text-gray-800',
-    icon: Heart
+    icon: Heart,
   },
-  study: { 
-    en: 'Study Skills', 
+  study: {
+    en: 'Study Skills',
     hi: 'अध्ययन कौशल',
     es: 'Habilidades de Estudio',
     ta: 'படிப்பு திறன்கள்',
     color: 'bg-green-100 text-green-800',
-    icon: Coffee
+    icon: Coffee,
   },
-  trauma: { 
-    en: 'Trauma Recovery', 
+  trauma: {
+    en: 'Trauma Recovery',
     hi: 'आघात से उबरना',
     es: 'Recuperación del Trauma',
     ta: 'அதிர்ச்சியிலிருந்து மீட்சி',
     color: 'bg-pink-100 text-pink-800',
-    icon: Heart
+    icon: Heart,
   },
-  relationships: { 
-    en: 'Relationships', 
+  relationships: {
+    en: 'Relationships',
     hi: 'रिश्ते',
     es: 'Relaciones',
     ta: 'உறவுகள்',
     color: 'bg-teal-100 text-teal-800',
-    icon: Users
+    icon: Users,
   },
   crisis: {
     en: 'Crisis Resources',
@@ -131,8 +137,8 @@ const categories = {
     es: 'Recursos de Crisis',
     ta: 'நெருக்கடி வளங்கள்',
     color: 'bg-red-100 text-red-800',
-    icon: Phone
-  }
+    icon: Phone,
+  },
 };
 
 interface Resource {
@@ -162,7 +168,8 @@ const mockResources: Resource[] = [
   {
     id: '1',
     title: 'Deep Breathing for Exam Anxiety',
-    description: 'Learn the 4-7-8 breathing technique specifically designed for Indian students to calm pre-exam nerves and improve focus during competitive exams.',
+    description:
+      'Learn the 4-7-8 breathing technique specifically designed for Indian students to calm pre-exam nerves and improve focus during competitive exams.',
     type: 'video',
     category: 'anxiety',
     duration: '8 min',
@@ -173,12 +180,13 @@ const mockResources: Resource[] = [
     url: 'https://www.youtube.com/watch?v=YRPh_GaiL8s',
     author: 'Dr. Priya Sharma, Clinical Psychologist',
     publishedDate: '2024-08-15',
-    tags: ['breathing', 'exam-stress', 'anxiety-relief']
+    tags: ['breathing', 'exam-stress', 'anxiety-relief'],
   },
   {
     id: '2',
     title: 'प्रगतिशील मांसपेशी विश्राम (Progressive Muscle Relaxation)',
-    description: 'हिंदी में शारीरिक तनाव मुक्त करने और गहरी विश्राम को बढ़ावा देने के लिए ऑडियो गाइड। भारतीय संस्कृति के अनुकूल तकनीकें।',
+    description:
+      'हिंदी में शारीरिक तनाव मुक्त करने और गहरी विश्राम को बढ़ावा देने के लिए ऑडियो गाइड। भारतीय संस्कृति के अनुकूल तकनीकें।',
     type: 'audio',
     category: 'stress',
     duration: '15 min',
@@ -190,12 +198,13 @@ const mockResources: Resource[] = [
     downloadUrl: '/audio/pmr-hindi.mp3',
     author: 'डॉ. अर्जुन पटेल',
     publishedDate: '2024-09-01',
-    tags: ['तनाव-मुक्ति', 'विश्राम', 'मांसपेशी']
+    tags: ['तनाव-मुक्ति', 'विश्राम', 'मांसपेशी'],
   },
   {
     id: '3',
     title: 'Sleep Hygiene for Indian Students',
-    description: 'Evidence-based strategies to improve sleep quality considering Indian lifestyle, late-night study culture, and family dynamics. Includes tips for hostels and shared rooms.',
+    description:
+      'Evidence-based strategies to improve sleep quality considering Indian lifestyle, late-night study culture, and family dynamics. Includes tips for hostels and shared rooms.',
     type: 'article',
     category: 'sleep',
     duration: '7 min read',
@@ -207,12 +216,13 @@ const mockResources: Resource[] = [
     downloadUrl: '/pdfs/sleep-hygiene-indian-students.pdf',
     author: 'Dr. Kavita Menon, Sleep Specialist',
     publishedDate: '2024-08-20',
-    tags: ['sleep', 'student-life', 'hostel-life']
+    tags: ['sleep', 'student-life', 'hostel-life'],
   },
   {
     id: '4',
     title: 'Mindful Study Planner & Pomodoro Timer',
-    description: 'Interactive web tool designed for Indian academic calendar. Plan focused study sessions with built-in mindfulness breaks, exam countdown, and stress monitoring.',
+    description:
+      'Interactive web tool designed for Indian academic calendar. Plan focused study sessions with built-in mindfulness breaks, exam countdown, and stress monitoring.',
     type: 'tool',
     category: 'study',
     difficulty: 'intermediate',
@@ -222,12 +232,13 @@ const mockResources: Resource[] = [
     url: 'https://pomofocus.io/',
     author: 'Mind Buddy Team',
     publishedDate: '2024-09-10',
-    tags: ['productivity', 'study-planning', 'mindfulness']
+    tags: ['productivity', 'study-planning', 'mindfulness'],
   },
   {
     id: '5',
     title: 'JEE/NEET Stress Management Guide',
-    description: 'Comprehensive PDF guide specifically for competitive exam aspirants. Covers managing parental pressure, peer comparison, and maintaining mental health during preparation.',
+    description:
+      'Comprehensive PDF guide specifically for competitive exam aspirants. Covers managing parental pressure, peer comparison, and maintaining mental health during preparation.',
     type: 'pdf',
     category: 'anxiety',
     duration: '25 min read',
@@ -239,12 +250,13 @@ const mockResources: Resource[] = [
     downloadUrl: '/pdfs/competitive-exam-stress-management.pdf',
     author: 'Dr. Rajesh Kumar & Dr. Sneha Joshi',
     publishedDate: '2024-07-15',
-    tags: ['competitive-exams', 'parental-pressure', 'academic-stress']
+    tags: ['competitive-exams', 'parental-pressure', 'academic-stress'],
   },
   {
     id: '6',
     title: 'Depression Awareness in Indian Context',
-    description: 'Understanding depression symptoms, cultural stigma, and when to seek help. Addresses misconceptions common in Indian families and provides practical coping strategies.',
+    description:
+      'Understanding depression symptoms, cultural stigma, and when to seek help. Addresses misconceptions common in Indian families and provides practical coping strategies.',
     type: 'video',
     category: 'depression',
     duration: '18 min',
@@ -255,12 +267,13 @@ const mockResources: Resource[] = [
     url: 'https://www.youtube.com/watch?v=z-IR48Mb3W0',
     author: 'Dr. Priya Sharma',
     publishedDate: '2024-08-30',
-    tags: ['depression', 'mental-health-awareness', 'cultural-context']
+    tags: ['depression', 'mental-health-awareness', 'cultural-context'],
   },
   {
     id: '7',
     title: 'Yoga Nidra for Deep Relaxation',
-    description: 'Traditional Indian relaxation technique combining mindfulness with yogic practices. Perfect for students dealing with academic pressure and sleep issues.',
+    description:
+      'Traditional Indian relaxation technique combining mindfulness with yogic practices. Perfect for students dealing with academic pressure and sleep issues.',
     type: 'audio',
     category: 'mindfulness',
     duration: '30 min',
@@ -272,12 +285,13 @@ const mockResources: Resource[] = [
     downloadUrl: '/audio/yoga-nidra-students.mp3',
     author: 'Yogacharya Ramesh Sharma',
     publishedDate: '2024-08-25',
-    tags: ['yoga', 'relaxation', 'traditional-healing']
+    tags: ['yoga', 'relaxation', 'traditional-healing'],
   },
   {
     id: '8',
     title: 'তনাব মোকাবেলার কৌশল (Stress Management Techniques)',
-    description: 'Bengali language guide for stress management incorporating Bengali cultural values and family dynamics. Practical techniques for students and working professionals.',
+    description:
+      'Bengali language guide for stress management incorporating Bengali cultural values and family dynamics. Practical techniques for students and working professionals.',
     type: 'article',
     category: 'stress',
     duration: '10 min read',
@@ -289,12 +303,13 @@ const mockResources: Resource[] = [
     downloadUrl: '/pdfs/stress-management-bengali.pdf',
     author: 'ডঃ সুমিত্রা বসু',
     publishedDate: '2024-09-05',
-    tags: ['তনাব', 'মানসিক-স্বাস্থ্য', 'বাঙালি-সংস্কৃতি']
+    tags: ['তনাব', 'মানসিক-স্বাস্থ্য', 'বাঙালি-সংস্কৃতি'],
   },
   {
     id: '9',
     title: 'Digital Detox for Mental Health',
-    description: 'How to manage social media addiction, reduce screen time, and create healthy boundaries with technology. Essential for Gen Z mental health.',
+    description:
+      'How to manage social media addiction, reduce screen time, and create healthy boundaries with technology. Essential for Gen Z mental health.',
     type: 'tool',
     category: 'anxiety',
     difficulty: 'intermediate',
@@ -304,12 +319,13 @@ const mockResources: Resource[] = [
     url: 'https://freedom.to/',
     author: 'Dr. Kavita Menon',
     publishedDate: '2024-09-12',
-    tags: ['digital-wellness', 'social-media', 'technology-balance']
+    tags: ['digital-wellness', 'social-media', 'technology-balance'],
   },
   {
     id: '10',
     title: 'Relationship Counseling for Indian Couples',
-    description: 'Navigate relationship challenges in the context of Indian family structures, arranged marriages, and cultural expectations. Communication techniques and conflict resolution.',
+    description:
+      'Navigate relationship challenges in the context of Indian family structures, arranged marriages, and cultural expectations. Communication techniques and conflict resolution.',
     type: 'video',
     category: 'relationships',
     duration: '22 min',
@@ -320,12 +336,13 @@ const mockResources: Resource[] = [
     url: 'https://www.youtube.com/watch?v=example',
     author: 'Dr. Rajesh Kumar, Marriage Therapist',
     publishedDate: '2024-08-18',
-    tags: ['relationships', 'marriage', 'family-dynamics']
+    tags: ['relationships', 'marriage', 'family-dynamics'],
   },
   {
     id: '11',
     title: 'PTSD Recovery Resources',
-    description: 'Trauma-informed healing approaches combining Western therapy with Indian spiritual practices. Safe space information and emergency resources.',
+    description:
+      'Trauma-informed healing approaches combining Western therapy with Indian spiritual practices. Safe space information and emergency resources.',
     type: 'article',
     category: 'trauma',
     duration: '15 min read',
@@ -337,12 +354,13 @@ const mockResources: Resource[] = [
     downloadUrl: '/pdfs/trauma-recovery-guide.pdf',
     author: 'Dr. Kavita Menon, Trauma Specialist',
     publishedDate: '2024-07-30',
-    tags: ['trauma', 'ptsd', 'recovery', 'healing']
+    tags: ['trauma', 'ptsd', 'recovery', 'healing'],
   },
   {
     id: '12',
     title: 'தமிழ் மனநல வழிகாட்டி (Tamil Mental Health Guide)',
-    description: 'Tamil language comprehensive mental health guide covering anxiety, depression, and stress management with cultural sensitivity for Tamil-speaking communities.',
+    description:
+      'Tamil language comprehensive mental health guide covering anxiety, depression, and stress management with cultural sensitivity for Tamil-speaking communities.',
     type: 'pdf',
     category: 'anxiety',
     duration: '20 min read',
@@ -354,12 +372,13 @@ const mockResources: Resource[] = [
     downloadUrl: '/pdfs/tamil-mental-health-guide.pdf',
     author: 'டாக்டர் கமலா சுந்தரம்',
     publishedDate: '2024-08-12',
-    tags: ['மனநலம்', 'தமிழ்', 'கவலை']
+    tags: ['மனநலம்', 'தமிழ்', 'கவலை'],
   },
   {
     id: '13',
     title: 'Mindfulness Meditation for Beginners',
-    description: 'Start your mindfulness journey with simple 5-minute daily practices. Includes guided meditations in English and Hindi for Indian practitioners.',
+    description:
+      'Start your mindfulness journey with simple 5-minute daily practices. Includes guided meditations in English and Hindi for Indian practitioners.',
     type: 'audio',
     category: 'mindfulness',
     duration: '45 min',
@@ -371,12 +390,13 @@ const mockResources: Resource[] = [
     downloadUrl: '/audio/mindfulness-beginners.mp3',
     author: 'Mind Buddy Meditation Team',
     publishedDate: '2024-09-01',
-    tags: ['meditation', 'mindfulness', 'beginners']
+    tags: ['meditation', 'mindfulness', 'beginners'],
   },
   {
     id: '14',
     title: 'Academic Burnout Prevention Toolkit',
-    description: 'Early warning signs, prevention strategies, and recovery techniques for students experiencing academic burnout. Includes self-assessment tools and action plans.',
+    description:
+      'Early warning signs, prevention strategies, and recovery techniques for students experiencing academic burnout. Includes self-assessment tools and action plans.',
     type: 'tool',
     category: 'stress',
     difficulty: 'intermediate',
@@ -386,12 +406,13 @@ const mockResources: Resource[] = [
     url: 'https://burnout-assessment.vercel.app/',
     author: 'Dr. Sneha Joshi',
     publishedDate: '2024-08-28',
-    tags: ['burnout', 'academic-stress', 'prevention']
+    tags: ['burnout', 'academic-stress', 'prevention'],
   },
   {
     id: '15',
     title: 'Crisis Support & Emergency Resources',
-    description: 'Comprehensive list of mental health crisis support resources in India. Includes helpline numbers, online chat services, and immediate safety planning.',
+    description:
+      'Comprehensive list of mental health crisis support resources in India. Includes helpline numbers, online chat services, and immediate safety planning.',
     type: 'article',
     category: 'depression',
     duration: '5 min read',
@@ -403,8 +424,8 @@ const mockResources: Resource[] = [
     downloadUrl: '/pdfs/crisis-support-resources-india.pdf',
     author: 'Mind Buddy Crisis Team',
     publishedDate: '2024-09-15',
-    tags: ['crisis', 'emergency', 'support', 'helpline']
-  }
+    tags: ['crisis', 'emergency', 'support', 'helpline'],
+  },
 ];
 
 const Resources = () => {
@@ -412,39 +433,59 @@ const Resources = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<keyof typeof categories>('all');
   const [selectedLanguage, setSelectedLanguage] = useState<keyof typeof languages | 'all'>('all');
-  const [selectedDifficulty, setSelectedDifficulty] = useState<'all' | 'beginner' | 'intermediate' | 'advanced'>('all');
-  const [selectedType, setSelectedType] = useState<'all' | 'article' | 'video' | 'audio' | 'tool' | 'pdf'>('all');
-  const [sortBy, setSortBy] = useState<'relevance' | 'popularity' | 'rating' | 'recent'>('relevance');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<
+    'all' | 'beginner' | 'intermediate' | 'advanced'
+  >('all');
+  const [selectedType, setSelectedType] = useState<
+    'all' | 'article' | 'video' | 'audio' | 'tool' | 'pdf'
+  >('all');
+  const [sortBy, setSortBy] = useState<'relevance' | 'popularity' | 'rating' | 'recent'>(
+    'relevance'
+  );
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [bookmarkedOnly, setBookmarkedOnly] = useState(false);
-  const [currentLanguageContext, setCurrentLanguageContext] = useState<keyof typeof languages>('english');
+  const [currentLanguageContext, setCurrentLanguageContext] =
+    useState<keyof typeof languages>('english');
 
   // Reading mode classes
-  const readingModeClasses = settings.readingMode?.enabled ? [
-    'reading-mode',
-    settings.readingMode.backgroundColor && `${settings.readingMode.backgroundColor}-bg`,
-    settings.readingMode.contrast === 'high' && 'reading-high-contrast',
-    settings.readingMode.warmColors && 'reading-warm-colors',
-    settings.readingMode.reducedMotion && 'reading-reduced-motion',
-    settings.readingMode.fontFamily && `font-${settings.readingMode.fontFamily}`,
-    settings.readingMode.fontSize && `text-${settings.readingMode.fontSize}`,
-    settings.readingMode.lineHeight && `leading-${settings.readingMode.lineHeight}`,
-  ].filter(Boolean).join(' ') : '';
+  const readingModeClasses = settings.readingMode?.enabled
+    ? [
+        'reading-mode',
+        settings.readingMode.backgroundColor && `${settings.readingMode.backgroundColor}-bg`,
+        settings.readingMode.contrast === 'high' && 'reading-high-contrast',
+        settings.readingMode.warmColors && 'reading-warm-colors',
+        settings.readingMode.reducedMotion && 'reading-reduced-motion',
+        settings.readingMode.fontFamily && `font-${settings.readingMode.fontFamily}`,
+        settings.readingMode.fontSize && `text-${settings.readingMode.fontSize}`,
+        settings.readingMode.lineHeight && `leading-${settings.readingMode.lineHeight}`,
+      ]
+        .filter(Boolean)
+        .join(' ')
+    : '';
 
   // Enhanced filtering and search
   const filteredResources = useMemo(() => {
-    const filtered = mockResources.filter(resource => {
-      const matchesSearch = resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           resource.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           resource.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      
+    const filtered = mockResources.filter((resource) => {
+      const matchesSearch =
+        resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        resource.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        resource.tags?.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+
       const matchesCategory = selectedCategory === 'all' || resource.category === selectedCategory;
       const matchesLanguage = selectedLanguage === 'all' || resource.language === selectedLanguage;
-      const matchesDifficulty = selectedDifficulty === 'all' || resource.difficulty === selectedDifficulty;
+      const matchesDifficulty =
+        selectedDifficulty === 'all' || resource.difficulty === selectedDifficulty;
       const matchesType = selectedType === 'all' || resource.type === selectedType;
       const matchesBookmark = !bookmarkedOnly || resource.isBookmarked;
 
-      return matchesSearch && matchesCategory && matchesLanguage && matchesDifficulty && matchesType && matchesBookmark;
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesLanguage &&
+        matchesDifficulty &&
+        matchesType &&
+        matchesBookmark
+      );
     });
 
     // Sort results
@@ -456,7 +497,10 @@ const Resources = () => {
         filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
         break;
       case 'recent':
-        filtered.sort((a, b) => new Date(b.publishedDate || '').getTime() - new Date(a.publishedDate || '').getTime());
+        filtered.sort(
+          (a, b) =>
+            new Date(b.publishedDate || '').getTime() - new Date(a.publishedDate || '').getTime()
+        );
         break;
       default:
         // Keep original order for relevance
@@ -464,11 +508,19 @@ const Resources = () => {
     }
 
     return filtered;
-  }, [searchQuery, selectedCategory, selectedLanguage, selectedDifficulty, selectedType, sortBy, bookmarkedOnly]);
+  }, [
+    searchQuery,
+    selectedCategory,
+    selectedLanguage,
+    selectedDifficulty,
+    selectedType,
+    sortBy,
+    bookmarkedOnly,
+  ]);
 
   const toggleBookmark = (resourceId: string) => {
     // In a real app, this would update the backend
-    const resourceIndex = mockResources.findIndex(r => r.id === resourceId);
+    const resourceIndex = mockResources.findIndex((r) => r.id === resourceId);
     if (resourceIndex !== -1) {
       mockResources[resourceIndex].isBookmarked = !mockResources[resourceIndex].isBookmarked;
     }
@@ -479,7 +531,7 @@ const Resources = () => {
       navigator.share({
         title: resource.title,
         text: resource.description,
-        url: resource.url || window.location.href
+        url: resource.url || window.location.href,
       });
     } else {
       // Fallback to clipboard
@@ -489,32 +541,48 @@ const Resources = () => {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'video': return Play;
-      case 'audio': return Volume2;
-      case 'article': return BookOpen;
-      case 'tool': return Zap;
-      case 'pdf': return Download;
-      default: return BookOpen;
+      case 'video':
+        return Play;
+      case 'audio':
+        return Volume2;
+      case 'article':
+        return BookOpen;
+      case 'tool':
+        return Zap;
+      case 'pdf':
+        return Download;
+      default:
+        return BookOpen;
     }
   };
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case 'video': return 'bg-severity-high text-white';
-      case 'audio': return 'bg-severity-medium text-white';
-      case 'article': return 'bg-primary text-primary-foreground';
-      case 'tool': return 'bg-secondary text-secondary-foreground';
-      case 'pdf': return 'bg-severity-low text-white';
-      default: return 'bg-muted text-muted-foreground';
+      case 'video':
+        return 'bg-severity-high text-white';
+      case 'audio':
+        return 'bg-severity-medium text-white';
+      case 'article':
+        return 'bg-primary text-primary-foreground';
+      case 'tool':
+        return 'bg-secondary text-secondary-foreground';
+      case 'pdf':
+        return 'bg-severity-low text-white';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'beginner': return 'bg-severity-low text-white';
-      case 'intermediate': return 'bg-severity-medium text-white';
-      case 'advanced': return 'bg-severity-high text-white';
-      default: return 'bg-muted text-muted-foreground';
+      case 'beginner':
+        return 'bg-severity-low text-white';
+      case 'intermediate':
+        return 'bg-severity-medium text-white';
+      case 'advanced':
+        return 'bg-severity-high text-white';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
 
@@ -529,7 +597,8 @@ const Resources = () => {
           Psychoeducational Resources
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto reading-content">
-          Evidence-based resources to support your mental health journey. All content is reviewed by licensed professionals.
+          Evidence-based resources to support your mental health journey. All content is reviewed by
+          licensed professionals.
         </p>
       </div>
 
@@ -566,7 +635,7 @@ const Resources = () => {
                 {Object.entries(categories).map(([key, category]) => (
                   <Button
                     key={key}
-                    variant={selectedCategory === key ? "default" : "outline"}
+                    variant={selectedCategory === key ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => setSelectedCategory(key as keyof typeof categories)}
                     className={`flex items-center space-x-1 ${category.color.replace('bg-', 'hover:bg-')}`}
@@ -583,7 +652,7 @@ const Resources = () => {
                 {(['all', 'article', 'video', 'audio', 'tool', 'pdf'] as const).map((type) => (
                   <Button
                     key={type}
-                    variant={selectedType === type ? "default" : "outline"}
+                    variant={selectedType === type ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => setSelectedType(type)}
                     className="capitalize"
@@ -599,7 +668,7 @@ const Resources = () => {
                 {(['all', ...Object.keys(languages)] as const).map((language) => (
                   <Button
                     key={language}
-                    variant={selectedLanguage === language ? "default" : "outline"}
+                    variant={selectedLanguage === language ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => setSelectedLanguage(language as typeof selectedLanguage)}
                     className="flex items-center space-x-1"
@@ -625,16 +694,21 @@ const Resources = () => {
         <p className="text-muted-foreground">
           Showing {filteredResources.length} of {mockResources.length} resources
         </p>
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           size="sm"
           onClick={() => {
             // Generate a comprehensive PDF with all resources
-            const resourceList = filteredResources.map(r => 
-              `${r.title}\n${r.description}\nType: ${r.type} | Duration: ${r.duration} | Language: ${r.language}\nAuthor: ${r.author || 'N/A'}\nURL: ${r.url || 'N/A'}\n---\n`
-            ).join('\n');
-            
-            const blob = new Blob([`Mind Buddy Resources Collection\n\n${resourceList}`], { type: 'text/plain' });
+            const resourceList = filteredResources
+              .map(
+                (r) =>
+                  `${r.title}\n${r.description}\nType: ${r.type} | Duration: ${r.duration} | Language: ${r.language}\nAuthor: ${r.author || 'N/A'}\nURL: ${r.url || 'N/A'}\n---\n`
+              )
+              .join('\n');
+
+            const blob = new Blob([`Mind Buddy Resources Collection\n\n${resourceList}`], {
+              type: 'text/plain',
+            });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = 'mind-buddy-resources.txt';
@@ -653,24 +727,30 @@ const Resources = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredResources.map((resource) => {
           const TypeIcon = getTypeIcon(resource.type);
-          
+
           return (
-            <Card key={resource.id} className="group hover:shadow-medium transition-all duration-300 hover:scale-[1.02]">
+            <Card
+              key={resource.id}
+              className="group hover:shadow-medium transition-all duration-300 hover:scale-[1.02]"
+            >
               <CardHeader className="space-y-3">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-2">
                     <div className={`p-2 rounded-md ${getTypeColor(resource.type)}`}>
                       <TypeIcon className="h-4 w-4" />
                     </div>
-                    <Badge 
-                      variant="secondary" 
+                    <Badge
+                      variant="secondary"
                       className={`${categories[resource.category]?.color} flex items-center space-x-1`}
                     >
                       {(() => {
                         const CategoryIcon = categories[resource.category]?.icon || BookOpen;
                         return <CategoryIcon className="h-3 w-3" />;
                       })()}
-                      <span>{categories[resource.category]?.[currentLanguageContext] || categories[resource.category]?.en}</span>
+                      <span>
+                        {categories[resource.category]?.[currentLanguageContext] ||
+                          categories[resource.category]?.en}
+                      </span>
                     </Badge>
                     <Badge variant="secondary" className={getDifficultyColor(resource.difficulty)}>
                       {resource.difficulty}
@@ -688,8 +768,8 @@ const Resources = () => {
                       onClick={() => toggleBookmark(resource.id)}
                       title={resource.isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
                     >
-                      <Bookmark 
-                        className={`h-3 w-3 ${resource.isBookmarked ? 'fill-current text-primary' : 'text-muted-foreground'}`} 
+                      <Bookmark
+                        className={`h-3 w-3 ${resource.isBookmarked ? 'fill-current text-primary' : 'text-muted-foreground'}`}
                       />
                     </Button>
                     <Button
@@ -747,22 +827,20 @@ const Resources = () => {
                         <Heart
                           key={i}
                           className={`h-3 w-3 ${
-                            i < Math.floor(resource.rating!) 
-                              ? 'text-primary fill-current' 
+                            i < Math.floor(resource.rating!)
+                              ? 'text-primary fill-current'
                               : 'text-muted-foreground'
                           }`}
                         />
                       ))}
                     </div>
-                    <span className="text-sm text-muted-foreground">
-                      {resource.rating}/5
-                    </span>
+                    <span className="text-sm text-muted-foreground">{resource.rating}/5</span>
                   </div>
                 )}
 
                 <div className="flex space-x-2 pt-2">
-                  <Button 
-                    variant="default" 
+                  <Button
+                    variant="default"
                     className="flex-1"
                     onClick={() => {
                       if (resource.url) {
@@ -776,29 +854,39 @@ const Resources = () => {
                       }
                     }}
                   >
-                    {resource.type === 'article' ? 
-                      (currentLanguageContext === 'hindi' ? 'लेख पढ़ें' :
-                       currentLanguageContext === 'spanish' ? 'Leer Artículo' :
-                       'Read Article') : 
-                     resource.type === 'video' ? 
-                      (currentLanguageContext === 'hindi' ? 'वीडियो देखें' :
-                       currentLanguageContext === 'spanish' ? 'Ver Video' :
-                       'Watch Video') :
-                     resource.type === 'audio' ? 
-                      (currentLanguageContext === 'hindi' ? 'सुनें' :
-                       currentLanguageContext === 'spanish' ? 'Escuchar' :
-                       'Listen Now') : 
-                     resource.type === 'pdf' ? 
-                      (currentLanguageContext === 'hindi' ? 'PDF देखें' :
-                       currentLanguageContext === 'spanish' ? 'Ver PDF' :
-                       'View PDF') :
-                      (currentLanguageContext === 'hindi' ? 'उपकरण का उपयोग करें' :
-                       currentLanguageContext === 'spanish' ? 'Usar Herramienta' :
-                       'Use Tool')}
+                    {resource.type === 'article'
+                      ? currentLanguageContext === 'hindi'
+                        ? 'लेख पढ़ें'
+                        : currentLanguageContext === 'spanish'
+                          ? 'Leer Artículo'
+                          : 'Read Article'
+                      : resource.type === 'video'
+                        ? currentLanguageContext === 'hindi'
+                          ? 'वीडियो देखें'
+                          : currentLanguageContext === 'spanish'
+                            ? 'Ver Video'
+                            : 'Watch Video'
+                        : resource.type === 'audio'
+                          ? currentLanguageContext === 'hindi'
+                            ? 'सुनें'
+                            : currentLanguageContext === 'spanish'
+                              ? 'Escuchar'
+                              : 'Listen Now'
+                          : resource.type === 'pdf'
+                            ? currentLanguageContext === 'hindi'
+                              ? 'PDF देखें'
+                              : currentLanguageContext === 'spanish'
+                                ? 'Ver PDF'
+                                : 'View PDF'
+                            : currentLanguageContext === 'hindi'
+                              ? 'उपकरण का उपयोग करें'
+                              : currentLanguageContext === 'spanish'
+                                ? 'Usar Herramienta'
+                                : 'Use Tool'}
                   </Button>
                   {resource.downloadUrl && (
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       size="icon"
                       onClick={() => {
                         // Create a temporary link to trigger download
@@ -809,20 +897,29 @@ const Resources = () => {
                         link.click();
                         document.body.removeChild(link);
                       }}
-                      title={currentLanguageContext === 'hindi' ? 'डाउनलोड' :
-                             currentLanguageContext === 'spanish' ? 'Descargar' :
-                             'Download'}
+                      title={
+                        currentLanguageContext === 'hindi'
+                          ? 'डाउनलोड'
+                          : currentLanguageContext === 'spanish'
+                            ? 'Descargar'
+                            : 'Download'
+                      }
                     >
                       <Download className="h-4 w-4" />
                     </Button>
                   )}
-                  
+
                   {/* Cultural Context Indicator */}
                   {resource.culturalContext && (
-                    <Badge variant="outline" className="text-xs bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700">
-                      {currentLanguageContext === 'hindi' ? 'स्थानीय संदर्भ' :
-                       currentLanguageContext === 'spanish' ? 'Contexto Local' :
-                       'Local Context'}
+                    <Badge
+                      variant="outline"
+                      className="text-xs bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700"
+                    >
+                      {currentLanguageContext === 'hindi'
+                        ? 'स्थानीय संदर्भ'
+                        : currentLanguageContext === 'spanish'
+                          ? 'Contexto Local'
+                          : 'Local Context'}
                     </Badge>
                   )}
                 </div>
@@ -848,12 +945,13 @@ const Resources = () => {
             <span>Need Immediate Support?</span>
           </CardTitle>
           <CardDescription>
-            If you're experiencing a mental health crisis, don't wait - reach out for immediate help.
+            If you're experiencing a mental health crisis, don't wait - reach out for immediate
+            help.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Button 
+            <Button
               variant="safety"
               onClick={() => window.open('tel:+91-9152987821', '_self')}
               className="flex flex-col items-center p-4 h-auto"
@@ -863,7 +961,7 @@ const Resources = () => {
               <span className="text-xs">24x7 Helpline</span>
               <span className="text-xs">+91-91529-87821</span>
             </Button>
-            <Button 
+            <Button
               variant="trust"
               onClick={() => window.open('tel:+91-80-25497777', '_self')}
               className="flex flex-col items-center p-4 h-auto"
@@ -873,7 +971,7 @@ const Resources = () => {
               <span className="text-xs">Foundation</span>
               <span className="text-xs">+91-80-2549-7777</span>
             </Button>
-            <Button 
+            <Button
               variant="gentle"
               onClick={() => window.open('tel:+91-22-25563291', '_self')}
               className="flex flex-col items-center p-4 h-auto"
@@ -883,7 +981,7 @@ const Resources = () => {
               <span className="text-xs">Trust</span>
               <span className="text-xs">+91-22-2556-3291</span>
             </Button>
-            <Button 
+            <Button
               variant="outline"
               onClick={() => window.open('/booking', '_self')}
               className="flex flex-col items-center p-4 h-auto"
@@ -895,7 +993,10 @@ const Resources = () => {
             </Button>
           </div>
           <div className="text-center text-sm text-muted-foreground mt-4">
-            <p>In case of emergency, please call <strong>102</strong> (National Emergency Helpline) or visit your nearest hospital.</p>
+            <p>
+              In case of emergency, please call <strong>102</strong> (National Emergency Helpline)
+              or visit your nearest hospital.
+            </p>
           </div>
         </CardContent>
       </Card>

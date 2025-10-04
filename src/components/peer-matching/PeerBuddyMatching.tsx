@@ -6,11 +6,17 @@ import { Progress } from '@/components/ui/progress';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
+import {
   Users,
   Search,
   Heart,
@@ -28,12 +34,12 @@ import {
   Eye,
   EyeOff,
   Filter,
-  SortAsc
+  SortAsc,
 } from 'lucide-react';
 
-import { 
-  PeerUser, 
-  PeerBuddy, 
+import {
+  PeerUser,
+  PeerBuddy,
   MatchingRequest,
   MatchResult,
   PotentialMatch,
@@ -47,7 +53,7 @@ import {
   calculateCompatibilityScore,
   generateAnonymousDisplayName,
   getStatusColor,
-  formatMeetingFrequency
+  formatMeetingFrequency,
 } from '@/types/peerMatching';
 
 interface PeerBuddyMatchingProps {
@@ -61,7 +67,7 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
   currentUser,
   onMatchFound,
   onConnectionStart,
-  className = ''
+  className = '',
 }) => {
   // Component state
   const [activeTab, setActiveTab] = useState<string>('find-buddy');
@@ -74,44 +80,46 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
     scheduleWeight: 0.2,
     personalityWeight: 0.2,
     communicationWeight: 0.2,
-    minimumCompatibility: 60
+    minimumCompatibility: 60,
   });
 
   // Mock current user if not provided
-  const [user, setUser] = useState<PeerUser>(currentUser || {
-    id: 'user_123',
-    anonymousId: 'anonymous_123',
-    displayName: generateAnonymousDisplayName(),
-    isOnline: true,
-    lastActive: new Date().toISOString(),
-    year: 'junior',
-    major: 'Psychology',
-    institution: 'University College',
-    mentalHealthConcerns: ['anxiety', 'academic-pressure', 'stress'],
-    interests: ['reading', 'meditation', 'outdoor activities'],
-    availableHours: {
-      monday: [{ start: '14:00', end: '16:00' }],
-      tuesday: [{ start: '10:00', end: '12:00' }],
-      wednesday: [{ start: '14:00', end: '16:00' }],
-      thursday: [{ start: '10:00', end: '12:00' }],
-      friday: [{ start: '15:00', end: '17:00' }],
-      saturday: [{ start: '09:00', end: '11:00' }],
-      sunday: [{ start: '14:00', end: '16:00' }]
-    },
-    timeZone: 'America/New_York',
-    preferences: {
-      genderPreference: 'any',
-      ageRange: { min: 18, max: 25 },
-      communicationStyle: 'text-only',
-      meetingFrequency: 'weekly',
-      groupSizePreference: 'one-on-one',
-      anonymityLevel: 'first-name-only',
-      supportType: ['emotional-support', 'study-buddy']
-    },
-    profileComplete: true,
-    verificationStatus: 'verified',
-    createdAt: '2024-01-01T00:00:00Z'
-  });
+  const [user, setUser] = useState<PeerUser>(
+    currentUser || {
+      id: 'user_123',
+      anonymousId: 'anonymous_123',
+      displayName: generateAnonymousDisplayName(),
+      isOnline: true,
+      lastActive: new Date().toISOString(),
+      year: 'junior',
+      major: 'Psychology',
+      institution: 'University College',
+      mentalHealthConcerns: ['anxiety', 'academic-pressure', 'stress'],
+      interests: ['reading', 'meditation', 'outdoor activities'],
+      availableHours: {
+        monday: [{ start: '14:00', end: '16:00' }],
+        tuesday: [{ start: '10:00', end: '12:00' }],
+        wednesday: [{ start: '14:00', end: '16:00' }],
+        thursday: [{ start: '10:00', end: '12:00' }],
+        friday: [{ start: '15:00', end: '17:00' }],
+        saturday: [{ start: '09:00', end: '11:00' }],
+        sunday: [{ start: '14:00', end: '16:00' }],
+      },
+      timeZone: 'America/New_York',
+      preferences: {
+        genderPreference: 'any',
+        ageRange: { min: 18, max: 25 },
+        communicationStyle: 'text-only',
+        meetingFrequency: 'weekly',
+        groupSizePreference: 'one-on-one',
+        anonymityLevel: 'first-name-only',
+        supportType: ['emotional-support', 'study-buddy'],
+      },
+      profileComplete: true,
+      verificationStatus: 'verified',
+      createdAt: '2024-01-01T00:00:00Z',
+    }
+  );
 
   // Mock potential matches
   const mockMatches: PotentialMatch[] = [
@@ -130,18 +138,18 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
           communicationStyle: 100,
           yearLevel: 100,
           institution: 100,
-          preferences: 85
-        }
+          preferences: 85,
+        },
       },
       rank: 1,
       reasons: [
         'Shares anxiety and academic pressure concerns',
         'Excellent schedule compatibility (8 hours overlap)',
         'Same communication preference (text-only)',
-        'Similar academic year and institution'
+        'Similar academic year and institution',
       ],
       warnings: [],
-      estimatedWaitTime: 5
+      estimatedWaitTime: 5,
     },
     {
       targetId: 'peer_789',
@@ -158,18 +166,18 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
           communicationStyle: 80,
           yearLevel: 90,
           institution: 100,
-          preferences: 75
-        }
+          preferences: 75,
+        },
       },
       rank: 2,
       reasons: [
         'Shares stress management focus',
         'Good schedule overlap (6 hours)',
         'Similar year level',
-        'Both interested in emotional support'
+        'Both interested in emotional support',
       ],
       warnings: ['Different communication style preference'],
-      estimatedWaitTime: 10
+      estimatedWaitTime: 10,
     },
     {
       targetId: 'peer_101',
@@ -186,18 +194,18 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
           communicationStyle: 60,
           yearLevel: 80,
           institution: 100,
-          preferences: 70
-        }
+          preferences: 70,
+        },
       },
       rank: 3,
       reasons: [
         'Shared interest in study support',
         'Compatible weekly meeting preference',
-        'Same institution'
+        'Same institution',
       ],
       warnings: ['Lower concern overlap', 'Different communication preferences'],
-      estimatedWaitTime: 15
-    }
+      estimatedWaitTime: 15,
+    },
   ];
 
   // Mock active buddies
@@ -215,7 +223,7 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
       totalInteractions: 15,
       averageResponseTime: 45,
       connectionStrength: 85,
-      isActive: true
+      isActive: true,
     },
     {
       id: 'buddy_002',
@@ -231,8 +239,8 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
       averageResponseTime: 120,
       connectionStrength: 65,
       isActive: false,
-      endReason: 'Mutual agreement to pause'
-    }
+      endReason: 'Mutual agreement to pause',
+    },
   ];
 
   useEffect(() => {
@@ -247,7 +255,7 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
 
     // Simulate matching progress
     const progressInterval = setInterval(() => {
-      setMatchingProgress(prev => {
+      setMatchingProgress((prev) => {
         if (prev >= 100) {
           clearInterval(progressInterval);
           setIsMatching(false);
@@ -276,7 +284,7 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
           totalInteractions: 0,
           averageResponseTime: 0,
           connectionStrength: bestMatch.compatibility.overall,
-          isActive: false
+          isActive: false,
         };
         onMatchFound(newBuddy);
       }
@@ -289,7 +297,7 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
   };
 
   const declineMatch = (matchId: string) => {
-    setCurrentMatches(prev => prev.filter(match => match.targetId !== matchId));
+    setCurrentMatches((prev) => prev.filter((match) => match.targetId !== matchId));
   };
 
   const startConversation = (buddyId: string) => {
@@ -327,11 +335,13 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
         <div>
           <Label className="text-sm font-medium">Shared Concerns</Label>
           <div className="flex flex-wrap gap-2 mt-1">
-            {user.mentalHealthConcerns.slice(0, match.compatibility.breakdown.sharedConcerns).map(concern => (
-              <Badge key={concern} variant="outline" className="text-xs">
-                {MENTAL_HEALTH_CONCERNS[concern].icon} {MENTAL_HEALTH_CONCERNS[concern].label}
-              </Badge>
-            ))}
+            {user.mentalHealthConcerns
+              .slice(0, match.compatibility.breakdown.sharedConcerns)
+              .map((concern) => (
+                <Badge key={concern} variant="outline" className="text-xs">
+                  {MENTAL_HEALTH_CONCERNS[concern].icon} {MENTAL_HEALTH_CONCERNS[concern].label}
+                </Badge>
+              ))}
           </div>
         </div>
 
@@ -396,19 +406,11 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
 
         {/* Action Buttons */}
         <div className="flex space-x-2 pt-2">
-          <Button 
-            size="sm" 
-            onClick={() => acceptMatch(match.targetId)}
-            className="flex-1"
-          >
+          <Button size="sm" onClick={() => acceptMatch(match.targetId)} className="flex-1">
             <UserCheck className="h-4 w-4 mr-2" />
             Connect
           </Button>
-          <Button 
-            size="sm" 
-            variant="outline" 
-            onClick={() => declineMatch(match.targetId)}
-          >
+          <Button size="sm" variant="outline" onClick={() => declineMatch(match.targetId)}>
             <XCircle className="h-4 w-4 mr-2" />
             Pass
           </Button>
@@ -426,22 +428,21 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
               <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
                 <Users className="h-5 w-5 text-primary" />
               </div>
-              <div 
+              <div
                 className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${
                   buddy.status === 'active' ? 'bg-green-500' : 'bg-gray-400'
-                }`} 
+                }`}
               />
             </div>
             <div>
-              <CardTitle className="text-lg">
-                {generateAnonymousDisplayName()}
-              </CardTitle>
+              <CardTitle className="text-lg">{generateAnonymousDisplayName()}</CardTitle>
               <CardDescription>
-                {buddy.connectionType.replace('-', ' ')} • {new Date(buddy.matchedAt).toLocaleDateString()}
+                {buddy.connectionType.replace('-', ' ')} •{' '}
+                {new Date(buddy.matchedAt).toLocaleDateString()}
               </CardDescription>
             </div>
           </div>
-          <Badge 
+          <Badge
             variant={buddy.status === 'active' ? 'default' : 'secondary'}
             style={{ backgroundColor: getStatusColor(buddy.status) }}
           >
@@ -470,7 +471,7 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
         <div>
           <Label className="text-sm font-medium">Shared Focus Areas</Label>
           <div className="flex flex-wrap gap-2 mt-1">
-            {buddy.sharedConcerns.map(concern => (
+            {buddy.sharedConcerns.map((concern) => (
               <Badge key={concern} variant="outline" className="text-xs">
                 {MENTAL_HEALTH_CONCERNS[concern].icon} {MENTAL_HEALTH_CONCERNS[concern].label}
               </Badge>
@@ -487,17 +488,13 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
         {/* Action Buttons */}
         <div className="flex space-x-2 pt-2">
           {buddy.status === 'active' ? (
-            <Button 
-              size="sm" 
-              onClick={() => startConversation(buddy.id)}
-              className="flex-1"
-            >
+            <Button size="sm" onClick={() => startConversation(buddy.id)} className="flex-1">
               <MessageCircle className="h-4 w-4 mr-2" />
               Continue Chat
             </Button>
           ) : (
-            <Button 
-              size="sm" 
+            <Button
+              size="sm"
               variant="outline"
               onClick={() => startConversation(buddy.id)}
               className="flex-1"
@@ -535,7 +532,8 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
               <div>
                 <h3 className="font-semibold">Anonymous Profile: {user.displayName}</h3>
                 <p className="text-sm text-muted-foreground">
-                  {user.year} • {user.mentalHealthConcerns.length} focus areas • {user.verificationStatus}
+                  {user.year} • {user.mentalHealthConcerns.length} focus areas •{' '}
+                  {user.verificationStatus}
                 </p>
               </div>
             </div>
@@ -599,11 +597,7 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
                   </div>
                 </div>
 
-                <Button 
-                  size="lg" 
-                  onClick={startMatching}
-                  className="w-full md:w-auto"
-                >
+                <Button size="lg" onClick={startMatching} className="w-full md:w-auto">
                   <Users className="h-5 w-5 mr-2" />
                   Start Finding Buddies
                 </Button>
@@ -636,15 +630,15 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
           {!isMatching && currentMatches.length > 0 && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Found {currentMatches.length} Compatible Buddies</h3>
+                <h3 className="text-lg font-semibold">
+                  Found {currentMatches.length} Compatible Buddies
+                </h3>
                 <Button variant="outline" size="sm" onClick={startMatching}>
                   <RefreshCw className="h-4 w-4 mr-2" />
                   Find More
                 </Button>
               </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                {currentMatches.map(renderMatchCard)}
-              </div>
+              <div className="grid gap-4 md:grid-cols-2">{currentMatches.map(renderMatchCard)}</div>
             </div>
           )}
         </TabsContent>
@@ -696,9 +690,7 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
           <Card>
             <CardHeader>
               <CardTitle>Matching Preferences</CardTitle>
-              <CardDescription>
-                Customize how we find your ideal peer buddies
-              </CardDescription>
+              <CardDescription>Customize how we find your ideal peer buddies</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Anonymity Level */}
@@ -731,15 +723,21 @@ export const PeerBuddyMatching: React.FC<PeerBuddyMatchingProps> = ({
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-sm">Shared Concerns</span>
-                    <span className="text-sm font-medium">{Math.round(matchingPreferences.concernsWeight * 100)}%</span>
+                    <span className="text-sm font-medium">
+                      {Math.round(matchingPreferences.concernsWeight * 100)}%
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm">Schedule Compatibility</span>
-                    <span className="text-sm font-medium">{Math.round(matchingPreferences.scheduleWeight * 100)}%</span>
+                    <span className="text-sm font-medium">
+                      {Math.round(matchingPreferences.scheduleWeight * 100)}%
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm">Communication Style</span>
-                    <span className="text-sm font-medium">{Math.round(matchingPreferences.communicationWeight * 100)}%</span>
+                    <span className="text-sm font-medium">
+                      {Math.round(matchingPreferences.communicationWeight * 100)}%
+                    </span>
                   </div>
                 </div>
               </div>

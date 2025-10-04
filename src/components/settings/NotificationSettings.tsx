@@ -2,27 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  Bell, 
-  Clock, 
-  Heart, 
-  Wind, 
-  Calendar, 
-  Quote, 
-  Volume2, 
-  VolumeX, 
+import {
+  Bell,
+  Clock,
+  Heart,
+  Wind,
+  Calendar,
+  Quote,
+  Volume2,
+  VolumeX,
   Moon,
   Plus,
   Trash2,
   CheckCircle,
   Info,
-  Settings
+  Settings,
 } from 'lucide-react';
 import notificationService from '@/services/notificationService';
 import { NotificationPreferences } from '@/types/notifications';
@@ -61,7 +67,7 @@ const NotificationSettings = () => {
     if (hasPermission) {
       new Notification('🌟 Test Notification', {
         body: 'Great! Your wellness notifications are working perfectly.',
-        icon: '/favicon.ico'
+        icon: '/favicon.ico',
       });
       setTestNotificationSent(true);
       setTimeout(() => setTestNotificationSent(false), 3000);
@@ -74,8 +80,8 @@ const NotificationSettings = () => {
     updatePreferences({
       breathingReminders: {
         ...preferences.breathingReminders,
-        times: newTimes
-      }
+        times: newTimes,
+      },
     });
   };
 
@@ -84,8 +90,8 @@ const NotificationSettings = () => {
     updatePreferences({
       breathingReminders: {
         ...preferences.breathingReminders,
-        times: newTimes
-      }
+        times: newTimes,
+      },
     });
   };
 
@@ -95,8 +101,8 @@ const NotificationSettings = () => {
     updatePreferences({
       breathingReminders: {
         ...preferences.breathingReminders,
-        times: newTimes
-      }
+        times: newTimes,
+      },
     });
   };
 
@@ -113,8 +119,8 @@ const NotificationSettings = () => {
           </div>
         </div>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Customize your reminder preferences to support your mental wellness journey. 
-          Get gentle nudges for mood check-ins, breathing exercises, and session reminders.
+          Customize your reminder preferences to support your mental wellness journey. Get gentle
+          nudges for mood check-ins, breathing exercises, and session reminders.
         </p>
       </div>
 
@@ -123,7 +129,10 @@ const NotificationSettings = () => {
         <Alert className="border-orange-200 bg-orange-50">
           <Info className="h-4 w-4" />
           <AlertDescription className="flex items-center justify-between">
-            <span>Enable browser notifications to receive wellness reminders even when the app is closed.</span>
+            <span>
+              Enable browser notifications to receive wellness reminders even when the app is
+              closed.
+            </span>
             <Button onClick={requestPermission} size="sm" variant="outline">
               Enable Notifications
             </Button>
@@ -140,9 +149,9 @@ const NotificationSettings = () => {
                 <CheckCircle className="h-5 w-5 text-green-600" />
                 <span className="text-green-800 font-medium">Notifications Enabled</span>
               </div>
-              <Button 
-                onClick={sendTestNotification} 
-                size="sm" 
+              <Button
+                onClick={sendTestNotification}
+                size="sm"
                 variant="outline"
                 className={testNotificationSent ? 'bg-green-100 border-green-300' : ''}
                 disabled={testNotificationSent}
@@ -173,7 +182,7 @@ const NotificationSettings = () => {
                 checked={preferences.moodReminders.enabled}
                 onCheckedChange={(enabled) =>
                   updatePreferences({
-                    moodReminders: { ...preferences.moodReminders, enabled }
+                    moodReminders: { ...preferences.moodReminders, enabled },
                   })
                 }
               />
@@ -188,7 +197,7 @@ const NotificationSettings = () => {
                       value={preferences.moodReminders.frequency}
                       onValueChange={(frequency: any) =>
                         updatePreferences({
-                          moodReminders: { ...preferences.moodReminders, frequency }
+                          moodReminders: { ...preferences.moodReminders, frequency },
                         })
                       }
                     >
@@ -211,7 +220,7 @@ const NotificationSettings = () => {
                       value={preferences.moodReminders.time}
                       onChange={(e) =>
                         updatePreferences({
-                          moodReminders: { ...preferences.moodReminders, time: e.target.value }
+                          moodReminders: { ...preferences.moodReminders, time: e.target.value },
                         })
                       }
                     />
@@ -220,8 +229,8 @@ const NotificationSettings = () => {
 
                 <div className="bg-muted/50 p-3 rounded-lg">
                   <p className="text-sm text-muted-foreground">
-                    📱 You'll receive gentle reminders like "🌟 How are you feeling today?" 
-                    to help you track your emotional patterns over time.
+                    📱 You'll receive gentle reminders like "🌟 How are you feeling today?" to help
+                    you track your emotional patterns over time.
                   </p>
                 </div>
               </>
@@ -247,7 +256,7 @@ const NotificationSettings = () => {
                 checked={preferences.breathingReminders.enabled}
                 onCheckedChange={(enabled) =>
                   updatePreferences({
-                    breathingReminders: { ...preferences.breathingReminders, enabled }
+                    breathingReminders: { ...preferences.breathingReminders, enabled },
                   })
                 }
               />
@@ -262,10 +271,10 @@ const NotificationSettings = () => {
                       value={preferences.breathingReminders.duration.toString()}
                       onValueChange={(duration) =>
                         updatePreferences({
-                          breathingReminders: { 
-                            ...preferences.breathingReminders, 
-                            duration: parseInt(duration) 
-                          }
+                          breathingReminders: {
+                            ...preferences.breathingReminders,
+                            duration: parseInt(duration),
+                          },
                         })
                       }
                     >
@@ -317,8 +326,8 @@ const NotificationSettings = () => {
 
                 <div className="bg-muted/50 p-3 rounded-lg">
                   <p className="text-sm text-muted-foreground">
-                    🧘‍♀️ Breathing exercises help reduce stress and improve focus. 
-                    Try the 4-7-8 technique or box breathing for best results.
+                    🧘‍♀️ Breathing exercises help reduce stress and improve focus. Try the 4-7-8
+                    technique or box breathing for best results.
                   </p>
                 </div>
               </>
@@ -344,7 +353,7 @@ const NotificationSettings = () => {
                 checked={preferences.sessionReminders.enabled}
                 onCheckedChange={(enabled) =>
                   updatePreferences({
-                    sessionReminders: { ...preferences.sessionReminders, enabled }
+                    sessionReminders: { ...preferences.sessionReminders, enabled },
                   })
                 }
               />
@@ -359,10 +368,10 @@ const NotificationSettings = () => {
                       value={preferences.sessionReminders.beforeSession.toString()}
                       onValueChange={(beforeSession) =>
                         updatePreferences({
-                          sessionReminders: { 
-                            ...preferences.sessionReminders, 
-                            beforeSession: parseInt(beforeSession) 
-                          }
+                          sessionReminders: {
+                            ...preferences.sessionReminders,
+                            beforeSession: parseInt(beforeSession),
+                          },
                         })
                       }
                     >
@@ -385,7 +394,7 @@ const NotificationSettings = () => {
                       checked={preferences.sessionReminders.followUp}
                       onCheckedChange={(followUp) =>
                         updatePreferences({
-                          sessionReminders: { ...preferences.sessionReminders, followUp }
+                          sessionReminders: { ...preferences.sessionReminders, followUp },
                         })
                       }
                     />
@@ -397,7 +406,7 @@ const NotificationSettings = () => {
                       checked={preferences.sessionReminders.rescheduleReminder}
                       onCheckedChange={(rescheduleReminder) =>
                         updatePreferences({
-                          sessionReminders: { ...preferences.sessionReminders, rescheduleReminder }
+                          sessionReminders: { ...preferences.sessionReminders, rescheduleReminder },
                         })
                       }
                     />
@@ -426,7 +435,7 @@ const NotificationSettings = () => {
                 checked={preferences.wellnessQuotes.enabled}
                 onCheckedChange={(enabled) =>
                   updatePreferences({
-                    wellnessQuotes: { ...preferences.wellnessQuotes, enabled }
+                    wellnessQuotes: { ...preferences.wellnessQuotes, enabled },
                   })
                 }
               />
@@ -440,7 +449,7 @@ const NotificationSettings = () => {
                     value={preferences.wellnessQuotes.frequency}
                     onValueChange={(frequency: any) =>
                       updatePreferences({
-                        wellnessQuotes: { ...preferences.wellnessQuotes, frequency }
+                        wellnessQuotes: { ...preferences.wellnessQuotes, frequency },
                       })
                     }
                   >
@@ -461,7 +470,7 @@ const NotificationSettings = () => {
                     value={preferences.wellnessQuotes.time}
                     onChange={(e) =>
                       updatePreferences({
-                        wellnessQuotes: { ...preferences.wellnessQuotes, time: e.target.value }
+                        wellnessQuotes: { ...preferences.wellnessQuotes, time: e.target.value },
                       })
                     }
                   />
@@ -478,21 +487,23 @@ const NotificationSettings = () => {
               <Settings className="h-5 w-5 text-gray-500" />
               <span>General Settings</span>
             </CardTitle>
-            <CardDescription>
-              Sound, vibration, and quiet hours preferences
-            </CardDescription>
+            <CardDescription>Sound, vibration, and quiet hours preferences</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                {preferences.general.sound ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+                {preferences.general.sound ? (
+                  <Volume2 className="h-4 w-4" />
+                ) : (
+                  <VolumeX className="h-4 w-4" />
+                )}
                 <Label>Notification sound</Label>
               </div>
               <Switch
                 checked={preferences.general.sound}
                 onCheckedChange={(sound) =>
                   updatePreferences({
-                    general: { ...preferences.general, sound }
+                    general: { ...preferences.general, sound },
                   })
                 }
               />
@@ -504,7 +515,7 @@ const NotificationSettings = () => {
                 checked={preferences.general.vibration}
                 onCheckedChange={(vibration) =>
                   updatePreferences({
-                    general: { ...preferences.general, vibration }
+                    general: { ...preferences.general, vibration },
                   })
                 }
               />
@@ -524,8 +535,8 @@ const NotificationSettings = () => {
                     updatePreferences({
                       general: {
                         ...preferences.general,
-                        quietHours: { ...preferences.general.quietHours, enabled }
-                      }
+                        quietHours: { ...preferences.general.quietHours, enabled },
+                      },
                     })
                   }
                 />
@@ -542,11 +553,11 @@ const NotificationSettings = () => {
                         updatePreferences({
                           general: {
                             ...preferences.general,
-                            quietHours: { 
-                              ...preferences.general.quietHours, 
-                              start: e.target.value 
-                            }
-                          }
+                            quietHours: {
+                              ...preferences.general.quietHours,
+                              start: e.target.value,
+                            },
+                          },
                         })
                       }
                     />
@@ -560,11 +571,11 @@ const NotificationSettings = () => {
                         updatePreferences({
                           general: {
                             ...preferences.general,
-                            quietHours: { 
-                              ...preferences.general.quietHours, 
-                              end: e.target.value 
-                            }
-                          }
+                            quietHours: {
+                              ...preferences.general.quietHours,
+                              end: e.target.value,
+                            },
+                          },
                         })
                       }
                     />
@@ -608,7 +619,8 @@ const NotificationSettings = () => {
               )}
             </div>
             <p className="text-sm text-muted-foreground">
-              Your personalized wellness notifications are designed to support your mental health journey
+              Your personalized wellness notifications are designed to support your mental health
+              journey
             </p>
           </div>
         </CardContent>

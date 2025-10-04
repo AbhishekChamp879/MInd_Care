@@ -1,33 +1,57 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { useGoals, Goal } from '@/hooks/useDashboardFeatures';
 import { useRealTimeUpdates, useSmoothAnimations } from '@/hooks/useRealTimeFeatures';
-import { showRealTimeNotification, ProgressFeedback, AnimatedCounter } from '@/components/dashboard/RealTimeFeedback';
+import {
+  showRealTimeNotification,
+  ProgressFeedback,
+  AnimatedCounter,
+} from '@/components/dashboard/RealTimeFeedback';
 import { Target, Plus, Check, Calendar, Trash2, Edit, Sparkles } from 'lucide-react';
 
 const categoryColors = {
   wellness: 'bg-green-100 text-green-700 border-green-200',
   academic: 'bg-blue-100 text-blue-700 border-blue-200',
   social: 'bg-purple-100 text-purple-700 border-purple-200',
-  personal: 'bg-orange-100 text-orange-700 border-orange-200'
+  personal: 'bg-orange-100 text-orange-700 border-orange-200',
 };
 
 const categoryEmojis = {
   wellness: '🌿',
   academic: '📚',
   social: '👥',
-  personal: '✨'
+  personal: '✨',
 };
 
 export const GoalsTracker = () => {
-  const { goals, addGoal, updateGoalProgress, completeGoal, getActiveGoals, getWeeklyGoalProgress } = useGoals();
+  const {
+    goals,
+    addGoal,
+    updateGoalProgress,
+    completeGoal,
+    getActiveGoals,
+    getWeeklyGoalProgress,
+  } = useGoals();
   const { triggerUpdate } = useRealTimeUpdates();
   const { smoothTransition, isAnimating } = useSmoothAnimations();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -36,7 +60,7 @@ export const GoalsTracker = () => {
     title: '',
     description: '',
     targetDate: '',
-    category: 'wellness' as Goal['category']
+    category: 'wellness' as Goal['category'],
   });
 
   const activeGoals = getActiveGoals();
@@ -47,9 +71,9 @@ export const GoalsTracker = () => {
       smoothTransition(() => {
         addGoal(newGoal.title, newGoal.description, newGoal.targetDate, newGoal.category);
         triggerUpdate('goal_created', newGoal);
-        
+
         showRealTimeNotification('success', `New goal created: ${newGoal.title}`);
-        
+
         setNewGoal({ title: '', description: '', targetDate: '', category: 'wellness' });
         setIsDialogOpen(false);
       });
@@ -58,12 +82,12 @@ export const GoalsTracker = () => {
 
   const handleProgressUpdate = (goalId: string, progress: number) => {
     smoothTransition(() => {
-      const oldGoal = goals.find(g => g.id === goalId);
+      const oldGoal = goals.find((g) => g.id === goalId);
       updateGoalProgress(goalId, progress);
       triggerUpdate('goal_progress_updated', { goalId, progress });
-      
+
       showRealTimeNotification('success', `Progress updated: ${progress}%`);
-      
+
       // Check for completion
       if (progress >= 100 && oldGoal && !oldGoal.completed) {
         showRealTimeNotification('achievement', `🎉 Goal completed: ${oldGoal.title}`);
@@ -73,10 +97,10 @@ export const GoalsTracker = () => {
 
   const handleCompleteGoal = (goalId: string) => {
     smoothTransition(() => {
-      const goal = goals.find(g => g.id === goalId);
+      const goal = goals.find((g) => g.id === goalId);
       completeGoal(goalId);
       triggerUpdate('goal_completed', { goalId });
-      
+
       if (goal) {
         showRealTimeNotification('achievement', `🏆 Goal completed: ${goal.title}`);
       }
@@ -87,7 +111,7 @@ export const GoalsTracker = () => {
     return new Date(dateString).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
-      year: 'numeric'
+      year: 'numeric',
     });
   };
 
@@ -96,22 +120,29 @@ export const GoalsTracker = () => {
   };
 
   return (
-    <Card className={`enhanced-card hover:shadow-medium transition-all duration-300 ${
-      isAnimating ? 'scale-105 shadow-lg' : ''
-    }`}>
+    <Card
+      className={`enhanced-card hover:shadow-medium transition-all duration-300 ${
+        isAnimating ? 'scale-105 shadow-lg' : ''
+      }`}
+    >
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className={`p-2 rounded-lg bg-gradient-to-br from-secondary/10 to-secondary/20 transition-all duration-300 ${
-              isAnimating ? 'scale-110' : ''
-            }`}>
+            <div
+              className={`p-2 rounded-lg bg-gradient-to-br from-secondary/10 to-secondary/20 transition-all duration-300 ${
+                isAnimating ? 'scale-110' : ''
+              }`}
+            >
               <Target className="h-5 w-5 text-secondary" />
             </div>
             <div>
               <CardTitle className="text-lg flex items-center space-x-2">
                 <span>Goals & Progress</span>
                 {activeGoals.length > 0 && (
-                  <Badge variant="secondary" className="bg-gradient-to-r from-secondary/10 to-accent/10">
+                  <Badge
+                    variant="secondary"
+                    className="bg-gradient-to-r from-secondary/10 to-accent/10"
+                  >
                     <Sparkles className="h-3 w-3 mr-1" />
                     <AnimatedCounter value={activeGoals.length} />
                   </Badge>
@@ -122,7 +153,7 @@ export const GoalsTracker = () => {
               </CardDescription>
             </div>
           </div>
-          
+
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button size="sm" className="bg-gradient-secondary text-white">
@@ -137,7 +168,7 @@ export const GoalsTracker = () => {
                   Set a wellness goal to track your progress and stay motivated.
                 </DialogDescription>
               </DialogHeader>
-              
+
               <div className="space-y-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Goal Title</label>
@@ -147,7 +178,7 @@ export const GoalsTracker = () => {
                     onChange={(e) => setNewGoal({ ...newGoal, title: e.target.value })}
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Description</label>
                   <Textarea
@@ -157,11 +188,16 @@ export const GoalsTracker = () => {
                     rows={3}
                   />
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Category</label>
-                    <Select value={newGoal.category} onValueChange={(value: Goal['category']) => setNewGoal({ ...newGoal, category: value })}>
+                    <Select
+                      value={newGoal.category}
+                      onValueChange={(value: Goal['category']) =>
+                        setNewGoal({ ...newGoal, category: value })
+                      }
+                    >
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
@@ -173,7 +209,7 @@ export const GoalsTracker = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Target Date</label>
                     <Input
@@ -184,7 +220,7 @@ export const GoalsTracker = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="flex gap-2 pt-2">
                   <Button
                     onClick={handleSubmit}
@@ -196,7 +232,12 @@ export const GoalsTracker = () => {
                   <Button
                     variant="outline"
                     onClick={() => {
-                      setNewGoal({ title: '', description: '', targetDate: '', category: 'wellness' });
+                      setNewGoal({
+                        title: '',
+                        description: '',
+                        targetDate: '',
+                        category: 'wellness',
+                      });
                       setIsDialogOpen(false);
                     }}
                   >
@@ -208,7 +249,7 @@ export const GoalsTracker = () => {
           </Dialog>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {weeklyProgress > 0 && (
           <div className="p-3 bg-gradient-to-r from-secondary/5 to-accent/5 rounded-lg transition-all duration-300 hover:scale-102">
@@ -218,14 +259,10 @@ export const GoalsTracker = () => {
                 <AnimatedCounter value={weeklyProgress} suffix="%" duration={1500} />
               </span>
             </div>
-            <ProgressFeedback 
-              progress={weeklyProgress} 
-              label="" 
-              isAnimating={isAnimating}
-            />
+            <ProgressFeedback progress={weeklyProgress} label="" isAnimating={isAnimating} />
           </div>
         )}
-        
+
         <div className="space-y-3 max-h-64 overflow-y-auto">
           {activeGoals.length === 0 ? (
             <div className="text-center py-6 text-muted-foreground">
@@ -251,30 +288,23 @@ export const GoalsTracker = () => {
                       </p>
                     )}
                   </div>
-                  
+
                   <div className="flex items-center space-x-1 ml-2">
-                    <Badge
-                      variant="outline"
-                      className={`text-xs ${categoryColors[goal.category]}`}
-                    >
+                    <Badge variant="outline" className={`text-xs ${categoryColors[goal.category]}`}>
                       {goal.category}
                     </Badge>
                   </div>
                 </div>
-                
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-muted-foreground">Progress</span>
-                      <span className="text-xs font-medium">
-                        <AnimatedCounter value={goal.progress} suffix="%" />
-                      </span>
-                    </div>
-                    <ProgressFeedback 
-                      progress={goal.progress} 
-                      label="" 
-                      isAnimating={isAnimating}
-                    />
-                                      <div className="flex justify-between items-center">
+
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-muted-foreground">Progress</span>
+                    <span className="text-xs font-medium">
+                      <AnimatedCounter value={goal.progress} suffix="%" />
+                    </span>
+                  </div>
+                  <ProgressFeedback progress={goal.progress} label="" isAnimating={isAnimating} />
+                  <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-1 text-xs text-muted-foreground">
                       <Calendar className="h-3 w-3" />
                       <span className={isOverdue(goal.targetDate) ? 'text-red-500' : ''}>
@@ -282,13 +312,15 @@ export const GoalsTracker = () => {
                         {isOverdue(goal.targetDate) && ' (Overdue)'}
                       </span>
                     </div>
-                    
+
                     <div className="flex space-x-1">
                       <Button
                         size="sm"
                         variant="outline"
                         className="h-6 px-2 text-xs transition-all duration-200 hover:scale-105 hover:bg-secondary/10"
-                        onClick={() => handleProgressUpdate(goal.id, Math.min(goal.progress + 25, 100))}
+                        onClick={() =>
+                          handleProgressUpdate(goal.id, Math.min(goal.progress + 25, 100))
+                        }
                       >
                         +25%
                       </Button>
@@ -307,7 +339,7 @@ export const GoalsTracker = () => {
             ))
           )}
         </div>
-        
+
         {activeGoals.length > 4 && (
           <div className="text-center pt-2 border-t">
             <Button variant="ghost" size="sm" className="text-xs text-muted-foreground">

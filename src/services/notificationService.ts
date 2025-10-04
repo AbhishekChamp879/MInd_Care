@@ -1,4 +1,9 @@
-import { NotificationPreferences, WellnessNotification, NOTIFICATION_TEMPLATES, WELLNESS_QUOTES } from '@/types/notifications';
+import {
+  NotificationPreferences,
+  WellnessNotification,
+  NOTIFICATION_TEMPLATES,
+  WELLNESS_QUOTES,
+} from '@/types/notifications';
 
 class NotificationService {
   private preferences: NotificationPreferences;
@@ -16,24 +21,24 @@ class NotificationService {
       moodReminders: {
         enabled: true,
         frequency: 'daily',
-        time: '09:00'
+        time: '09:00',
       },
       breathingReminders: {
         enabled: true,
         frequency: 'multiple',
         times: ['10:00', '15:00', '20:00'],
-        duration: 3
+        duration: 3,
       },
       sessionReminders: {
         enabled: true,
         beforeSession: 15,
         followUp: true,
-        rescheduleReminder: true
+        rescheduleReminder: true,
       },
       wellnessQuotes: {
         enabled: true,
         frequency: 'daily',
-        time: '08:00'
+        time: '08:00',
       },
       general: {
         sound: true,
@@ -41,9 +46,9 @@ class NotificationService {
         quietHours: {
           enabled: true,
           start: '22:00',
-          end: '07:00'
-        }
-      }
+          end: '07:00',
+        },
+      },
     };
   }
 
@@ -92,7 +97,7 @@ class NotificationService {
 
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
-    
+
     const startTime = this.parseTime(this.preferences.general.quietHours.start);
     const endTime = this.parseTime(this.preferences.general.quietHours.end);
 
@@ -130,7 +135,7 @@ class NotificationService {
 
   private scheduleMoodReminders() {
     const { frequency, time, customDays } = this.preferences.moodReminders;
-    
+
     switch (frequency) {
       case 'daily':
         this.scheduleDaily('mood-reminder', time);
@@ -144,7 +149,7 @@ class NotificationService {
         break;
       case 'custom':
         if (customDays) {
-          customDays.forEach(day => {
+          customDays.forEach((day) => {
             this.scheduleWeekly('mood-reminder', time, parseInt(day));
           });
         }
@@ -154,9 +159,9 @@ class NotificationService {
 
   private scheduleBreathingReminders() {
     const { frequency, times } = this.preferences.breathingReminders;
-    
+
     if (frequency === 'daily' || frequency === 'multiple') {
-      times.forEach(time => {
+      times.forEach((time) => {
         this.scheduleDaily('breathing-exercise', time);
       });
     }
@@ -164,7 +169,7 @@ class NotificationService {
 
   private scheduleWellnessQuotes() {
     const { frequency, time } = this.preferences.wellnessQuotes;
-    
+
     if (frequency === 'daily') {
       this.scheduleDaily('wellness-quote', time);
     } else if (frequency === 'weekly') {
@@ -217,7 +222,7 @@ class NotificationService {
     const [hours, minutes] = time.split(':').map(Number);
     const now = new Date();
     const scheduled = new Date();
-    
+
     scheduled.setHours(hours, minutes, 0, 0);
     scheduled.setDate(now.getDate() + ((dayOfWeek - now.getDay() + 7) % 7));
 
@@ -258,13 +263,13 @@ class NotificationService {
       isRecurring: true,
       data: customData,
       status: 'pending',
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
     this.notifications.push(notification);
     this.showBrowserNotification(notification);
     this.showInAppNotification(notification);
-    
+
     // Cleanup old notifications
     this.cleanupOldNotifications();
   }
@@ -279,7 +284,7 @@ class NotificationService {
         icon: '/favicon.ico',
         badge: '/favicon.ico',
         silent: !this.preferences.general.sound,
-        requireInteraction: true
+        requireInteraction: true,
       });
 
       browserNotification.onclick = () => {
@@ -295,7 +300,6 @@ class NotificationService {
       setTimeout(() => {
         browserNotification.close();
       }, 10000);
-
     } catch (error) {
       console.error('Error showing browser notification:', error);
     }
@@ -304,7 +308,7 @@ class NotificationService {
   private showInAppNotification(notification: WellnessNotification) {
     // Trigger custom event for in-app notification display
     const event = new CustomEvent('wellnessNotification', {
-      detail: notification
+      detail: notification,
     });
     window.dispatchEvent(event);
   }
@@ -312,8 +316,10 @@ class NotificationService {
   public scheduleSessionReminder(sessionId: string, sessionTime: Date, counselorName: string) {
     if (!this.preferences.sessionReminders.enabled) return;
 
-    const reminderTime = new Date(sessionTime.getTime() - (this.preferences.sessionReminders.beforeSession * 60 * 1000));
-    
+    const reminderTime = new Date(
+      sessionTime.getTime() - this.preferences.sessionReminders.beforeSession * 60 * 1000
+    );
+
     if (reminderTime <= new Date()) return; // Don't schedule past reminders
 
     const timeout = setTimeout(() => {
@@ -321,7 +327,7 @@ class NotificationService {
         sessionId,
         title: '📅 Upcoming Session',
         message: `Your session with ${counselorName} starts in ${this.preferences.sessionReminders.beforeSession} minutes.`,
-        actionUrl: '/app/sessions'
+        actionUrl: '/app/sessions',
       });
     }, reminderTime.getTime() - Date.now());
 
@@ -337,7 +343,7 @@ class NotificationService {
   }
 
   private clearScheduledNotifications() {
-    this.scheduledNotifications.forEach(timeout => clearTimeout(timeout));
+    this.scheduledNotifications.forEach((timeout) => clearTimeout(timeout));
     this.scheduledNotifications.clear();
   }
 
@@ -349,7 +355,7 @@ class NotificationService {
   private cleanupOldNotifications() {
     const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     this.notifications = this.notifications.filter(
-      notification => notification.createdAt > oneWeekAgo
+      (notification) => notification.createdAt > oneWeekAgo
     );
   }
 
@@ -358,14 +364,14 @@ class NotificationService {
   }
 
   public markNotificationAsActedUpon(notificationId: string) {
-    const notification = this.notifications.find(n => n.id === notificationId);
+    const notification = this.notifications.find((n) => n.id === notificationId);
     if (notification) {
       notification.status = 'acted-upon';
     }
   }
 
   public dismissNotification(notificationId: string) {
-    const notification = this.notifications.find(n => n.id === notificationId);
+    const notification = this.notifications.find((n) => n.id === notificationId);
     if (notification) {
       notification.status = 'dismissed';
     }

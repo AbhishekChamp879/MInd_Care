@@ -25,13 +25,18 @@ const About = () => {
             </h1>
 
             <p className="text-lg text-muted-foreground max-w-2xl">
-              Mental health crises among students are rising: increased anxiety, depression, suicidal ideation,
-              and barriers to timely care. MindBuddy combines AI screening, licensed counselors, and peer support
-              to reduce time-to-help, improve detection, and deliver compassionate, confidential care.
+              Mental health crises among students are rising: increased anxiety, depression,
+              suicidal ideation, and barriers to timely care. MindBuddy combines AI screening,
+              licensed counselors, and peer support to reduce time-to-help, improve detection, and
+              deliver compassionate, confidential care.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="bg-gradient-primary text-white px-8 py-3 rounded-full">
+              <Button
+                asChild
+                size="lg"
+                className="bg-gradient-primary text-white px-8 py-3 rounded-full"
+              >
                 <Link to="/login">Get Support Now</Link>
               </Button>
             </div>
@@ -39,7 +44,11 @@ const About = () => {
 
           <div className="relative">
             <div className="rounded-2xl overflow-hidden shadow-xl transform hover:scale-102 transition-transform duration-500">
-              <img src={heroImage} alt="Care illustration" className="w-full h-80 md:h-96 object-cover" />
+              <img
+                src={heroImage}
+                alt="Care illustration"
+                className="w-full h-80 md:h-96 object-cover"
+              />
             </div>
             <div className="absolute -bottom-6 left-6 bg-white/6 backdrop-blur-md rounded-xl p-4 shadow-md flex items-center gap-3">
               <Heart className="h-6 w-6 text-primary" />
@@ -57,8 +66,9 @@ const About = () => {
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold">Why this matters</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto mt-3">
-              Students face unique pressures — academic stress, social isolation, and limited access to timely
-              mental health care. Early detection and immediate support dramatically improve outcomes.
+              Students face unique pressures — academic stress, social isolation, and limited access
+              to timely mental health care. Early detection and immediate support dramatically
+              improve outcomes.
             </p>
           </div>
 
@@ -68,7 +78,9 @@ const About = () => {
                 <CheckCircle className="h-6 w-6 text-primary" />
               </div>
               <h3 className="font-semibold mb-2">Rapid Screening</h3>
-              <p className="text-sm text-muted-foreground">AI-powered PHQ/GAD screening in chat, available 24/7.</p>
+              <p className="text-sm text-muted-foreground">
+                AI-powered PHQ/GAD screening in chat, available 24/7.
+              </p>
             </div>
 
             <div className="enhanced-card p-6 text-center">
@@ -76,7 +88,9 @@ const About = () => {
                 <UserCheck className="h-6 w-6 text-secondary" />
               </div>
               <h3 className="font-semibold mb-2">Licensed Care</h3>
-              <p className="text-sm text-muted-foreground">Confidential sessions with vetted, licensed counselors.</p>
+              <p className="text-sm text-muted-foreground">
+                Confidential sessions with vetted, licensed counselors.
+              </p>
             </div>
 
             <div className="enhanced-card p-6 text-center">
@@ -84,7 +98,9 @@ const About = () => {
                 <Shield className="h-6 w-6 text-accent" />
               </div>
               <h3 className="font-semibold mb-2">Privacy First</h3>
-              <p className="text-sm text-muted-foreground">HIPAA-compliant systems and anonymized peer support options.</p>
+              <p className="text-sm text-muted-foreground">
+                HIPAA-compliant systems and anonymized peer support options.
+              </p>
             </div>
           </div>
         </div>
@@ -102,7 +118,10 @@ const About = () => {
                   </span>
                   <div>
                     <div className="font-semibold">Immediate connection</div>
-                    <div className="text-sm">AI chat quickly triages and connects the user to resources or counselors when warning signs are detected.</div>
+                    <div className="text-sm">
+                      AI chat quickly triages and connects the user to resources or counselors when
+                      warning signs are detected.
+                    </div>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
@@ -111,7 +130,10 @@ const About = () => {
                   </span>
                   <div>
                     <div className="font-semibold">Warm handoffs</div>
-                    <div className="text-sm">When AI flags high risk, we initiate warm handoffs to licensed professionals or emergency contacts.</div>
+                    <div className="text-sm">
+                      When AI flags high risk, we initiate warm handoffs to licensed professionals
+                      or emergency contacts.
+                    </div>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
@@ -120,7 +142,9 @@ const About = () => {
                   </span>
                   <div>
                     <div className="font-semibold">Continuous monitoring</div>
-                    <div className="text-sm">Follow-ups and check-ins help prevent relapse and keep care plans on track.</div>
+                    <div className="text-sm">
+                      Follow-ups and check-ins help prevent relapse and keep care plans on track.
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -129,7 +153,10 @@ const About = () => {
             <div>
               <div className="enhanced-card p-6">
                 <h3 className="text-xl font-semibold mb-3">Real outcomes</h3>
-                <p className="text-sm text-muted-foreground mb-4">Early adopters report faster access to care and improved wellbeing metrics within weeks of use.</p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Early adopters report faster access to care and improved wellbeing metrics within
+                  weeks of use.
+                </p>
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
                     <div className="text-2xl font-bold text-primary">78%</div>
@@ -154,7 +181,10 @@ const About = () => {
         <div className="container mx-auto text-center">
           <div className="max-w-3xl mx-auto space-y-6">
             <h3 className="text-2xl md:text-3xl font-bold">Ready to learn more or get help?</h3>
-            <p className="opacity-90">We partner with universities to provide confidential, campus-tailored mental health services.</p>
+            <p className="opacity-90">
+              We partner with universities to provide confidential, campus-tailored mental health
+              services.
+            </p>
             <div className="flex justify-center gap-4">
               <Button asChild className="text-white px-8 py-3 rounded-full">
                 <Link to="/login">Get Started</Link>

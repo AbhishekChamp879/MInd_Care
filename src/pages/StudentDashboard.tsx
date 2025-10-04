@@ -4,11 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { useAuth } from '@/contexts/AuthContext';
-import { 
-  MessageCircle, 
-  Calendar, 
-  BookOpen, 
-  Users, 
+import {
+  MessageCircle,
+  Calendar,
+  BookOpen,
+  Users,
   Heart,
   CheckCircle,
   Zap,
@@ -34,14 +34,19 @@ import {
   Lightbulb,
   ChevronRight,
   Plus,
-  Timer
+  Timer,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 // Import new functional components
 import { MoodTracker } from '@/components/dashboard/MoodTracker';
 import QuickMoodCheckIn from '@/components/dashboard/QuickMoodCheckIn';
-import { MoodSummaryWidget, MoodTrendWidget, MoodStreakWidget, MoodWeeklyWidget } from '@/components/dashboard/MoodWidgets';
+import {
+  MoodSummaryWidget,
+  MoodTrendWidget,
+  MoodStreakWidget,
+  MoodWeeklyWidget,
+} from '@/components/dashboard/MoodWidgets';
 import FloatingMoodButton from '@/components/dashboard/FloatingMoodButton';
 import QuickMoodHeader from '@/components/dashboard/QuickMoodHeader';
 import MoodAnalytics from '@/components/dashboard/MoodAnalytics';
@@ -49,22 +54,27 @@ import { GoalsTracker } from '@/components/dashboard/GoalsTracker';
 import { ActivityTracker, AchievementTracker } from '@/components/dashboard/ActivityTracker';
 import { EnhancedDailyTips } from '@/components/dashboard/EnhancedDailyTips';
 import { InteractiveAnalytics } from '@/components/dashboard/InteractiveAnalytics';
-import { useActivityLog, useAchievements, useMoodTracking, useGoals } from '@/hooks/useDashboardFeatures';
+import {
+  useActivityLog,
+  useAchievements,
+  useMoodTracking,
+  useGoals,
+} from '@/hooks/useDashboardFeatures';
 
 // Enhanced Quick Action Card Component - Still needed for the action cards section
-const ActionCard = ({ 
-  title, 
-  description, 
-  icon: Icon, 
-  href, 
+const ActionCard = ({
+  title,
+  description,
+  icon: Icon,
+  href,
   badge,
   color = 'primary',
   features = [],
-  onCardClick
+  onCardClick,
 }: {
   title: string;
   description: string;
-  icon: React.ComponentType<any>,
+  icon: React.ComponentType<any>;
   href: string;
   badge?: string;
   color?: 'primary' | 'secondary' | 'accent' | 'success';
@@ -75,23 +85,28 @@ const ActionCard = ({
     primary: 'from-primary/10 to-primary/20 text-primary border-primary/20',
     secondary: 'from-secondary/10 to-secondary/20 text-secondary border-secondary/20',
     accent: 'from-accent/10 to-accent/20 text-accent border-accent/20',
-    success: 'from-green-100/50 to-green-200/50 text-green-600 border-green-200/50'
+    success: 'from-green-100/50 to-green-200/50 text-green-600 border-green-200/50',
   };
 
   return (
     <Card className="enhanced-card group hover:shadow-aurora hover:-translate-y-2 transition-all duration-500 cursor-pointer">
       <CardHeader className="relative pb-4">
         {badge && (
-          <Badge variant="secondary" className="absolute -top-2 -right-2 text-xs bg-gradient-primary text-white shadow-soft z-10">
+          <Badge
+            variant="secondary"
+            className="absolute -top-2 -right-2 text-xs bg-gradient-primary text-white shadow-soft z-10"
+          >
             <Sparkles className="h-3 w-3 mr-1" />
             {badge}
           </Badge>
         )}
-        
-        <div className={`mb-6 p-4 rounded-2xl bg-gradient-to-br ${colorClasses[color]} w-fit mx-auto group-hover:scale-110 transition-transform duration-300 shadow-soft`}>
+
+        <div
+          className={`mb-6 p-4 rounded-2xl bg-gradient-to-br ${colorClasses[color]} w-fit mx-auto group-hover:scale-110 transition-transform duration-300 shadow-soft`}
+        >
           <Icon className="h-8 w-8" />
         </div>
-        
+
         <CardTitle className="text-xl mb-3 text-center group-hover:text-primary transition-colors">
           {title}
         </CardTitle>
@@ -99,7 +114,7 @@ const ActionCard = ({
           {description}
         </CardDescription>
       </CardHeader>
-      
+
       <CardContent className="pt-0 space-y-4">
         {features.length > 0 && (
           <div className="space-y-2">
@@ -111,10 +126,13 @@ const ActionCard = ({
             ))}
           </div>
         )}
-        
-        <Button asChild className="w-full bg-gradient-primary hover:shadow-glow group-hover:scale-105 transition-all duration-300 mt-4">
-          <Link 
-            to={href} 
+
+        <Button
+          asChild
+          className="w-full bg-gradient-primary hover:shadow-glow group-hover:scale-105 transition-all duration-300 mt-4"
+        >
+          <Link
+            to={href}
             className="flex items-center justify-center"
             onClick={() => onCardClick?.(href, title)}
           >
@@ -152,9 +170,9 @@ const StudentDashboard = () => {
       '/app/chat': 'chat',
       '/app/booking': 'booking',
       '/app/resources': 'resource',
-      '/app/forum': 'forum'
+      '/app/forum': 'forum',
     };
-    
+
     const activityType = activityTypes[href];
     if (activityType) {
       logActivity(activityType, `Clicked ${title}`, `Navigated to ${title} from dashboard`);
@@ -171,22 +189,22 @@ const StudentDashboard = () => {
     // Set motivational message - only changes when component mounts or once per day
     const getMotivationalMessage = () => {
       const messages = [
-        "Your mental health matters. Take it one day at a time.",
+        'Your mental health matters. Take it one day at a time.',
         "You're stronger than you think. Keep moving forward.",
-        "Every step toward wellness is a victory worth celebrating.",
-        "Remember to be kind to yourself today.",
-        "Your journey to better mental health starts with small steps.",
-        "Progress, not perfection. Every small step counts.",
-        "You have the strength to overcome any challenge today.",
-        "Taking care of your mental health is a sign of strength.",
-        "Today is a new opportunity to prioritize your wellbeing.",
-        "You deserve happiness, peace, and self-compassion."
+        'Every step toward wellness is a victory worth celebrating.',
+        'Remember to be kind to yourself today.',
+        'Your journey to better mental health starts with small steps.',
+        'Progress, not perfection. Every small step counts.',
+        'You have the strength to overcome any challenge today.',
+        'Taking care of your mental health is a sign of strength.',
+        'Today is a new opportunity to prioritize your wellbeing.',
+        'You deserve happiness, peace, and self-compassion.',
       ];
-      
+
       // Use current date to ensure message changes daily but stays consistent throughout the day
       const today = new Date().toDateString();
       const savedMessage = localStorage.getItem(`motivational_message_${today}`);
-      
+
       if (savedMessage) {
         return savedMessage;
       } else {
@@ -194,7 +212,7 @@ const StudentDashboard = () => {
         const dateNumber = new Date().getDate() + new Date().getMonth();
         const messageIndex = dateNumber % messages.length;
         const todayMessage = messages[messageIndex];
-        
+
         localStorage.setItem(`motivational_message_${today}`, todayMessage);
         return todayMessage;
       }
@@ -204,14 +222,14 @@ const StudentDashboard = () => {
 
     // Update time every minute for dynamic greeting
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
-    
+
     // Log dashboard visit
     logActivity('resource', 'Visited Student Dashboard', 'Dashboard access');
-    
+
     // Check for achievements
     const activities = JSON.parse(localStorage.getItem('activity_log') || '[]');
     checkAchievements(activities, moods, goals);
-    
+
     return () => clearInterval(timer);
   }, [logActivity, checkAchievements, moods, goals]);
 
@@ -225,15 +243,17 @@ const StudentDashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-mesh">
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-8 space-y-8 sm:space-y-12 max-w-7xl">
-        
         {/* Enhanced Welcome Section */}
         <section className="text-center space-y-6 fade-in">
           <div className="relative">
-            <Badge variant="secondary" className="bg-gradient-primary text-white shadow-soft mb-6 animate-pulse">
+            <Badge
+              variant="secondary"
+              className="bg-gradient-primary text-white shadow-soft mb-6 animate-pulse"
+            >
               <Heart className="h-4 w-4 mr-2" />
               {getGreeting()}, Welcome to Your Wellness Hub
             </Badge>
-            
+
             <div className="space-y-4">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
                 <span className="text-heading">Hello, </span>
@@ -245,14 +265,17 @@ const StudentDashboard = () => {
                   Ready to prioritize your wellbeing?
                 </span>
               </h1>
-              
+
               <div className="max-w-2xl mx-auto">
                 <p className="text-lg text-muted-foreground leading-relaxed mb-4 transition-all duration-500 ease-in-out">
-                  {motivationalMessage || "Welcome to your wellness journey..."}
+                  {motivationalMessage || 'Welcome to your wellness journey...'}
                 </p>
-                
+
                 {selectedInstitution && (
-                  <Badge variant="outline" className="text-sm px-4 py-2 border-primary/30 text-primary">
+                  <Badge
+                    variant="outline"
+                    className="text-sm px-4 py-2 border-primary/30 text-primary"
+                  >
                     <Sparkles className="h-4 w-4 mr-2" />
                     {selectedInstitution.name} Student
                   </Badge>
@@ -265,10 +288,14 @@ const StudentDashboard = () => {
         {/* Quick Action Cards - Responsive Grid */}
         <section className="space-y-6">
           <div className="text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold text-heading mb-2">Your Wellness Toolkit</h2>
-            <p className="text-muted-foreground">Everything you need for mental health support, just a click away</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-heading mb-2">
+              Your Wellness Toolkit
+            </h2>
+            <p className="text-muted-foreground">
+              Everything you need for mental health support, just a click away
+            </p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
             <ActionCard
               title="AI Support Chat"
@@ -277,7 +304,12 @@ const StudentDashboard = () => {
               href="/app/chat"
               badge="Available 24/7"
               color="primary"
-              features={["Instant responses", "Crisis detection", "Confidential support", "Available anytime"]}
+              features={[
+                'Instant responses',
+                'Crisis detection',
+                'Confidential support',
+                'Available anytime',
+              ]}
               onCardClick={handleActionCardClick}
             />
             <ActionCard
@@ -287,7 +319,12 @@ const StudentDashboard = () => {
               href="/app/booking"
               badge="Professional Care"
               color="secondary"
-              features={["Licensed therapists", "Flexible scheduling", "Private sessions", "Insurance accepted"]}
+              features={[
+                'Licensed therapists',
+                'Flexible scheduling',
+                'Private sessions',
+                'Insurance accepted',
+              ]}
               onCardClick={handleActionCardClick}
             />
             <ActionCard
@@ -297,7 +334,12 @@ const StudentDashboard = () => {
               href="/app/resources"
               badge="Evidence-Based"
               color="accent"
-              features={["Guided meditations", "Coping strategies", "Stress management", "Study tips"]}
+              features={[
+                'Guided meditations',
+                'Coping strategies',
+                'Stress management',
+                'Study tips',
+              ]}
               onCardClick={handleActionCardClick}
             />
             <ActionCard
@@ -307,7 +349,12 @@ const StudentDashboard = () => {
               href="/app/forum"
               badge="Safe Space"
               color="success"
-              features={["Anonymous discussions", "Peer support", "Moderated forums", "Shared experiences"]}
+              features={[
+                'Anonymous discussions',
+                'Peer support',
+                'Moderated forums',
+                'Shared experiences',
+              ]}
               onCardClick={handleActionCardClick}
             />
           </div>
@@ -316,30 +363,34 @@ const StudentDashboard = () => {
         {/* Quick Mood Check-in Section */}
         <section className="space-y-6">
           <div className="text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold text-heading mb-2">Quick Mood Check-in</h2>
-            <p className="text-muted-foreground">One-tap mood logging for faster wellness tracking</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-heading mb-2">
+              Quick Mood Check-in
+            </h2>
+            <p className="text-muted-foreground">
+              One-tap mood logging for faster wellness tracking
+            </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Quick Mood Check-in */}
             <div className="md:col-span-2">
               <QuickMoodCheckIn variant="default" showStreak={true} />
             </div>
-            
+
             {/* Mood Summary Widget */}
             <MoodSummaryWidget />
-            
+
             {/* Mood Streak Widget */}
             <MoodStreakWidget />
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Mood Trend Widget */}
             <MoodTrendWidget />
-            
+
             {/* Weekly Pattern */}
             <MoodWeeklyWidget />
-            
+
             {/* Mood Analytics */}
             <MoodAnalytics timeframe="week" />
           </div>
@@ -348,25 +399,29 @@ const StudentDashboard = () => {
         {/* Enhanced Progress Dashboard with Functional Components */}
         <section className="space-y-6">
           <div className="text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold text-heading mb-2">Your Wellness Journey</h2>
-            <p className="text-muted-foreground">Track your progress and celebrate your achievements</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-heading mb-2">
+              Your Wellness Journey
+            </h2>
+            <p className="text-muted-foreground">
+              Track your progress and celebrate your achievements
+            </p>
           </div>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {/* Interactive Analytics */}
             <div className="xl:col-span-2">
               <InteractiveAnalytics />
             </div>
-            
+
             {/* Mood Tracker */}
             <MoodTracker />
-            
+
             {/* Goals Tracker */}
             <GoalsTracker />
-            
+
             {/* Activity Overview */}
             <ActivityTracker />
-            
+
             {/* Achievement Tracker */}
             <AchievementTracker />
           </div>
@@ -380,10 +435,14 @@ const StudentDashboard = () => {
         {/* Quick Wellness Tools */}
         <section className="space-y-6">
           <div className="text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold text-heading mb-2">Quick Wellness Tools</h2>
-            <p className="text-muted-foreground">Instant access to stress relief and wellness features</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-heading mb-2">
+              Quick Wellness Tools
+            </h2>
+            <p className="text-muted-foreground">
+              Instant access to stress relief and wellness features
+            </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Breathing Exercises */}
             <Card className="enhanced-card group hover:shadow-aurora hover:-translate-y-1 transition-all duration-300 cursor-pointer border-blue-200/50">
@@ -413,7 +472,10 @@ const StudentDashboard = () => {
                     <span>Guided sessions (1-10 minutes)</span>
                   </div>
                 </div>
-                <Button asChild className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700">
+                <Button
+                  asChild
+                  className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700"
+                >
                   <Link to="/app/breathing">
                     <Wind className="h-4 w-4 mr-2" />
                     Start Breathing Exercise
@@ -450,7 +512,11 @@ const StudentDashboard = () => {
                     <span>Session reminders</span>
                   </div>
                 </div>
-                <Button asChild variant="outline" className="w-full border-purple-200 hover:bg-purple-50">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full border-purple-200 hover:bg-purple-50"
+                >
                   <Link to="/app/notifications">
                     <Settings className="h-4 w-4 mr-2" />
                     Manage Notifications
@@ -475,18 +541,30 @@ const StudentDashboard = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
               <Button asChild className="bg-gradient-primary hover:shadow-glow btn-enhanced">
-                <Link 
+                <Link
                   to="/app/chat"
-                  onClick={() => logActivity('chat', 'Started AI Chat from quick access', 'Dashboard quick access button')}
+                  onClick={() =>
+                    logActivity(
+                      'chat',
+                      'Started AI Chat from quick access',
+                      'Dashboard quick access button'
+                    )
+                  }
                 >
                   <MessageCircle className="h-4 w-4 mr-2" />
                   Start AI Chat
                 </Link>
               </Button>
               <Button variant="outline" asChild className="border-primary/30 hover:bg-primary/10">
-                <Link 
+                <Link
                   to="/app/booking"
-                  onClick={() => logActivity('booking', 'Started booking session from quick access', 'Dashboard quick access button')}
+                  onClick={() =>
+                    logActivity(
+                      'booking',
+                      'Started booking session from quick access',
+                      'Dashboard quick access button'
+                    )
+                  }
                 >
                   <Calendar className="h-4 w-4 mr-2" />
                   Book Session
@@ -504,44 +582,53 @@ const StudentDashboard = () => {
                 <Shield className="h-6 w-6 text-red-600" />
               </div>
               <div>
-                <h3 className="text-xl sm:text-2xl font-bold text-red-800">Crisis Support Available</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-red-800">
+                  Crisis Support Available
+                </h3>
                 <div className="h-1 w-16 bg-gradient-to-r from-red-400 to-red-600 rounded-full mx-auto mt-2"></div>
               </div>
             </div>
-            
+
             <p className="text-red-700 leading-relaxed max-w-2xl mx-auto">
-              If you're experiencing a mental health crisis, having thoughts of self-harm, or need immediate support, 
-              please don't hesitate to reach out. You are not alone, and help is available right now.
+              If you're experiencing a mental health crisis, having thoughts of self-harm, or need
+              immediate support, please don't hesitate to reach out. You are not alone, and help is
+              available right now.
             </p>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
-              <Button 
-                variant="destructive" 
-                size="lg" 
+              <Button
+                variant="destructive"
+                size="lg"
                 className="shadow-soft hover:shadow-medium btn-enhanced bg-gradient-to-r from-red-600 to-red-700"
               >
                 <Phone className="h-4 w-4 mr-2" />
                 Crisis Line: 988
               </Button>
-              
-              <Button 
-                variant="outline" 
-                size="lg" 
+
+              <Button
+                variant="outline"
+                size="lg"
                 className="border-red-300 text-red-700 hover:bg-red-50 shadow-soft hover:shadow-medium btn-enhanced"
               >
                 <MessageCircle className="h-4 w-4 mr-2" />
                 Text: HOME to 741741
               </Button>
-              
-              <Button 
-                variant="outline" 
-                size="lg" 
+
+              <Button
+                variant="outline"
+                size="lg"
                 className="border-red-300 text-red-700 hover:bg-red-50 shadow-soft hover:shadow-medium btn-enhanced"
                 asChild
               >
-                <Link 
+                <Link
                   to="/app/chat"
-                  onClick={() => logActivity('chat', 'Emergency AI Chat', 'Crisis support - Emergency AI chat accessed')}
+                  onClick={() =>
+                    logActivity(
+                      'chat',
+                      'Emergency AI Chat',
+                      'Crisis support - Emergency AI chat accessed'
+                    )
+                  }
                 >
                   <Brain className="h-4 w-4 mr-2" />
                   Emergency AI Chat
@@ -572,7 +659,7 @@ const StudentDashboard = () => {
           </div>
         </section>
       </div>
-      
+
       {/* Floating Mood Button */}
       <FloatingMoodButton position="bottom-right" showOnlyIfNotLogged={true} />
     </div>

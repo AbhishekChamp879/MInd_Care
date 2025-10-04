@@ -6,22 +6,22 @@ import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { RatingComponent, QuickSatisfaction } from './RatingComponent';
-import { 
-  SessionFeedback, 
-  QuickFeedback, 
-  DetailedFeedback, 
+import {
+  SessionFeedback,
+  QuickFeedback,
+  DetailedFeedback,
   CategoryRatings,
-  calculateOverallRating
+  calculateOverallRating,
 } from '@/types/feedback';
-import { 
-  Send, 
-  CheckCircle, 
-  MessageSquare, 
+import {
+  Send,
+  CheckCircle,
+  MessageSquare,
   TrendingUp,
   User,
   Calendar,
   Timer,
-  ThumbsUp
+  ThumbsUp,
 } from 'lucide-react';
 
 interface FeedbackFormProps {
@@ -51,13 +51,13 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
   onQuickSubmit,
   initialData,
   isSubmitting = false,
-  className = ''
+  className = '',
 }) => {
   const [mode, setMode] = useState<FormMode>('quick');
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
-  
+
   // Form state
   const [overallRating, setOverallRating] = useState<1 | 2 | 3 | 4 | 5>(3);
   const [categoryRatings, setCategoryRatings] = useState<CategoryRatings>({
@@ -65,21 +65,21 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
     communication: 3,
     professionalism: 3,
     environment: 3,
-    satisfaction: 3
+    satisfaction: 3,
   });
   const [quickFeedback, setQuickFeedback] = useState<QuickFeedback>({
     wouldRecommend: true,
     feelHeard: true,
     goalsMet: true,
     safeEnvironment: true,
-    appropriateLength: true
+    appropriateLength: true,
   });
   const [detailedFeedback, setDetailedFeedback] = useState<DetailedFeedback>({
     whatWorkedWell: '',
     whatCouldImprove: '',
     additionalComments: '',
     specificConcerns: '',
-    suggestions: ''
+    suggestions: '',
   });
 
   const totalSteps = mode === 'quick' ? 3 : 5;
@@ -96,11 +96,11 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 
   const validateCurrentStep = (): boolean => {
     const errors: string[] = [];
-    
+
     if (currentStep === 0 && !overallRating) {
       errors.push('Overall rating is required');
     }
-    
+
     setValidationErrors(errors);
     return errors.length === 0;
   };
@@ -132,7 +132,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
       feelHeard: overallRating >= 3,
       goalsMet: overallRating >= 3,
       safeEnvironment: true,
-      appropriateLength: true
+      appropriateLength: true,
     };
 
     onQuickSubmit?.(quickSubmission);
@@ -154,7 +154,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
       quickFeedback,
       detailedFeedback,
       anonymous: false,
-      isPublic: false
+      isPublic: false,
     };
 
     onSubmit?.(completeFeedback);
@@ -171,7 +171,9 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
             </div>
             <div>
               <h3 className="text-lg font-semibold text-foreground">Thank You!</h3>
-              <p className="text-muted-foreground">Your feedback has been submitted successfully.</p>
+              <p className="text-muted-foreground">
+                Your feedback has been submitted successfully.
+              </p>
             </div>
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
               <p className="text-sm text-green-800">
@@ -195,7 +197,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
                 Share your overall experience in just a few clicks
               </p>
             </div>
-            
+
             <RatingComponent
               question="How would you rate your overall experience with this session?"
               value={overallRating}
@@ -209,36 +211,34 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
             />
           </div>
         );
-      
+
       case 1:
         return (
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-lg font-semibold mb-2">Quick Questions</h3>
-              <p className="text-muted-foreground text-sm">
-                A few quick yes/no questions
-              </p>
+              <p className="text-muted-foreground text-sm">A few quick yes/no questions</p>
             </div>
-            
+
             <div className="space-y-4">
               <QuickSatisfaction
                 question="Would you recommend this counselor to others?"
                 onSelect={(satisfaction) => {
-                  setQuickFeedback(prev => ({
+                  setQuickFeedback((prev) => ({
                     ...prev,
-                    wouldRecommend: satisfaction === 'satisfied'
+                    wouldRecommend: satisfaction === 'satisfied',
                   }));
                 }}
                 value={quickFeedback.wouldRecommend ? 'satisfied' : 'dissatisfied'}
                 disabled={isSubmitting}
               />
-              
+
               <QuickSatisfaction
                 question="Did you feel heard and understood?"
                 onSelect={(satisfaction) => {
-                  setQuickFeedback(prev => ({
+                  setQuickFeedback((prev) => ({
                     ...prev,
-                    feelHeard: satisfaction === 'satisfied'
+                    feelHeard: satisfaction === 'satisfied',
                   }));
                 }}
                 value={quickFeedback.feelHeard ? 'satisfied' : 'dissatisfied'}
@@ -247,7 +247,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
             </div>
           </div>
         );
-      
+
       case 2:
         return (
           <div className="space-y-6">
@@ -257,23 +257,25 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
                 Share any additional thoughts (optional)
               </p>
             </div>
-            
+
             <div className="space-y-2">
               <label className="text-sm font-medium">Additional comments (optional)</label>
               <Textarea
                 placeholder="Share any additional thoughts about your session..."
                 value={detailedFeedback.additionalComments || ''}
-                onChange={(e) => setDetailedFeedback(prev => ({
-                  ...prev,
-                  additionalComments: e.target.value
-                }))}
+                onChange={(e) =>
+                  setDetailedFeedback((prev) => ({
+                    ...prev,
+                    additionalComments: e.target.value,
+                  }))
+                }
                 disabled={isSubmitting}
                 rows={4}
               />
             </div>
           </div>
         );
-      
+
       default:
         return null;
     }
@@ -286,11 +288,9 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-lg font-semibold mb-2">Overall Experience</h3>
-              <p className="text-muted-foreground text-sm">
-                Rate your overall session experience
-              </p>
+              <p className="text-muted-foreground text-sm">Rate your overall session experience</p>
             </div>
-            
+
             <RatingComponent
               question="How would you rate your overall experience?"
               value={overallRating}
@@ -304,7 +304,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
             />
           </div>
         );
-      
+
       case 1:
         return (
           <div className="space-y-6">
@@ -314,39 +314,45 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
                 Rate different aspects of your counselor's performance
               </p>
             </div>
-            
+
             <div className="space-y-6">
               <RatingComponent
                 question="How helpful was your counselor?"
                 value={categoryRatings.helpfulness}
-                onChange={(value) => setCategoryRatings(prev => ({
-                  ...prev,
-                  helpfulness: value as 1 | 2 | 3 | 4 | 5
-                }))}
+                onChange={(value) =>
+                  setCategoryRatings((prev) => ({
+                    ...prev,
+                    helpfulness: value as 1 | 2 | 3 | 4 | 5,
+                  }))
+                }
                 disabled={isSubmitting}
                 variant="stars"
                 showLabels
               />
-              
+
               <RatingComponent
                 question="How clear was the communication?"
                 value={categoryRatings.communication}
-                onChange={(value) => setCategoryRatings(prev => ({
-                  ...prev,
-                  communication: value as 1 | 2 | 3 | 4 | 5
-                }))}
+                onChange={(value) =>
+                  setCategoryRatings((prev) => ({
+                    ...prev,
+                    communication: value as 1 | 2 | 3 | 4 | 5,
+                  }))
+                }
                 disabled={isSubmitting}
                 variant="stars"
                 showLabels
               />
-              
+
               <RatingComponent
                 question="How professional was your counselor?"
                 value={categoryRatings.professionalism}
-                onChange={(value) => setCategoryRatings(prev => ({
-                  ...prev,
-                  professionalism: value as 1 | 2 | 3 | 4 | 5
-                }))}
+                onChange={(value) =>
+                  setCategoryRatings((prev) => ({
+                    ...prev,
+                    professionalism: value as 1 | 2 | 3 | 4 | 5,
+                  }))
+                }
                 disabled={isSubmitting}
                 variant="stars"
                 showLabels
@@ -354,7 +360,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
             </div>
           </div>
         );
-      
+
       case 2:
         return (
           <div className="space-y-6">
@@ -364,27 +370,31 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
                 Rate the session environment and your satisfaction
               </p>
             </div>
-            
+
             <div className="space-y-6">
               <RatingComponent
                 question="How comfortable was the session environment?"
                 value={categoryRatings.environment}
-                onChange={(value) => setCategoryRatings(prev => ({
-                  ...prev,
-                  environment: value as 1 | 2 | 3 | 4 | 5
-                }))}
+                onChange={(value) =>
+                  setCategoryRatings((prev) => ({
+                    ...prev,
+                    environment: value as 1 | 2 | 3 | 4 | 5,
+                  }))
+                }
                 disabled={isSubmitting}
                 variant="stars"
                 showLabels
               />
-              
+
               <RatingComponent
                 question="How satisfied are you with the session outcomes?"
                 value={categoryRatings.satisfaction}
-                onChange={(value) => setCategoryRatings(prev => ({
-                  ...prev,
-                  satisfaction: value as 1 | 2 | 3 | 4 | 5
-                }))}
+                onChange={(value) =>
+                  setCategoryRatings((prev) => ({
+                    ...prev,
+                    satisfaction: value as 1 | 2 | 3 | 4 | 5,
+                  }))
+                }
                 disabled={isSubmitting}
                 variant="stars"
                 showLabels
@@ -392,36 +402,34 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
             </div>
           </div>
         );
-      
+
       case 3:
         return (
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-lg font-semibold mb-2">Quick Assessment</h3>
-              <p className="text-muted-foreground text-sm">
-                A few quick yes/no questions
-              </p>
+              <p className="text-muted-foreground text-sm">A few quick yes/no questions</p>
             </div>
-            
+
             <div className="space-y-4">
               <QuickSatisfaction
                 question="Would you recommend this counselor?"
                 onSelect={(satisfaction) => {
-                  setQuickFeedback(prev => ({
+                  setQuickFeedback((prev) => ({
                     ...prev,
-                    wouldRecommend: satisfaction === 'satisfied'
+                    wouldRecommend: satisfaction === 'satisfied',
                   }));
                 }}
                 value={quickFeedback.wouldRecommend ? 'satisfied' : 'dissatisfied'}
                 disabled={isSubmitting}
               />
-              
+
               <QuickSatisfaction
                 question="Were your session goals met?"
                 onSelect={(satisfaction) => {
-                  setQuickFeedback(prev => ({
+                  setQuickFeedback((prev) => ({
                     ...prev,
-                    goalsMet: satisfaction === 'satisfied'
+                    goalsMet: satisfaction === 'satisfied',
                   }));
                 }}
                 value={quickFeedback.goalsMet ? 'satisfied' : 'dissatisfied'}
@@ -430,7 +438,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
             </div>
           </div>
         );
-      
+
       case 4:
         return (
           <div className="space-y-6">
@@ -440,45 +448,51 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
                 Share your detailed thoughts and suggestions
               </p>
             </div>
-            
+
             <div className="space-y-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium">What worked well?</label>
                 <Textarea
                   placeholder="Tell us what you found most helpful..."
                   value={detailedFeedback.whatWorkedWell || ''}
-                  onChange={(e) => setDetailedFeedback(prev => ({
-                    ...prev,
-                    whatWorkedWell: e.target.value
-                  }))}
+                  onChange={(e) =>
+                    setDetailedFeedback((prev) => ({
+                      ...prev,
+                      whatWorkedWell: e.target.value,
+                    }))
+                  }
                   disabled={isSubmitting}
                   rows={3}
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <label className="text-sm font-medium">What could be improved?</label>
                 <Textarea
                   placeholder="Share suggestions for improvement..."
                   value={detailedFeedback.whatCouldImprove || ''}
-                  onChange={(e) => setDetailedFeedback(prev => ({
-                    ...prev,
-                    whatCouldImprove: e.target.value
-                  }))}
+                  onChange={(e) =>
+                    setDetailedFeedback((prev) => ({
+                      ...prev,
+                      whatCouldImprove: e.target.value,
+                    }))
+                  }
                   disabled={isSubmitting}
                   rows={3}
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <label className="text-sm font-medium">Additional comments</label>
                 <Textarea
                   placeholder="Any other thoughts you'd like to share..."
                   value={detailedFeedback.additionalComments || ''}
-                  onChange={(e) => setDetailedFeedback(prev => ({
-                    ...prev,
-                    additionalComments: e.target.value
-                  }))}
+                  onChange={(e) =>
+                    setDetailedFeedback((prev) => ({
+                      ...prev,
+                      additionalComments: e.target.value,
+                    }))
+                  }
                   disabled={isSubmitting}
                   rows={3}
                 />
@@ -486,7 +500,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
             </div>
           </div>
         );
-      
+
       default:
         return null;
     }
@@ -522,7 +536,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
               )}
             </CardDescription>
           </div>
-          
+
           <div className="flex space-x-2">
             <Button
               variant={mode === 'quick' ? 'default' : 'outline'}
@@ -548,7 +562,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
             </Button>
           </div>
         </div>
-        
+
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span>Progress</span>
@@ -557,7 +571,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
           <Progress value={progress} className="h-2" />
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-6">
         {validationErrors.length > 0 && (
           <Alert variant="destructive">
@@ -570,11 +584,11 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
             </AlertDescription>
           </Alert>
         )}
-        
+
         {mode === 'quick' ? renderQuickMode() : renderDetailedMode()}
-        
+
         <Separator />
-        
+
         <div className="flex items-center justify-between">
           <Button
             variant="outline"
@@ -583,7 +597,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
           >
             Previous
           </Button>
-          
+
           <div className="flex space-x-2">
             {mode === 'quick' && currentStep === 0 && (
               <Button
@@ -595,7 +609,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
                 <span>Quick Submit</span>
               </Button>
             )}
-            
+
             <Button
               onClick={handleNext}
               disabled={isSubmitting}

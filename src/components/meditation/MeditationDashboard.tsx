@@ -4,10 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { 
-  Play, 
-  Pause, 
-  Square, 
+import {
+  Play,
+  Pause,
+  Square,
   RotateCcw,
   Settings,
   Timer,
@@ -17,7 +17,7 @@ import {
   Award,
   Brain,
   Heart,
-  Sparkles
+  Sparkles,
 } from 'lucide-react';
 
 // Import our meditation components
@@ -27,15 +27,15 @@ import { AmbientSoundPlayer } from './AmbientSoundPlayer';
 import { MindfulnessProgressTracker } from './MindfulnessProgressTracker';
 
 // Import types
-import { 
-  MeditationType, 
-  BreathingTechnique, 
+import {
+  MeditationType,
+  BreathingTechnique,
   AmbientSoundType,
   MeditationSession,
   BreathingSession,
   getMeditationTypeIcon,
   formatMeditationTime,
-  BREATHING_EXERCISES
+  BREATHING_EXERCISES,
 } from '@/types/meditation';
 
 interface MeditationDashboardProps {
@@ -54,12 +54,12 @@ type ActiveSession = {
 
 export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
   userId = 'current_user',
-  className = ''
+  className = '',
 }) => {
   // Session state
   const [activeSession, setActiveSession] = useState<ActiveSession>(null);
   const [currentTab, setCurrentTab] = useState<string>('quick-start');
-  
+
   // Settings state
   const [preferences, setPreferences] = useState({
     defaultMeditationType: 'mindfulness' as MeditationType,
@@ -68,7 +68,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
     defaultAmbientSound: 'rain' as AmbientSoundType,
     ambientVolume: 50,
     reminderEnabled: false,
-    reminderTime: '09:00'
+    reminderTime: '09:00',
   });
 
   // Quick start options
@@ -79,7 +79,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
       type: 'mindfulness' as MeditationType,
       duration: 5,
       icon: '🎯',
-      color: 'bg-blue-50 border-blue-200'
+      color: 'bg-blue-50 border-blue-200',
     },
     {
       title: '10-Minute Calm',
@@ -87,7 +87,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
       type: 'guided-meditation' as MeditationType,
       duration: 10,
       icon: '🧘‍♀️',
-      color: 'bg-green-50 border-green-200'
+      color: 'bg-green-50 border-green-200',
     },
     {
       title: '4-7-8 Breathing',
@@ -95,7 +95,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
       type: 'breathing-exercise',
       duration: 5,
       icon: '🌬️',
-      color: 'bg-purple-50 border-purple-200'
+      color: 'bg-purple-50 border-purple-200',
     },
     {
       title: '15-Minute Deep',
@@ -103,21 +103,21 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
       type: 'body-scan' as MeditationType,
       duration: 15,
       icon: '🌸',
-      color: 'bg-pink-50 border-pink-200'
-    }
+      color: 'bg-pink-50 border-pink-200',
+    },
   ];
 
   // Session management
-  const startQuickSession = (option: typeof quickStartOptions[0]) => {
+  const startQuickSession = (option: (typeof quickStartOptions)[0]) => {
     const session: ActiveSession = {
       type: option.type === 'breathing-exercise' ? 'breathing' : 'meditation',
       startTime: new Date(),
       isActive: true,
       isPaused: false,
       duration: option.duration * 60, // convert to seconds
-      technique: option.type as MeditationType
+      technique: option.type as MeditationType,
     };
-    
+
     setActiveSession(session);
     setCurrentTab('active-session');
   };
@@ -134,9 +134,9 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
       console.log('Session completed:', {
         type: activeSession.type,
         duration: Math.floor((new Date().getTime() - activeSession.startTime.getTime()) / 1000),
-        technique: activeSession.technique
+        technique: activeSession.technique,
       });
-      
+
       setActiveSession(null);
       setCurrentTab('progress');
     }
@@ -148,7 +148,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
         ...activeSession,
         startTime: new Date(),
         isActive: true,
-        isPaused: false
+        isPaused: false,
       });
     }
   };
@@ -156,16 +156,20 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
   // Helper function to get breathing exercise icon
   const getBreathingExerciseIcon = (exerciseId: string) => {
     switch (exerciseId) {
-      case '4-7-8-breathing': return '🌙';
-      case 'box-breathing': return '⬜';
-      case 'triangle-breathing': return '🔺';
-      default: return '🌬️';
+      case '4-7-8-breathing':
+        return '🌙';
+      case 'box-breathing':
+        return '⬜';
+      case 'triangle-breathing':
+        return '🔺';
+      default:
+        return '🌬️';
     }
   };
 
   // Helper function to get breathing pattern display
-  const getBreathingPattern = (exercise: typeof BREATHING_EXERCISES[0]) => {
-    return exercise.phases.map(phase => phase.duration).join('-');
+  const getBreathingPattern = (exercise: (typeof BREATHING_EXERCISES)[0]) => {
+    return exercise.phases.map((phase) => phase.duration).join('-');
   };
 
   // Calculate session elapsed time
@@ -187,9 +191,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
       {/* Header */}
       <div className="text-center space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">Meditation Center</h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          {getWelcomeMessage()}
-        </p>
+        <p className="text-muted-foreground max-w-2xl mx-auto">{getWelcomeMessage()}</p>
       </div>
 
       {/* Active Session Indicator */}
@@ -199,28 +201,25 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-2">
-                  <div className={`w-3 h-3 rounded-full ${activeSession.isPaused ? 'bg-yellow-500' : 'bg-green-500 animate-pulse'}`} />
+                  <div
+                    className={`w-3 h-3 rounded-full ${activeSession.isPaused ? 'bg-yellow-500' : 'bg-green-500 animate-pulse'}`}
+                  />
                   <span className="font-medium">
-                    {activeSession.isPaused ? 'Paused' : 'Active'} - {activeSession.technique?.replace('-', ' ')}
+                    {activeSession.isPaused ? 'Paused' : 'Active'} -{' '}
+                    {activeSession.technique?.replace('-', ' ')}
                   </span>
                 </div>
-                <Badge variant="secondary">
-                  {formatMeditationTime(getElapsedTime())}
-                </Badge>
+                <Badge variant="secondary">{formatMeditationTime(getElapsedTime())}</Badge>
               </div>
               <div className="flex items-center space-x-2">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={pauseSession}
-                >
-                  {activeSession.isPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+                <Button size="sm" variant="outline" onClick={pauseSession}>
+                  {activeSession.isPaused ? (
+                    <Play className="h-4 w-4" />
+                  ) : (
+                    <Pause className="h-4 w-4" />
+                  )}
                 </Button>
-                <Button
-                  size="sm"
-                  variant="destructive"
-                  onClick={endSession}
-                >
+                <Button size="sm" variant="destructive" onClick={endSession}>
                   <Square className="h-4 w-4" />
                 </Button>
               </div>
@@ -243,8 +242,8 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
         <TabsContent value="quick-start" className="space-y-6">
           <div className="grid gap-4 md:grid-cols-2">
             {quickStartOptions.map((option, index) => (
-              <Card 
-                key={index} 
+              <Card
+                key={index}
                 className={`cursor-pointer transition-all hover:shadow-md ${option.color}`}
                 onClick={() => startQuickSession(option)}
               >
@@ -282,18 +281,21 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
                 <div className="flex-1">
                   <h3 className="font-semibold">Morning Mindfulness</h3>
                   <p className="text-sm text-muted-foreground">
-                    Start your day with a 10-minute mindfulness session. Perfect for setting positive intentions.
+                    Start your day with a 10-minute mindfulness session. Perfect for setting
+                    positive intentions.
                   </p>
                 </div>
-                <Button 
-                  onClick={() => startQuickSession({
-                    title: 'Morning Mindfulness',
-                    description: 'Start your day mindfully',
-                    type: 'mindfulness',
-                    duration: 10,
-                    icon: '🌅',
-                    color: 'bg-purple-50 border-purple-200'
-                  })}
+                <Button
+                  onClick={() =>
+                    startQuickSession({
+                      title: 'Morning Mindfulness',
+                      description: 'Start your day mindfully',
+                      type: 'mindfulness',
+                      duration: 10,
+                      icon: '🌅',
+                      color: 'bg-purple-50 border-purple-200',
+                    })
+                  }
                 >
                   Start Now
                 </Button>
@@ -312,7 +314,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
                 <p className="text-sm text-muted-foreground">Today's Progress</p>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardContent className="p-4 text-center">
                 <div className="flex items-center justify-center space-x-2">
@@ -322,7 +324,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
                 <p className="text-sm text-muted-foreground">Day Streak</p>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardContent className="p-4 text-center">
                 <div className="flex items-center justify-center space-x-2">
@@ -337,7 +339,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
 
         {/* Timer Tab */}
         <TabsContent value="timer" className="space-y-6">
-          <MeditationTimer 
+          <MeditationTimer
             onSessionComplete={(session) => {
               console.log('Timer session completed:', session);
               setCurrentTab('progress');
@@ -363,7 +365,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
               <CardContent>
                 <div className="grid gap-3">
                   {BREATHING_EXERCISES.map((exercise) => (
-                    <div 
+                    <div
                       key={exercise.id}
                       className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent cursor-pointer"
                       onClick={() => {
@@ -372,7 +374,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
                           startTime: new Date(),
                           isActive: true,
                           isPaused: false,
-                          technique: exercise.type
+                          technique: exercise.type,
                         };
                         setActiveSession(session);
                       }}
@@ -395,7 +397,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
             </Card>
 
             {/* Breathing Animation */}
-            <BreathingAnimation 
+            <BreathingAnimation
               onSessionComplete={(session) => {
                 console.log('Breathing session completed:', session);
                 setActiveSession(null);
@@ -419,9 +421,9 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <AmbientSoundPlayer 
+              <AmbientSoundPlayer
                 onVolumeChange={(volume) => {
-                  setPreferences(prev => ({ ...prev, ambientVolume: volume }));
+                  setPreferences((prev) => ({ ...prev, ambientVolume: volume }));
                 }}
                 defaultVolume={preferences.ambientVolume}
                 className="w-full"
@@ -445,15 +447,16 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
                     </p>
                   </div>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="flex items-start space-x-3">
                   <Heart className="h-5 w-5 text-red-500 mt-1" />
                   <div>
                     <h4 className="font-medium">Stress Reduction</h4>
                     <p className="text-sm text-muted-foreground">
-                      Natural sounds activate the parasympathetic nervous system, promoting relaxation
+                      Natural sounds activate the parasympathetic nervous system, promoting
+                      relaxation
                     </p>
                   </div>
                 </div>
@@ -464,7 +467,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
 
         {/* Progress Tab */}
         <TabsContent value="progress" className="space-y-6">
-          <MindfulnessProgressTracker 
+          <MindfulnessProgressTracker
             userId={userId}
             onGoalUpdate={(goal) => {
               console.log('Weekly goal updated:', goal);

@@ -16,7 +16,7 @@ export interface MeditationSession {
   actualDuration: number; // actual time spent meditating
 }
 
-export type MeditationType = 
+export type MeditationType =
   | 'guided-meditation'
   | 'breathing-exercise'
   | 'mindfulness'
@@ -38,7 +38,7 @@ export interface BreathingExercise {
   benefits: string[];
 }
 
-export type BreathingTechnique = 
+export type BreathingTechnique =
   | '4-7-8-breathing'
   | 'box-breathing'
   | 'triangle-breathing'
@@ -54,13 +54,7 @@ export interface BreathingPhase {
   animation: AnimationType;
 }
 
-export type AnimationType = 
-  | 'expand'
-  | 'contract'
-  | 'hold'
-  | 'pause'
-  | 'inhale'
-  | 'exhale';
+export type AnimationType = 'expand' | 'contract' | 'hold' | 'pause' | 'inhale' | 'exhale';
 
 export interface AmbientSound {
   id: string;
@@ -76,7 +70,7 @@ export interface AmbientSound {
   tags: string[];
 }
 
-export type AmbientSoundType = 
+export type AmbientSoundType =
   | 'rain'
   | 'ocean-waves'
   | 'forest'
@@ -94,12 +88,7 @@ export type AmbientSoundType =
   | 'chimes'
   | 'silence';
 
-export type SoundCategory = 
-  | 'nature'
-  | 'urban'
-  | 'instrumental'
-  | 'noise'
-  | 'spiritual';
+export type SoundCategory = 'nature' | 'urban' | 'instrumental' | 'noise' | 'spiritual';
 
 export interface MeditationTimer {
   duration: number; // total duration in seconds
@@ -152,7 +141,7 @@ export interface Achievement {
   rarity: 'common' | 'rare' | 'epic' | 'legendary';
 }
 
-export type AchievementCategory = 
+export type AchievementCategory =
   | 'streak'
   | 'duration'
   | 'frequency'
@@ -243,7 +232,8 @@ export const BREATHING_EXERCISES: BreathingExercise[] = [
     id: '4-7-8-breathing',
     name: '4-7-8 Breathing',
     type: '4-7-8-breathing',
-    description: 'A powerful technique for relaxation and sleep, involving inhaling for 4, holding for 7, and exhaling for 8 counts.',
+    description:
+      'A powerful technique for relaxation and sleep, involving inhaling for 4, holding for 7, and exhaling for 8 counts.',
     instructions: [
       'Sit comfortably with your back straight',
       'Place your tongue against the ridge behind your upper teeth',
@@ -251,7 +241,7 @@ export const BREATHING_EXERCISES: BreathingExercise[] = [
       'Inhale through your nose for 4 counts',
       'Hold your breath for 7 counts',
       'Exhale through your mouth for 8 counts',
-      'Repeat for 4 cycles initially'
+      'Repeat for 4 cycles initially',
     ],
     phases: [
       {
@@ -259,22 +249,22 @@ export const BREATHING_EXERCISES: BreathingExercise[] = [
         duration: 4,
         instruction: 'Breathe in slowly through your nose',
         color: '#3B82F6',
-        animation: 'expand'
+        animation: 'expand',
       },
       {
         name: 'Hold',
         duration: 7,
         instruction: 'Hold your breath gently',
         color: '#8B5CF6',
-        animation: 'hold'
+        animation: 'hold',
       },
       {
         name: 'Exhale',
         duration: 8,
         instruction: 'Breathe out slowly through your mouth',
         color: '#10B981',
-        animation: 'contract'
-      }
+        animation: 'contract',
+      },
     ],
     totalCycleDuration: 19,
     recommendedCycles: 4,
@@ -284,14 +274,15 @@ export const BREATHING_EXERCISES: BreathingExercise[] = [
       'Improves sleep quality',
       'Lowers heart rate',
       'Promotes relaxation',
-      'Enhances focus'
-    ]
+      'Enhances focus',
+    ],
   },
   {
     id: 'box-breathing',
     name: 'Box Breathing',
     type: 'box-breathing',
-    description: 'A balanced breathing technique used by Navy SEALs and athletes for focus and stress relief.',
+    description:
+      'A balanced breathing technique used by Navy SEALs and athletes for focus and stress relief.',
     instructions: [
       'Sit upright in a comfortable position',
       'Exhale completely through your mouth',
@@ -299,7 +290,7 @@ export const BREATHING_EXERCISES: BreathingExercise[] = [
       'Hold your breath for 4 counts',
       'Exhale through your mouth for 4 counts',
       'Hold empty for 4 counts',
-      'Continue for several cycles'
+      'Continue for several cycles',
     ],
     phases: [
       {
@@ -307,29 +298,29 @@ export const BREATHING_EXERCISES: BreathingExercise[] = [
         duration: 4,
         instruction: 'Breathe in slowly and deeply',
         color: '#3B82F6',
-        animation: 'expand'
+        animation: 'expand',
       },
       {
         name: 'Hold Full',
         duration: 4,
         instruction: 'Hold your breath with lungs full',
         color: '#8B5CF6',
-        animation: 'hold'
+        animation: 'hold',
       },
       {
         name: 'Exhale',
         duration: 4,
         instruction: 'Breathe out slowly and completely',
         color: '#10B981',
-        animation: 'contract'
+        animation: 'contract',
       },
       {
         name: 'Hold Empty',
         duration: 4,
         instruction: 'Hold your breath with lungs empty',
         color: '#F59E0B',
-        animation: 'pause'
-      }
+        animation: 'pause',
+      },
     ],
     totalCycleDuration: 16,
     recommendedCycles: 6,
@@ -339,8 +330,8 @@ export const BREATHING_EXERCISES: BreathingExercise[] = [
       'Reduces stress and anxiety',
       'Enhances emotional regulation',
       'Increases lung capacity',
-      'Promotes mental clarity'
-    ]
+      'Promotes mental clarity',
+    ],
   },
   {
     id: 'triangle-breathing',
@@ -353,7 +344,7 @@ export const BREATHING_EXERCISES: BreathingExercise[] = [
       'Inhale for 3 counts',
       'Hold for 3 counts',
       'Exhale for 3 counts',
-      'Continue the triangle pattern'
+      'Continue the triangle pattern',
     ],
     phases: [
       {
@@ -361,22 +352,22 @@ export const BREATHING_EXERCISES: BreathingExercise[] = [
         duration: 3,
         instruction: 'Breathe in gently',
         color: '#3B82F6',
-        animation: 'expand'
+        animation: 'expand',
       },
       {
         name: 'Hold',
         duration: 3,
         instruction: 'Hold with ease',
         color: '#8B5CF6',
-        animation: 'hold'
+        animation: 'hold',
       },
       {
         name: 'Exhale',
         duration: 3,
         instruction: 'Breathe out slowly',
         color: '#10B981',
-        animation: 'contract'
-      }
+        animation: 'contract',
+      },
     ],
     totalCycleDuration: 9,
     recommendedCycles: 8,
@@ -386,9 +377,9 @@ export const BREATHING_EXERCISES: BreathingExercise[] = [
       'Easy for beginners',
       'Promotes steady rhythm',
       'Calms the nervous system',
-      'Improves breathing awareness'
-    ]
-  }
+      'Improves breathing awareness',
+    ],
+  },
 ];
 
 // Predefined ambient sounds
@@ -403,7 +394,7 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     category: 'nature',
     icon: '🌧️',
     color: '#6B7280',
-    tags: ['relaxing', 'nature', 'sleep']
+    tags: ['relaxing', 'nature', 'sleep'],
   },
   {
     id: 'ocean-waves',
@@ -415,7 +406,7 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     category: 'nature',
     icon: '🌊',
     color: '#0EA5E9',
-    tags: ['calming', 'rhythmic', 'nature']
+    tags: ['calming', 'rhythmic', 'nature'],
   },
   {
     id: 'forest',
@@ -427,7 +418,7 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     category: 'nature',
     icon: '🌲',
     color: '#059669',
-    tags: ['nature', 'birds', 'peaceful']
+    tags: ['nature', 'birds', 'peaceful'],
   },
   {
     id: 'fireplace',
@@ -439,7 +430,7 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     category: 'instrumental',
     icon: '🔥',
     color: '#DC2626',
-    tags: ['cozy', 'warm', 'focus']
+    tags: ['cozy', 'warm', 'focus'],
   },
   {
     id: 'white-noise',
@@ -451,7 +442,7 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     category: 'noise',
     icon: '📊',
     color: '#9CA3AF',
-    tags: ['focus', 'concentration', 'masking']
+    tags: ['focus', 'concentration', 'masking'],
   },
   {
     id: 'tibetan-bowls',
@@ -463,8 +454,8 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     category: 'spiritual',
     icon: '🎵',
     color: '#7C3AED',
-    tags: ['spiritual', 'meditation', 'sacred']
-  }
+    tags: ['spiritual', 'meditation', 'sacred'],
+  },
 ];
 
 // Default meditation achievements
@@ -478,7 +469,7 @@ export const MEDITATION_ACHIEVEMENTS: Achievement[] = [
     requirement: 1,
     currentProgress: 0,
     isUnlocked: false,
-    rarity: 'common'
+    rarity: 'common',
   },
   {
     id: 'week-streak',
@@ -489,7 +480,7 @@ export const MEDITATION_ACHIEVEMENTS: Achievement[] = [
     requirement: 7,
     currentProgress: 0,
     isUnlocked: false,
-    rarity: 'rare'
+    rarity: 'rare',
   },
   {
     id: 'hour-master',
@@ -500,7 +491,7 @@ export const MEDITATION_ACHIEVEMENTS: Achievement[] = [
     requirement: 60,
     currentProgress: 0,
     isUnlocked: false,
-    rarity: 'epic'
+    rarity: 'epic',
   },
   {
     id: 'breathing-expert',
@@ -511,8 +502,8 @@ export const MEDITATION_ACHIEVEMENTS: Achievement[] = [
     requirement: 3,
     currentProgress: 0,
     isUnlocked: false,
-    rarity: 'legendary'
-  }
+    rarity: 'legendary',
+  },
 ];
 
 // Utility functions
@@ -531,7 +522,7 @@ export const getBreathingPhaseColor = (phase: BreathingPhase, intensity: number 
     expand: `rgba(59, 130, 246, ${intensity})`,
     contract: `rgba(16, 185, 129, ${intensity})`,
     hold: `rgba(139, 92, 246, ${intensity})`,
-    pause: `rgba(245, 158, 11, ${intensity})`
+    pause: `rgba(245, 158, 11, ${intensity})`,
   };
   return colors[phase.animation] || colors.hold;
 };
@@ -540,18 +531,18 @@ export const getMeditationTypeIcon = (type: MeditationType): string => {
   const icons = {
     'guided-meditation': '🧘‍♀️',
     'breathing-exercise': '🌬️',
-    'mindfulness': '🧠',
+    mindfulness: '🧠',
     'body-scan': '🫧',
     'loving-kindness': '💝',
     'zen-meditation': '☯️',
-    'free-meditation': '✨'
+    'free-meditation': '✨',
   };
   return icons[type] || '🧘';
 };
 
 export const getNextAchievement = (progress: MindfulnessProgress): Achievement | null => {
-  const locked = MEDITATION_ACHIEVEMENTS.filter(a => !a.isUnlocked);
-  return locked.find(a => a.currentProgress / a.requirement >= 0.5) || locked[0] || null;
+  const locked = MEDITATION_ACHIEVEMENTS.filter((a) => !a.isUnlocked);
+  return locked.find((a) => a.currentProgress / a.requirement >= 0.5) || locked[0] || null;
 };
 
 export const calculateWeeklyGoalProgress = (weeklyMinutes: number, goal: number): number => {

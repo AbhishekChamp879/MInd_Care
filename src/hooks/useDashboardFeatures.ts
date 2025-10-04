@@ -56,41 +56,41 @@ export const useMoodTracking = () => {
       date: today,
       mood: mood as 1 | 2 | 3 | 4 | 5,
       note,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
-    const updatedMoods = moods.filter(m => m.date !== today).concat(newEntry);
+    const updatedMoods = moods.filter((m) => m.date !== today).concat(newEntry);
     setMoods(updatedMoods);
     localStorage.setItem('mood_entries', JSON.stringify(updatedMoods));
   };
 
   const getTodayMood = () => {
     const today = new Date().toISOString().split('T')[0];
-    return moods.find(m => m.date === today);
+    return moods.find((m) => m.date === today);
   };
 
   const getWeeklyMoodAverage = () => {
     const weekAgo = new Date();
     weekAgo.setDate(weekAgo.getDate() - 7);
-    
-    const recentMoods = moods.filter(m => new Date(m.date) >= weekAgo);
+
+    const recentMoods = moods.filter((m) => new Date(m.date) >= weekAgo);
     if (recentMoods.length === 0) return 0;
-    
+
     const average = recentMoods.reduce((sum, m) => sum + m.mood, 0) / recentMoods.length;
     return Math.round(average * 10) / 10;
   };
 
   const getMoodTrend = () => {
     if (moods.length < 2) return 'stable';
-    
+
     const recent = moods.slice(-7); // Last 7 entries
     const older = moods.slice(-14, -7); // Previous 7 entries
-    
+
     if (recent.length === 0 || older.length === 0) return 'stable';
-    
+
     const recentAvg = recent.reduce((sum, m) => sum + m.mood, 0) / recent.length;
     const olderAvg = older.reduce((sum, m) => sum + m.mood, 0) / older.length;
-    
+
     if (recentAvg > olderAvg + 0.3) return 'improving';
     if (recentAvg < olderAvg - 0.3) return 'declining';
     return 'stable';
@@ -101,7 +101,7 @@ export const useMoodTracking = () => {
     addMoodEntry,
     getTodayMood,
     getWeeklyMoodAverage,
-    getMoodTrend
+    getMoodTrend,
   };
 };
 
@@ -116,7 +116,12 @@ export const useGoals = () => {
     }
   }, []);
 
-  const addGoal = (title: string, description: string, targetDate: string, category: Goal['category']) => {
+  const addGoal = (
+    title: string,
+    description: string,
+    targetDate: string,
+    category: Goal['category']
+  ) => {
     const newGoal: Goal = {
       id: Date.now().toString(),
       title,
@@ -125,7 +130,7 @@ export const useGoals = () => {
       completed: false,
       progress: 0,
       category,
-      createdAt: Date.now()
+      createdAt: Date.now(),
     };
 
     const updatedGoals = [...goals, newGoal];
@@ -134,7 +139,7 @@ export const useGoals = () => {
   };
 
   const updateGoalProgress = (id: string, progress: number) => {
-    const updatedGoals = goals.map(goal => 
+    const updatedGoals = goals.map((goal) =>
       goal.id === id ? { ...goal, progress, completed: progress >= 100 } : goal
     );
     setGoals(updatedGoals);
@@ -142,24 +147,24 @@ export const useGoals = () => {
   };
 
   const completeGoal = (id: string) => {
-    const updatedGoals = goals.map(goal => 
+    const updatedGoals = goals.map((goal) =>
       goal.id === id ? { ...goal, completed: true, progress: 100 } : goal
     );
     setGoals(updatedGoals);
     localStorage.setItem('user_goals', JSON.stringify(updatedGoals));
   };
 
-  const getActiveGoals = () => goals.filter(g => !g.completed);
-  const getCompletedGoals = () => goals.filter(g => g.completed);
-  
+  const getActiveGoals = () => goals.filter((g) => !g.completed);
+  const getCompletedGoals = () => goals.filter((g) => g.completed);
+
   const getWeeklyGoalProgress = () => {
-    const weeklyGoals = goals.filter(g => {
+    const weeklyGoals = goals.filter((g) => {
       const targetDate = new Date(g.targetDate);
       const weekFromNow = new Date();
       weekFromNow.setDate(weekFromNow.getDate() + 7);
       return targetDate <= weekFromNow;
     });
-    
+
     if (weeklyGoals.length === 0) return 0;
     const totalProgress = weeklyGoals.reduce((sum, g) => sum + g.progress, 0);
     return Math.round(totalProgress / weeklyGoals.length);
@@ -172,7 +177,7 @@ export const useGoals = () => {
     completeGoal,
     getActiveGoals,
     getCompletedGoals,
-    getWeeklyGoalProgress
+    getWeeklyGoalProgress,
   };
 };
 
@@ -193,7 +198,7 @@ export const useActivityLog = () => {
       type,
       title,
       timestamp: Date.now(),
-      details
+      details,
     };
 
     const updatedActivities = [newActivity, ...activities].slice(0, 100); // Keep only last 100
@@ -202,15 +207,15 @@ export const useActivityLog = () => {
   };
 
   const getWeeklyStats = () => {
-    const weekAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
-    const weeklyActivities = activities.filter(a => a.timestamp > weekAgo);
-    
+    const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    const weeklyActivities = activities.filter((a) => a.timestamp > weekAgo);
+
     return {
       total: weeklyActivities.length,
-      chat: weeklyActivities.filter(a => a.type === 'chat').length,
-      resource: weeklyActivities.filter(a => a.type === 'resource').length,
-      forum: weeklyActivities.filter(a => a.type === 'forum').length,
-      booking: weeklyActivities.filter(a => a.type === 'booking').length
+      chat: weeklyActivities.filter((a) => a.type === 'chat').length,
+      resource: weeklyActivities.filter((a) => a.type === 'resource').length,
+      forum: weeklyActivities.filter((a) => a.type === 'forum').length,
+      booking: weeklyActivities.filter((a) => a.type === 'booking').length,
     };
   };
 
@@ -222,7 +227,7 @@ export const useActivityLog = () => {
     activities,
     logActivity,
     getWeeklyStats,
-    getRecentActivities
+    getRecentActivities,
   };
 };
 
@@ -239,7 +244,7 @@ export const useAchievements = () => {
         description: 'Started your first AI chat session',
         icon: '🌱',
         unlocked: false,
-        type: 'milestone'
+        type: 'milestone',
       },
       {
         id: 'mood_streak_3',
@@ -247,7 +252,7 @@ export const useAchievements = () => {
         description: 'Tracked your mood for 3 consecutive days',
         icon: '📊',
         unlocked: false,
-        type: 'streak'
+        type: 'streak',
       },
       {
         id: 'goal_setter',
@@ -255,7 +260,7 @@ export const useAchievements = () => {
         description: 'Created your first wellness goal',
         icon: '🎯',
         unlocked: false,
-        type: 'milestone'
+        type: 'milestone',
       },
       {
         id: 'community_helper',
@@ -263,7 +268,7 @@ export const useAchievements = () => {
         description: 'Helped 5 peers in the forum',
         icon: '🤝',
         unlocked: false,
-        type: 'social'
+        type: 'social',
       },
       {
         id: 'weekly_warrior',
@@ -271,7 +276,7 @@ export const useAchievements = () => {
         description: 'Used the platform for 7 consecutive days',
         icon: '⚡',
         unlocked: false,
-        type: 'streak'
+        type: 'streak',
       },
       {
         id: 'wellness_champion',
@@ -279,8 +284,8 @@ export const useAchievements = () => {
         description: 'Completed 10 wellness activities',
         icon: '🏆',
         unlocked: false,
-        type: 'wellness'
-      }
+        type: 'wellness',
+      },
     ];
 
     const storedAchievements = localStorage.getItem('user_achievements');
@@ -293,24 +298,24 @@ export const useAchievements = () => {
   }, []);
 
   const unlockAchievement = (id: string) => {
-    const updatedAchievements = achievements.map(achievement =>
+    const updatedAchievements = achievements.map((achievement) =>
       achievement.id === id && !achievement.unlocked
         ? { ...achievement, unlocked: true, unlockedAt: Date.now() }
         : achievement
     );
-    
+
     setAchievements(updatedAchievements);
     localStorage.setItem('user_achievements', JSON.stringify(updatedAchievements));
-    
+
     // Return the unlocked achievement for showing notification
-    const unlockedAchievement = updatedAchievements.find(a => a.id === id && a.unlocked);
-    
+    const unlockedAchievement = updatedAchievements.find((a) => a.id === id && a.unlocked);
+
     // Trigger notification
     if (unlockedAchievement && typeof window !== 'undefined') {
       const event = new CustomEvent('achievementUnlocked', { detail: unlockedAchievement });
       window.dispatchEvent(event);
     }
-    
+
     return unlockedAchievement;
   };
 
@@ -318,20 +323,23 @@ export const useAchievements = () => {
     const newUnlocks: Achievement[] = [];
 
     // Check for chat achievement
-    if (activities.some(a => a.type === 'chat') && !achievements.find(a => a.id === 'first_chat')?.unlocked) {
+    if (
+      activities.some((a) => a.type === 'chat') &&
+      !achievements.find((a) => a.id === 'first_chat')?.unlocked
+    ) {
       const unlocked = unlockAchievement('first_chat');
       if (unlocked) newUnlocks.push(unlocked);
     }
 
     // Check for mood streak
     const recentMoods = moods.slice(-3);
-    if (recentMoods.length >= 3 && !achievements.find(a => a.id === 'mood_streak_3')?.unlocked) {
+    if (recentMoods.length >= 3 && !achievements.find((a) => a.id === 'mood_streak_3')?.unlocked) {
       const unlocked = unlockAchievement('mood_streak_3');
       if (unlocked) newUnlocks.push(unlocked);
     }
 
     // Check for goal setter
-    if (goals.length > 0 && !achievements.find(a => a.id === 'goal_setter')?.unlocked) {
+    if (goals.length > 0 && !achievements.find((a) => a.id === 'goal_setter')?.unlocked) {
       const unlocked = unlockAchievement('goal_setter');
       if (unlocked) newUnlocks.push(unlocked);
     }
@@ -339,7 +347,7 @@ export const useAchievements = () => {
     return newUnlocks;
   };
 
-  const getUnlockedCount = () => achievements.filter(a => a.unlocked).length;
+  const getUnlockedCount = () => achievements.filter((a) => a.unlocked).length;
   const getTotalCount = () => achievements.length;
 
   return {
@@ -347,7 +355,7 @@ export const useAchievements = () => {
     unlockAchievement,
     checkAchievements,
     getUnlockedCount,
-    getTotalCount
+    getTotalCount,
   };
 };
 
@@ -358,62 +366,62 @@ export const useDailyTips = () => {
       icon: 'Target',
       title: 'Mindful Moments',
       description: 'Take 3 deep breaths between classes to center yourself',
-      color: 'primary'
+      color: 'primary',
     },
     {
       icon: 'Timer',
       title: 'Study Breaks',
       description: 'Rest for 10 minutes every hour to prevent burnout',
-      color: 'secondary'
+      color: 'secondary',
     },
     {
       icon: 'Heart',
       title: 'Self-Care',
       description: 'Eat well, sleep enough, and stay hydrated daily',
-      color: 'accent'
+      color: 'accent',
     },
     {
       icon: 'Smile',
       title: 'Gratitude Practice',
-      description: 'Write down 3 things you\'re grateful for today',
-      color: 'success'
+      description: "Write down 3 things you're grateful for today",
+      color: 'success',
     },
     {
       icon: 'Coffee',
       title: 'Social Connection',
       description: 'Reach out to a friend or family member',
-      color: 'primary'
+      color: 'primary',
     },
     {
       icon: 'Moon',
       title: 'Quality Sleep',
       description: 'Aim for 7-9 hours of sleep for better mood',
-      color: 'secondary'
+      color: 'secondary',
     },
     {
       icon: 'Brain',
       title: 'Mental Exercise',
       description: 'Try a 5-minute meditation or mindfulness exercise',
-      color: 'accent'
+      color: 'accent',
     },
     {
       icon: 'Activity',
       title: 'Physical Movement',
       description: 'Take a short walk or do some stretches',
-      color: 'success'
-    }
+      color: 'success',
+    },
   ];
 
   const getDailyTips = (count: number = 6) => {
     // Shuffle tips based on current date for daily variation
     const today = new Date().toDateString();
     const seed = today.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
-    
+
     const shuffled = [...tips].sort(() => {
       const x = Math.sin(seed) * 10000;
       return x - Math.floor(x);
     });
-    
+
     return shuffled.slice(0, count);
   };
 
@@ -422,7 +430,7 @@ export const useDailyTips = () => {
 
 // Sleep Quality Tracking
 export const useSleepTracking = () => {
-  const [sleepData, setSleepData] = useState<Array<{ date: string, hours: number }>>([]);
+  const [sleepData, setSleepData] = useState<Array<{ date: string; hours: number }>>([]);
 
   useEffect(() => {
     const stored = localStorage.getItem('sleep_data');
@@ -433,7 +441,7 @@ export const useSleepTracking = () => {
 
   const addSleepEntry = (hours: number) => {
     const today = new Date().toISOString().split('T')[0];
-    const updated = sleepData.filter(s => s.date !== today).concat({ date: today, hours });
+    const updated = sleepData.filter((s) => s.date !== today).concat({ date: today, hours });
     setSleepData(updated);
     localStorage.setItem('sleep_data', JSON.stringify(updated));
   };

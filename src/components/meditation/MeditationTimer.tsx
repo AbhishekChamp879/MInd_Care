@@ -5,24 +5,24 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
-import { 
-  Play, 
-  Pause, 
-  Square, 
-  RotateCcw, 
-  Volume2, 
+import {
+  Play,
+  Pause,
+  Square,
+  RotateCcw,
+  Volume2,
   VolumeX,
   Clock,
   Settings,
   Bell,
-  Heart
+  Heart,
 } from 'lucide-react';
-import { 
-  MeditationTimer as TimerType, 
-  MeditationType, 
+import {
+  MeditationTimer as TimerType,
+  MeditationType,
   AmbientSoundType,
   formatMeditationTime,
-  calculateSessionCompletion
+  calculateSessionCompletion,
 } from '@/types/meditation';
 
 interface MeditationTimerProps {
@@ -42,7 +42,7 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
   onSessionComplete,
   onSessionStart,
   onSessionPause,
-  className = ''
+  className = '',
 }) => {
   // Timer state
   const [timer, setTimer] = useState<TimerType>({
@@ -53,7 +53,7 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
     isPaused: false,
     isCompleted: false,
     pausedTime: 0,
-    intervals: []
+    intervals: [],
   });
 
   // Settings state
@@ -77,11 +77,11 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
   useEffect(() => {
     if (!timer.isActive) {
       const newDuration = selectedDuration * 60;
-      setTimer(prev => ({
+      setTimer((prev) => ({
         ...prev,
         duration: newDuration,
         remaining: newDuration,
-        elapsed: 0
+        elapsed: 0,
       }));
     }
   }, [selectedDuration, timer.isActive]);
@@ -95,11 +95,11 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
     const remaining = Math.max(timer.duration - elapsed, 0);
     const isCompleted = remaining === 0;
 
-    setTimer(prev => ({
+    setTimer((prev) => ({
       ...prev,
       elapsed,
       remaining,
-      isCompleted
+      isCompleted,
     }));
 
     // Handle completion
@@ -127,7 +127,7 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
 
   const handleStart = () => {
     const now = Date.now();
-    
+
     if (!timer.isActive) {
       // Starting fresh session
       startTimeRef.current = now;
@@ -139,20 +139,20 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
       pausedTimeRef.current += pauseDuration;
     }
 
-    setTimer(prev => ({
+    setTimer((prev) => ({
       ...prev,
       isActive: true,
       isPaused: false,
       startTime: startTimeRef.current,
-      pausedStartTime: undefined
+      pausedStartTime: undefined,
     }));
   };
 
   const handlePause = () => {
-    setTimer(prev => ({
+    setTimer((prev) => ({
       ...prev,
       isPaused: true,
-      pausedStartTime: Date.now()
+      pausedStartTime: Date.now(),
     }));
     onSessionPause?.();
   };
@@ -168,7 +168,7 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
       actualDuration: timer.elapsed,
       type: meditationType,
       ambientSound: soundEnabled ? ambientSound : undefined,
-      interrupted: timer.elapsed < timer.duration * 0.8 // Less than 80% completed
+      interrupted: timer.elapsed < timer.duration * 0.8, // Less than 80% completed
     };
 
     onSessionComplete?.(sessionData);
@@ -190,16 +190,16 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
       actualDuration: timer.duration,
       type: meditationType,
       ambientSound: soundEnabled ? ambientSound : undefined,
-      interrupted: false
+      interrupted: false,
     };
 
     onSessionComplete?.(sessionData);
 
-    setTimer(prev => ({
+    setTimer((prev) => ({
       ...prev,
       isActive: false,
       isPaused: false,
-      isCompleted: true
+      isCompleted: true,
     }));
   };
 
@@ -220,7 +220,7 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
       isPaused: false,
       isCompleted: false,
       pausedTime: 0,
-      intervals: []
+      intervals: [],
     });
   };
 
@@ -230,17 +230,17 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
       const audioContext = new AudioContext();
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
-      
+
       oscillator.connect(gainNode);
       gainNode.connect(audioContext.destination);
-      
+
       oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
       oscillator.frequency.setValueAtTime(600, audioContext.currentTime + 0.1);
       oscillator.frequency.setValueAtTime(400, audioContext.currentTime + 0.2);
-      
+
       gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-      
+
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.3);
     }
@@ -248,35 +248,35 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
 
   const getMeditationTypeColor = (type: MeditationType): string => {
     const colors = {
-      'mindfulness': 'bg-blue-500',
+      mindfulness: 'bg-blue-500',
       'breathing-exercise': 'bg-green-500',
       'guided-meditation': 'bg-purple-500',
       'body-scan': 'bg-indigo-500',
       'loving-kindness': 'bg-pink-500',
       'zen-meditation': 'bg-gray-500',
-      'free-meditation': 'bg-yellow-500'
+      'free-meditation': 'bg-yellow-500',
     };
     return colors[type] || 'bg-blue-500';
   };
 
   const getAmbientSoundIcon = (sound: AmbientSoundType): string => {
     const icons = {
-      'rain': '🌧️',
+      rain: '🌧️',
       'ocean-waves': '🌊',
-      'forest': '🌲',
-      'fireplace': '🔥',
+      forest: '🌲',
+      fireplace: '🔥',
       'white-noise': '📊',
       'tibetan-bowls': '🎵',
       'mountain-stream': '🏔️',
-      'thunder': '⛈️',
-      'wind': '💨',
-      'birds': '🐦',
-      'crickets': '🦗',
+      thunder: '⛈️',
+      wind: '💨',
+      birds: '🐦',
+      crickets: '🦗',
       'cafe-ambience': '☕',
-      'chimes': '🔔',
+      chimes: '🔔',
       'pink-noise': '📈',
       'brown-noise': '📉',
-      'silence': '🤫'
+      silence: '🤫',
     };
     return icons[sound] || '🔊';
   };
@@ -292,18 +292,25 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
           <span>Meditation Timer</span>
         </CardTitle>
         <CardDescription>
-          {timer.isCompleted ? 'Session Complete!' : 
-           timer.isActive ? `${meditationType.replace('-', ' ').toUpperCase()}` : 
-           'Ready to begin your practice'}
+          {timer.isCompleted
+            ? 'Session Complete!'
+            : timer.isActive
+              ? `${meditationType.replace('-', ' ').toUpperCase()}`
+              : 'Ready to begin your practice'}
         </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-6">
         {/* Timer Display */}
         <div className="text-center space-y-4">
-          <div className={`relative w-48 h-48 mx-auto rounded-full border-8 ${getMeditationTypeColor(meditationType)} border-opacity-20 flex items-center justify-center`}>
+          <div
+            className={`relative w-48 h-48 mx-auto rounded-full border-8 ${getMeditationTypeColor(meditationType)} border-opacity-20 flex items-center justify-center`}
+          >
             {/* Progress Ring */}
-            <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+            <svg
+              className="absolute inset-0 w-full h-full transform -rotate-90"
+              viewBox="0 0 100 100"
+            >
               <circle
                 cx="50"
                 cy="50"
@@ -326,7 +333,7 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
                 strokeLinecap="round"
               />
             </svg>
-            
+
             {/* Time Display */}
             <div className="text-center z-10">
               <div className="text-3xl font-mono font-bold text-foreground">
@@ -341,20 +348,14 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
           {/* Progress Bar */}
           <div className="space-y-2">
             <Progress value={progress} className="h-2" />
-            <div className="text-xs text-muted-foreground">
-              {Math.round(progress)}% complete
-            </div>
+            <div className="text-xs text-muted-foreground">{Math.round(progress)}% complete</div>
           </div>
         </div>
 
         {/* Control Buttons */}
         <div className="flex justify-center space-x-3">
           {!timer.isActive ? (
-            <Button
-              onClick={handleStart}
-              size="lg"
-              className="flex items-center space-x-2"
-            >
+            <Button onClick={handleStart} size="lg" className="flex items-center space-x-2">
               <Play className="h-5 w-5" />
               <span>Start</span>
             </Button>
@@ -380,7 +381,7 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
               </Button>
             </>
           )}
-          
+
           <Button
             onClick={handleReset}
             size="lg"
@@ -389,12 +390,8 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
           >
             <RotateCcw className="h-5 w-5" />
           </Button>
-          
-          <Button
-            onClick={() => setShowSettings(!showSettings)}
-            size="lg"
-            variant="ghost"
-          >
+
+          <Button onClick={() => setShowSettings(!showSettings)} size="lg" variant="ghost">
             <Settings className="h-5 w-5" />
           </Button>
         </div>
@@ -403,7 +400,7 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
         {showSettings && (
           <div className="space-y-4 border-t pt-4">
             <h3 className="font-semibold text-sm">Session Settings</h3>
-            
+
             {/* Duration Presets */}
             <div className="space-y-2">
               <label className="text-sm font-medium">Duration</label>
@@ -412,7 +409,7 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
                   <Button
                     key={duration}
                     size="sm"
-                    variant={selectedDuration === duration ? "default" : "outline"}
+                    variant={selectedDuration === duration ? 'default' : 'outline'}
                     onClick={() => setSelectedDuration(duration)}
                     disabled={timer.isActive}
                   >
@@ -426,18 +423,20 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
             <div className="space-y-2">
               <label className="text-sm font-medium">Type</label>
               <div className="grid grid-cols-2 gap-2 text-xs">
-                {['mindfulness', 'breathing-exercise', 'guided-meditation', 'body-scan'].map((type) => (
-                  <Button
-                    key={type}
-                    size="sm"
-                    variant={meditationType === type ? "default" : "outline"}
-                    onClick={() => setMeditationType(type as MeditationType)}
-                    disabled={timer.isActive}
-                    className="justify-start"
-                  >
-                    {type.replace('-', ' ')}
-                  </Button>
-                ))}
+                {['mindfulness', 'breathing-exercise', 'guided-meditation', 'body-scan'].map(
+                  (type) => (
+                    <Button
+                      key={type}
+                      size="sm"
+                      variant={meditationType === type ? 'default' : 'outline'}
+                      onClick={() => setMeditationType(type as MeditationType)}
+                      disabled={timer.isActive}
+                      className="justify-start"
+                    >
+                      {type.replace('-', ' ')}
+                    </Button>
+                  )
+                )}
               </div>
             </div>
 
@@ -445,29 +444,35 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-sm font-medium">Ambient Sound</label>
-                <Switch
-                  checked={soundEnabled}
-                  onCheckedChange={setSoundEnabled}
-                />
+                <Switch checked={soundEnabled} onCheckedChange={setSoundEnabled} />
               </div>
-              
+
               {soundEnabled && (
                 <>
                   <div className="grid grid-cols-3 gap-2 text-xs">
-                    {['rain', 'ocean-waves', 'forest', 'fireplace', 'white-noise', 'tibetan-bowls'].map((sound) => (
+                    {[
+                      'rain',
+                      'ocean-waves',
+                      'forest',
+                      'fireplace',
+                      'white-noise',
+                      'tibetan-bowls',
+                    ].map((sound) => (
                       <Button
                         key={sound}
                         size="sm"
-                        variant={ambientSound === sound ? "default" : "outline"}
+                        variant={ambientSound === sound ? 'default' : 'outline'}
                         onClick={() => setAmbientSound(sound as AmbientSoundType)}
                         className="flex flex-col items-center p-2 h-auto"
                       >
-                        <span className="text-lg mb-1">{getAmbientSoundIcon(sound as AmbientSoundType)}</span>
+                        <span className="text-lg mb-1">
+                          {getAmbientSoundIcon(sound as AmbientSoundType)}
+                        </span>
                         <span className="text-xs">{sound.replace('-', ' ')}</span>
                       </Button>
                     ))}
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="text-sm">Volume</span>
@@ -495,10 +500,7 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
                 <Bell className="h-4 w-4" />
                 <label className="text-sm font-medium">Completion Bell</label>
               </div>
-              <Switch
-                checked={bellEnabled}
-                onCheckedChange={setBellEnabled}
-              />
+              <Switch checked={bellEnabled} onCheckedChange={setBellEnabled} />
             </div>
           </div>
         )}
@@ -507,8 +509,8 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
         {(timer.isActive || timer.isCompleted) && (
           <div className="text-center space-y-2">
             <div className="flex justify-center space-x-2">
-              <Badge variant={timer.isCompleted ? "default" : "secondary"}>
-                {timer.isCompleted ? "Complete" : timer.isPaused ? "Paused" : "Active"}
+              <Badge variant={timer.isCompleted ? 'default' : 'secondary'}>
+                {timer.isCompleted ? 'Complete' : timer.isPaused ? 'Paused' : 'Active'}
               </Badge>
               {soundEnabled && (
                 <Badge variant="outline" className="flex items-center space-x-1">
@@ -517,7 +519,7 @@ export const MeditationTimer: React.FC<MeditationTimerProps> = ({
                 </Badge>
               )}
             </div>
-            
+
             {timer.isCompleted && (
               <div className="flex items-center justify-center space-x-2 text-green-600">
                 <Heart className="h-4 w-4" />

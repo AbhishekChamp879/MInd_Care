@@ -1,9 +1,18 @@
 // Context provider for activity logging across the platform
 import { createContext, useContext, useEffect } from 'react';
-import { useActivityLog, useAchievements, useMoodTracking, useGoals } from '@/hooks/useDashboardFeatures';
+import {
+  useActivityLog,
+  useAchievements,
+  useMoodTracking,
+  useGoals,
+} from '@/hooks/useDashboardFeatures';
 
 interface ActivityContextType {
-  logActivity: (type: 'chat' | 'resource' | 'forum' | 'booking', title: string, details?: string) => void;
+  logActivity: (
+    type: 'chat' | 'resource' | 'forum' | 'booking',
+    title: string,
+    details?: string
+  ) => void;
   checkAndUnlockAchievements: () => void;
 }
 
@@ -20,9 +29,13 @@ export const ActivityProvider = ({ children }: { children: React.ReactNode }) =>
     checkAchievements(activities, moods, goals);
   };
 
-  const logActivityWithAchievements = (type: 'chat' | 'resource' | 'forum' | 'booking', title: string, details?: string) => {
+  const logActivityWithAchievements = (
+    type: 'chat' | 'resource' | 'forum' | 'booking',
+    title: string,
+    details?: string
+  ) => {
     logActivity(type, title, details);
-    
+
     // Check achievements after logging activity
     setTimeout(() => {
       checkAndUnlockAchievements();
@@ -30,10 +43,12 @@ export const ActivityProvider = ({ children }: { children: React.ReactNode }) =>
   };
 
   return (
-    <ActivityContext.Provider value={{
-      logActivity: logActivityWithAchievements,
-      checkAndUnlockAchievements
-    }}>
+    <ActivityContext.Provider
+      value={{
+        logActivity: logActivityWithAchievements,
+        checkAndUnlockAchievements,
+      }}
+    >
       {children}
     </ActivityContext.Provider>
   );
@@ -48,7 +63,11 @@ export const useActivityContext = () => {
 };
 
 // Higher-order component to automatically log navigation activities
-export const withActivityLogging = (WrappedComponent: React.ComponentType<any>, activityType: 'chat' | 'resource' | 'forum' | 'booking', activityTitle: string) => {
+export const withActivityLogging = (
+  WrappedComponent: React.ComponentType<any>,
+  activityType: 'chat' | 'resource' | 'forum' | 'booking',
+  activityTitle: string
+) => {
   return (props: any) => {
     const { logActivity } = useActivityContext();
 

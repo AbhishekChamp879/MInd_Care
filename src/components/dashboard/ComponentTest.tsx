@@ -23,9 +23,7 @@ export const ComponentTest = () => {
     );
   } catch (error) {
     return (
-      <div className="text-red-500">
-        ❌ Error loading dashboard components: {error?.toString()}
-      </div>
+      <div className="text-red-500">❌ Error loading dashboard components: {error?.toString()}</div>
     );
   }
 };

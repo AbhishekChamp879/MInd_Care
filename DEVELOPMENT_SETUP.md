@@ -7,13 +7,14 @@ Welcome to MInd_Care! This guide will help you set up your development environme
 Before you begin, make sure you have the following installed on your system:
 
 ### Required Software
+
 - **Node.js** 18 or higher ([Download here](https://nodejs.org/))
 - **Git** ([Download here](https://git-scm.com/))
 - **Code Editor** (We recommend [VS Code](https://code.visualstudio.com/))
 
 ### Recommended Package Manager
-We recommend using **npm** for faster package management and development:
 
+We recommend using **npm** for faster package management and development:
 
 ## 🚀 Quick Setup
 
@@ -29,16 +30,19 @@ cd MInd_Care
 ### 2. Install Dependencies
 
 **Using Bun (Recommended):**
+
 ```bash
 bun install
 ```
 
 **Using npm:**
+
 ```bash
 npm install
 ```
 
 **Using yarn:**
+
 ```bash
 yarn install
 ```
@@ -46,21 +50,25 @@ yarn install
 ### 3. Start Development Server
 
 **Using Bun:**
+
 ```bash
 bun dev
 ```
 
 **Using npm:**
+
 ```bash
 npm run dev
 ```
 
 **Using yarn:**
+
 ```bash
 yarn dev
 ```
 
 ### 4. Open in Browser
+
 Navigate to `http://localhost:xxxx` to see the application running.
 
 ## 🌐 Platform-Specific Setup
@@ -77,6 +85,7 @@ Navigate to `http://localhost:xxxx` to see the application running.
    - During installation, choose "Git from the command line and also from 3rd-party software"
 
 3. **Install Bun (Optional but recommended)**
+
    ```powershell
    powershell -c "irm bun.sh/install.ps1 | iex"
    ```
@@ -91,16 +100,19 @@ Navigate to `http://localhost:xxxx` to see the application running.
 ### macOS Setup
 
 1. **Install Homebrew** (if not already installed)
+
    ```bash
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
 2. **Install Node.js**
+
    ```bash
    brew install node
    ```
 
 3. **Install Git**
+
    ```bash
    brew install git
    ```
@@ -113,11 +125,13 @@ Navigate to `http://localhost:xxxx` to see the application running.
 ### Linux (Ubuntu/Debian) Setup
 
 1. **Update package list**
+
    ```bash
    sudo apt update
    ```
 
 2. **Install Node.js**
+
    ```bash
    # Install Node.js 18.x
    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
@@ -125,6 +139,7 @@ Navigate to `http://localhost:xxxx` to see the application running.
    ```
 
 3. **Install Git**
+
    ```bash
    sudo apt install git
    ```
@@ -141,6 +156,7 @@ Navigate to `http://localhost:xxxx` to see the application running.
 1. **Install VS Code** from [code.visualstudio.com](https://code.visualstudio.com/)
 
 2. **Install Essential Extensions:**
+
    ```bash
    # Open VS Code in the project directory
    code .
@@ -156,16 +172,16 @@ Navigate to `http://localhost:xxxx` to see the application running.
    - **Bracket Pair Colorizer**
    - **GitLens**
 
-
-
 ### Other IDEs
 
 **WebStorm:**
+
 - Enable TypeScript support
 - Install Tailwind CSS plugin
 - Configure Prettier for formatting
 
 **Vim/Neovim:**
+
 - Install coc.nvim for TypeScript support
 - Use vim-prettier for code formatting
 
@@ -200,6 +216,7 @@ If all commands run without errors, you're ready to contribute! 🎉
 ### Issue: "command not found" errors
 
 **Solution:**
+
 - Make sure the software is properly installed
 - Restart your terminal/command prompt
 - Check your system's PATH environment variable
@@ -207,6 +224,7 @@ If all commands run without errors, you're ready to contribute! 🎉
 ### Issue: Permission errors on macOS/Linux
 
 **Solution:**
+
 ```bash
 # Fix npm permissions
 sudo chown -R $(whoami) ~/.npm
@@ -215,6 +233,7 @@ sudo chown -R $(whoami) ~/.npm
 ### Issue: Port 5173 already in use
 
 **Solution:**
+
 ```bash
 # Kill process using the port
 npx kill-port 5173
@@ -226,6 +245,7 @@ bun dev --port 3000
 ### Issue: ESLint errors in VS Code
 
 **Solution:**
+
 1. Install the ESLint extension
 2. Restart VS Code
 3. Run `bun run lint` to check for actual errors
@@ -233,6 +253,7 @@ bun dev --port 3000
 ### Issue: TypeScript errors
 
 **Solution:**
+
 1. Make sure TypeScript extension is enabled in VS Code
 2. Run `bun run lint` to see actual TypeScript errors
 3. Check that all dependencies are installed

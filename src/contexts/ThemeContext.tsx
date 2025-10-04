@@ -1,5 +1,10 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { EnhancedThemeSettings, DEFAULT_THEME_SETTINGS, calculateSunriseSunset, READING_MODE_STYLES } from '@/types/theme';
+import {
+  EnhancedThemeSettings,
+  DEFAULT_THEME_SETTINGS,
+  calculateSunriseSunset,
+  READING_MODE_STYLES,
+} from '@/types/theme';
 
 type Theme = 'light' | 'dark' | 'system' | 'auto';
 
@@ -47,14 +52,14 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       );
       const [sunriseHour, sunriseMin] = sunrise.split(':').map(Number);
       const [sunsetHour, sunsetMin] = sunset.split(':').map(Number);
-      
+
       startTime = sunsetHour * 60 + sunsetMin;
       endTime = sunriseHour * 60 + sunriseMin;
     } else {
       // Use manual schedule
       const [startHour, startMin] = settings.schedule.darkModeStart.split(':').map(Number);
       const [endHour, endMin] = settings.schedule.darkModeEnd.split(':').map(Number);
-      
+
       startTime = startHour * 60 + startMin;
       endTime = endHour * 60 + endMin;
     }
@@ -87,10 +92,10 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const root = window.document.documentElement;
     const newTheme = determineTheme();
     const isScheduled = checkScheduledTime();
-    
+
     setActualTheme(newTheme);
     setIsScheduledTime(isScheduled);
-    
+
     // Remove existing theme classes
     root.classList.remove('light', 'dark');
     root.classList.add(newTheme);
@@ -120,16 +125,28 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   // Apply reading mode styles
   useEffect(() => {
     const root = window.document.documentElement;
-    
+
     if (readingMode && settings.readingMode.enabled) {
       root.classList.add('reading-mode');
-      
+
       // Apply reading mode CSS variables
-      root.style.setProperty('--reading-font-size', READING_MODE_STYLES.fontSize[settings.readingMode.fontSize]);
-      root.style.setProperty('--reading-line-height', READING_MODE_STYLES.lineHeight[settings.readingMode.lineHeight]);
-      root.style.setProperty('--reading-font-family', READING_MODE_STYLES.fontFamily[settings.readingMode.fontFamily]);
-      root.style.setProperty('--reading-background', READING_MODE_STYLES.backgroundColor[settings.readingMode.backgroundColor]);
-      
+      root.style.setProperty(
+        '--reading-font-size',
+        READING_MODE_STYLES.fontSize[settings.readingMode.fontSize]
+      );
+      root.style.setProperty(
+        '--reading-line-height',
+        READING_MODE_STYLES.lineHeight[settings.readingMode.lineHeight]
+      );
+      root.style.setProperty(
+        '--reading-font-family',
+        READING_MODE_STYLES.fontFamily[settings.readingMode.fontFamily]
+      );
+      root.style.setProperty(
+        '--reading-background',
+        READING_MODE_STYLES.backgroundColor[settings.readingMode.backgroundColor]
+      );
+
       if (settings.readingMode.customBackground) {
         root.style.setProperty('--reading-custom-bg', settings.readingMode.customBackground);
       }
@@ -146,7 +163,12 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         root.classList.add('reading-warm-colors');
       }
     } else {
-      root.classList.remove('reading-mode', 'reading-high-contrast', 'reading-reduced-motion', 'reading-warm-colors');
+      root.classList.remove(
+        'reading-mode',
+        'reading-high-contrast',
+        'reading-reduced-motion',
+        'reading-warm-colors'
+      );
     }
   }, [readingMode, settings.readingMode]);
 
@@ -178,32 +200,34 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   }, [settings.theme]);
 
   const setTheme = (theme: Theme) => {
-    setSettings(prev => ({ ...prev, theme }));
+    setSettings((prev) => ({ ...prev, theme }));
   };
 
   const updateSettings = (newSettings: Partial<EnhancedThemeSettings>) => {
-    setSettings(prev => ({ ...prev, ...newSettings }));
+    setSettings((prev) => ({ ...prev, ...newSettings }));
   };
 
   const toggleReadingMode = () => {
-    setReadingMode(prev => !prev);
-    setSettings(prev => ({
+    setReadingMode((prev) => !prev);
+    setSettings((prev) => ({
       ...prev,
-      readingMode: { ...prev.readingMode, enabled: !prev.readingMode.enabled }
+      readingMode: { ...prev.readingMode, enabled: !prev.readingMode.enabled },
     }));
   };
 
   return (
-    <ThemeContext.Provider value={{ 
-      theme: settings.theme, 
-      actualTheme,
-      setTheme, 
-      settings,
-      updateSettings,
-      readingMode,
-      toggleReadingMode,
-      isScheduledTime
-    }}>
+    <ThemeContext.Provider
+      value={{
+        theme: settings.theme,
+        actualTheme,
+        setTheme,
+        settings,
+        updateSettings,
+        readingMode,
+        toggleReadingMode,
+        isScheduledTime,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );

@@ -53,8 +53,8 @@ export const mockUsers: Record<string, { user: User; password: string }> = {
       university: 'State University',
       major: 'Psychology',
       year: 'Junior',
-      studentId: 'STU-2024-001'
-    }
+      studentId: 'STU-2024-001',
+    },
   },
   'counselor@mindbuddy.com': {
     password: 'counselor123',
@@ -73,9 +73,14 @@ export const mockUsers: Record<string, { user: User; password: string }> = {
       joinDate: '2023-06-01',
       lastActive: new Date().toISOString(),
       license: 'Licensed Clinical Social Worker (LCSW)',
-      specialization: ['Anxiety Disorders', 'Depression', 'Student Counseling', 'Crisis Intervention'],
-      experience: '8 years'
-    }
+      specialization: [
+        'Anxiety Disorders',
+        'Depression',
+        'Student Counseling',
+        'Crisis Intervention',
+      ],
+      experience: '8 years',
+    },
   },
   'admin@mindbuddy.com': {
     password: 'admin123',
@@ -94,7 +99,7 @@ export const mockUsers: Record<string, { user: User; password: string }> = {
       joinDate: '2023-01-01',
       lastActive: new Date().toISOString(),
       department: 'System Administration',
-      permissions: ['user_management', 'system_settings', 'analytics_view', 'content_moderation']
-    }
-  }
+      permissions: ['user_management', 'system_settings', 'analytics_view', 'content_moderation'],
+    },
+  },
 };

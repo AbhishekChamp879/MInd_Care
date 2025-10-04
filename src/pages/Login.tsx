@@ -14,18 +14,18 @@ const Login = () => {
   const navigate = useNavigate();
   const { login, isLoading } = useAuth();
   const { toast } = useToast();
-  
+
   const [credentials, setCredentials] = useState<LoginCredentials>({
     email: '',
     password: '',
-    role: 'student'
+    role: 'student',
   });
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const success = await login(credentials);
-    
+
     if (success) {
       toast({
         title: 'Welcome to MindBuddy!',
@@ -36,7 +36,7 @@ const Login = () => {
       toast({
         title: 'Login Failed',
         description: 'Please check your credentials and try again.',
-        variant: 'destructive'
+        variant: 'destructive',
       });
     }
   };
@@ -46,30 +46,38 @@ const Login = () => {
     const demoCredentials = {
       student: { email: 'student@mindbuddy.com', password: 'student123' },
       counselor: { email: 'counselor@mindbuddy.com', password: 'counselor123' },
-      admin: { email: 'admin@mindbuddy.com', password: 'admin123' }
+      admin: { email: 'admin@mindbuddy.com', password: 'admin123' },
     };
-    
+
     setCredentials({
       ...demoCredentials[role],
-      role
+      role,
     });
   };
 
   const getRoleIcon = (role: string) => {
     switch (role) {
-      case 'student': return <GraduationCap className="h-4 w-4" />;
-      case 'counselor': return <Heart className="h-4 w-4" />;
-      case 'admin': return <Shield className="h-4 w-4" />;
-      default: return <User className="h-4 w-4" />;
+      case 'student':
+        return <GraduationCap className="h-4 w-4" />;
+      case 'counselor':
+        return <Heart className="h-4 w-4" />;
+      case 'admin':
+        return <Shield className="h-4 w-4" />;
+      default:
+        return <User className="h-4 w-4" />;
     }
   };
 
   const getRoleDescription = (role: string) => {
     switch (role) {
-      case 'student': return 'Access AI support, book sessions, and join peer forums';
-      case 'counselor': return 'Manage sessions, provide support, and access resources';
-      case 'admin': return 'View analytics, manage users, and oversee platform';
-      default: return '';
+      case 'student':
+        return 'Access AI support, book sessions, and join peer forums';
+      case 'counselor':
+        return 'Manage sessions, provide support, and access resources';
+      case 'admin':
+        return 'View analytics, manage users, and oversee platform';
+      default:
+        return '';
     }
   };
 
@@ -84,9 +92,7 @@ const Login = () => {
               MindBuddy
             </span>
           </Link>
-          <p className="text-muted-foreground">
-            Your trusted mental health companion
-          </p>
+          <p className="text-muted-foreground">Your trusted mental health companion</p>
         </div>
 
         <Card className="shadow-trust">
@@ -100,15 +106,15 @@ const Login = () => {
           <CardContent>
             <Tabs defaultValue="student" className="w-full">
               <TabsList className="grid w-full grid-cols-3 mb-6">
-                <TabsTrigger 
-                  value="student" 
+                <TabsTrigger
+                  value="student"
                   onClick={() => handleRoleChange('student')}
                   className="flex items-center space-x-1"
                 >
                   <GraduationCap className="h-4 w-4" />
                   <span className="hidden sm:inline">Student</span>
                 </TabsTrigger>
-                <TabsTrigger 
+                <TabsTrigger
                   value="counselor"
                   onClick={() => handleRoleChange('counselor')}
                   className="flex items-center space-x-1"
@@ -116,7 +122,7 @@ const Login = () => {
                   <Heart className="h-4 w-4" />
                   <span className="hidden sm:inline">Counselor</span>
                 </TabsTrigger>
-                <TabsTrigger 
+                <TabsTrigger
                   value="admin"
                   onClick={() => handleRoleChange('admin')}
                   className="flex items-center space-x-1"
@@ -133,9 +139,7 @@ const Login = () => {
                       {getRoleIcon(role)}
                       <span className="font-medium capitalize">{role} Portal</span>
                     </div>
-                    <p className="text-sm text-muted-foreground">
-                      {getRoleDescription(role)}
-                    </p>
+                    <p className="text-sm text-muted-foreground">{getRoleDescription(role)}</p>
                   </div>
                 </TabsContent>
               ))}
@@ -151,7 +155,7 @@ const Login = () => {
                     type="email"
                     placeholder="Enter your email"
                     value={credentials.email}
-                    onChange={(e) => setCredentials({...credentials, email: e.target.value})}
+                    onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
                     className="pl-10"
                     required
                   />
@@ -167,17 +171,17 @@ const Login = () => {
                     type="password"
                     placeholder="Enter your password"
                     value={credentials.password}
-                    onChange={(e) => setCredentials({...credentials, password: e.target.value})}
+                    onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                     className="pl-10"
                     required
                   />
                 </div>
               </div>
 
-              <Button 
-                type="submit" 
-                variant="hero" 
-                size="lg" 
+              <Button
+                type="submit"
+                variant="hero"
+                size="lg"
                 className="w-full"
                 disabled={isLoading}
               >
@@ -189,9 +193,15 @@ const Login = () => {
             <div className="mt-6 p-3 bg-primary-light/20 rounded-lg text-sm">
               <p className="font-medium text-center mb-2">Demo Credentials:</p>
               <div className="space-y-1 text-xs">
-                <p><strong>Student:</strong> student@mindbuddy.com / student123</p>
-                <p><strong>Counselor:</strong> counselor@mindbuddy.com / counselor123</p>
-                <p><strong>Admin:</strong> admin@mindbuddy.com / admin123</p>
+                <p>
+                  <strong>Student:</strong> student@mindbuddy.com / student123
+                </p>
+                <p>
+                  <strong>Counselor:</strong> counselor@mindbuddy.com / counselor123
+                </p>
+                <p>
+                  <strong>Admin:</strong> admin@mindbuddy.com / admin123
+                </p>
               </div>
             </div>
 

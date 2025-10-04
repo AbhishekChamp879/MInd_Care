@@ -7,12 +7,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
-import { 
-  Video, 
-  VideoOff, 
-  Mic, 
-  MicOff, 
-  Phone, 
+import {
+  Video,
+  VideoOff,
+  Mic,
+  MicOff,
+  Phone,
   PhoneOff,
   Monitor,
   Settings,
@@ -31,7 +31,7 @@ import {
   CheckCircle,
   AlertTriangle,
   Info,
-  X
+  X,
 } from 'lucide-react';
 
 interface SessionNotes {
@@ -50,13 +50,13 @@ interface VideoCallWidgetProps {
   isEmergency?: boolean;
 }
 
-const VideoCallWidget = ({ 
-  isOpen, 
-  onClose, 
-  counselorName = "Dr. Sarah Wilson",
+const VideoCallWidget = ({
+  isOpen,
+  onClose,
+  counselorName = 'Dr. Sarah Wilson',
   sessionType = 'video',
   sessionId = `session_${Date.now()}`,
-  isEmergency = false
+  isEmergency = false,
 }: VideoCallWidgetProps) => {
   // Call state
   const [isVideoOn, setIsVideoOn] = useState(sessionType === 'video');
@@ -65,30 +65,36 @@ const VideoCallWidget = ({
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [callDuration, setCallDuration] = useState(0);
-  const [connectionStatus, setConnectionStatus] = useState<'disconnected' | 'connecting' | 'connected' | 'reconnecting'>('disconnected');
-  const [connectionQuality, setConnectionQuality] = useState<'excellent' | 'good' | 'poor' | 'unstable'>('excellent');
-  
+  const [connectionStatus, setConnectionStatus] = useState<
+    'disconnected' | 'connecting' | 'connected' | 'reconnecting'
+  >('disconnected');
+  const [connectionQuality, setConnectionQuality] = useState<
+    'excellent' | 'good' | 'poor' | 'unstable'
+  >('excellent');
+
   // Session management
   const [sessionNotes, setSessionNotes] = useState<SessionNotes[]>([]);
   const [newNote, setNewNote] = useState('');
   const [showChat, setShowChat] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
-  const [chatMessages, setChatMessages] = useState<Array<{id: string, sender: string, message: string, timestamp: Date}>>([]);
+  const [chatMessages, setChatMessages] = useState<
+    Array<{ id: string; sender: string; message: string; timestamp: Date }>
+  >([]);
   const [chatInput, setChatInput] = useState('');
-  
+
   // WebRTC refs
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
   const localStreamRef = useRef<MediaStream | null>(null);
   const dataChannelRef = useRef<RTCDataChannel | null>(null);
-  
+
   // Session timer
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (connectionStatus === 'connected') {
       timer = setInterval(() => {
-        setCallDuration(prev => prev + 1);
+        setCallDuration((prev) => prev + 1);
       }, 1000);
     }
     return () => clearInterval(timer);
@@ -100,56 +106,59 @@ const VideoCallWidget = ({
       // Get user media
       const stream = await navigator.mediaDevices.getUserMedia({
         video: isVideoOn,
-        audio: isAudioOn
+        audio: isAudioOn,
       });
-      
+
       localStreamRef.current = stream;
-      
+
       if (localVideoRef.current) {
         localVideoRef.current.srcObject = stream;
       }
-      
+
       // Create peer connection
       const configuration = {
         iceServers: [
           { urls: 'stun:stun.l.google.com:19302' },
-          { urls: 'stun:stun1.l.google.com:19302' }
-        ]
+          { urls: 'stun:stun1.l.google.com:19302' },
+        ],
       };
-      
+
       const peerConnection = new RTCPeerConnection(configuration);
       peerConnectionRef.current = peerConnection;
-      
+
       // Add local stream to peer connection
-      stream.getTracks().forEach(track => {
+      stream.getTracks().forEach((track) => {
         peerConnection.addTrack(track, stream);
       });
-      
+
       // Handle remote stream
       peerConnection.ontrack = (event) => {
         if (remoteVideoRef.current) {
           remoteVideoRef.current.srcObject = event.streams[0];
         }
       };
-      
+
       // Create data channel for chat
       const dataChannel = peerConnection.createDataChannel('chat');
       dataChannelRef.current = dataChannel;
-      
+
       dataChannel.onopen = () => {
         console.log('Data channel opened');
       };
-      
+
       dataChannel.onmessage = (event) => {
         const message = JSON.parse(event.data);
-        setChatMessages(prev => [...prev, {
-          id: Date.now().toString(),
-          sender: counselorName,
-          message: message.content,
-          timestamp: new Date()
-        }]);
+        setChatMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now().toString(),
+            sender: counselorName,
+            message: message.content,
+            timestamp: new Date(),
+          },
+        ]);
       };
-      
+
       // Handle connection state changes
       peerConnection.onconnectionstatechange = () => {
         switch (peerConnection.connectionState) {
@@ -167,7 +176,7 @@ const VideoCallWidget = ({
             break;
         }
       };
-      
+
       // Monitor connection quality
       const checkConnectionQuality = async () => {
         const stats = await peerConnection.getStats();
@@ -176,7 +185,7 @@ const VideoCallWidget = ({
             const packetsLost = report.packetsLost || 0;
             const packetsReceived = report.packetsReceived || 1;
             const lossRate = packetsLost / (packetsLost + packetsReceived);
-            
+
             if (lossRate < 0.02) setConnectionQuality('excellent');
             else if (lossRate < 0.05) setConnectionQuality('good');
             else if (lossRate < 0.1) setConnectionQuality('poor');
@@ -184,12 +193,13 @@ const VideoCallWidget = ({
           }
         });
       };
-      
+
       setInterval(checkConnectionQuality, 5000);
-      
     } catch (error) {
       console.error('Error initializing WebRTC:', error);
-      alert('Failed to initialize video call. Please check your camera and microphone permissions.');
+      alert(
+        'Failed to initialize video call. Please check your camera and microphone permissions.'
+      );
     }
   };
 
@@ -228,15 +238,15 @@ const VideoCallWidget = ({
       if (!isScreenSharing) {
         const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
         const videoTrack = screenStream.getVideoTracks()[0];
-        
+
         if (peerConnectionRef.current) {
-          const sender = peerConnectionRef.current.getSenders().find(s => 
-            s.track && s.track.kind === 'video'
-          );
+          const sender = peerConnectionRef.current
+            .getSenders()
+            .find((s) => s.track && s.track.kind === 'video');
           if (sender) {
             await sender.replaceTrack(videoTrack);
           }
-          
+
           videoTrack.onended = () => {
             setIsScreenSharing(false);
             // Restore camera
@@ -246,7 +256,7 @@ const VideoCallWidget = ({
             }
           };
         }
-        
+
         setIsScreenSharing(true);
       }
     } catch (error) {
@@ -256,7 +266,7 @@ const VideoCallWidget = ({
 
   const handleEndCall = () => {
     if (localStreamRef.current) {
-      localStreamRef.current.getTracks().forEach(track => track.stop());
+      localStreamRef.current.getTracks().forEach((track) => track.stop());
     }
     if (peerConnectionRef.current) {
       peerConnectionRef.current.close();
@@ -270,15 +280,15 @@ const VideoCallWidget = ({
         id: Date.now().toString(),
         sender: 'You',
         message: chatInput,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-      
-      setChatMessages(prev => [...prev, message]);
-      
+
+      setChatMessages((prev) => [...prev, message]);
+
       if (dataChannelRef.current.readyState === 'open') {
         dataChannelRef.current.send(JSON.stringify({ content: chatInput }));
       }
-      
+
       setChatInput('');
     }
   };
@@ -295,36 +305,48 @@ const VideoCallWidget = ({
         id: Date.now().toString(),
         timestamp: new Date(),
         content: newNote,
-        type: 'client'
+        type: 'client',
       };
-      setSessionNotes(prev => [...prev, note]);
+      setSessionNotes((prev) => [...prev, note]);
       setNewNote('');
     }
   };
 
   const getConnectionStatusColor = () => {
     switch (connectionStatus) {
-      case 'connected': return 'bg-green-500';
-      case 'connecting': return 'bg-yellow-500';
-      case 'reconnecting': return 'bg-orange-500';
-      default: return 'bg-red-500';
+      case 'connected':
+        return 'bg-green-500';
+      case 'connecting':
+        return 'bg-yellow-500';
+      case 'reconnecting':
+        return 'bg-orange-500';
+      default:
+        return 'bg-red-500';
     }
   };
 
   const getQualityColor = () => {
     switch (connectionQuality) {
-      case 'excellent': return 'text-green-500';
-      case 'good': return 'text-blue-500';
-      case 'poor': return 'text-orange-500';
-      default: return 'text-red-500';
+      case 'excellent':
+        return 'text-green-500';
+      case 'good':
+        return 'text-blue-500';
+      case 'poor':
+        return 'text-orange-500';
+      default:
+        return 'text-red-500';
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className={`fixed inset-0 z-50 bg-background/95 backdrop-blur-sm ${isFullscreen ? '' : 'p-4'}`}>
-      <Card className={`${isFullscreen ? 'h-full w-full rounded-none' : 'max-w-4xl mx-auto h-full'} bg-gradient-aurora border-0`}>
+    <div
+      className={`fixed inset-0 z-50 bg-background/95 backdrop-blur-sm ${isFullscreen ? '' : 'p-4'}`}
+    >
+      <Card
+        className={`${isFullscreen ? 'h-full w-full rounded-none' : 'max-w-4xl mx-auto h-full'} bg-gradient-aurora border-0`}
+      >
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between text-white">
             <div className="flex items-center space-x-3">
@@ -340,9 +362,7 @@ const VideoCallWidget = ({
                   {connectionStatus === 'connected' && (
                     <>
                       <span className="text-sm">{formatDuration(callDuration)}</span>
-                      <span className={`text-xs ${getQualityColor()}`}>
-                        {connectionQuality}
-                      </span>
+                      <span className={`text-xs ${getQualityColor()}`}>{connectionQuality}</span>
                     </>
                   )}
                   {isEmergency && (
@@ -395,9 +415,11 @@ const VideoCallWidget = ({
                       <div className="text-center text-white">
                         <Users className="h-12 w-12 mx-auto mb-2 opacity-50" />
                         <p>
-                          {connectionStatus === 'connecting' ? 'Connecting to counselor...' : 
-                           connectionStatus === 'reconnecting' ? 'Reconnecting...' : 
-                           'Waiting for counselor...'}
+                          {connectionStatus === 'connecting'
+                            ? 'Connecting to counselor...'
+                            : connectionStatus === 'reconnecting'
+                              ? 'Reconnecting...'
+                              : 'Waiting for counselor...'}
                         </p>
                       </div>
                     </div>
@@ -447,7 +469,7 @@ const VideoCallWidget = ({
           <div className="flex items-center justify-center space-x-4 p-4 bg-black/20 rounded-lg">
             {/* Audio Control */}
             <Button
-              variant={isAudioOn ? "secondary" : "destructive"}
+              variant={isAudioOn ? 'secondary' : 'destructive'}
               size="lg"
               onClick={toggleAudio}
               className="rounded-full w-12 h-12 p-0"
@@ -459,7 +481,7 @@ const VideoCallWidget = ({
             {/* Video Control (only for video calls) */}
             {sessionType === 'video' && (
               <Button
-                variant={isVideoOn ? "secondary" : "destructive"}
+                variant={isVideoOn ? 'secondary' : 'destructive'}
                 size="lg"
                 onClick={toggleVideo}
                 className="rounded-full w-12 h-12 p-0"
@@ -471,7 +493,7 @@ const VideoCallWidget = ({
 
             {/* Screen Share */}
             <Button
-              variant={isScreenSharing ? "default" : "outline"}
+              variant={isScreenSharing ? 'default' : 'outline'}
               size="lg"
               onClick={toggleScreenShare}
               className="rounded-full w-12 h-12 p-0"
@@ -483,7 +505,7 @@ const VideoCallWidget = ({
 
             {/* Speaker Control */}
             <Button
-              variant={isSpeakerOn ? "secondary" : "outline"}
+              variant={isSpeakerOn ? 'secondary' : 'outline'}
               size="lg"
               onClick={() => setIsSpeakerOn(!isSpeakerOn)}
               className="rounded-full w-12 h-12 p-0"
@@ -494,7 +516,7 @@ const VideoCallWidget = ({
 
             {/* Chat Toggle */}
             <Button
-              variant={showChat ? "default" : "outline"}
+              variant={showChat ? 'default' : 'outline'}
               size="lg"
               onClick={() => setShowChat(!showChat)}
               className="rounded-full w-12 h-12 p-0"
@@ -505,7 +527,7 @@ const VideoCallWidget = ({
 
             {/* Notes Toggle */}
             <Button
-              variant={showNotes ? "default" : "outline"}
+              variant={showNotes ? 'default' : 'outline'}
               size="lg"
               onClick={() => setShowNotes(!showNotes)}
               className="rounded-full w-12 h-12 p-0"
@@ -534,7 +556,7 @@ const VideoCallWidget = ({
                 Session Chat
               </h4>
               <div className="h-40 overflow-y-auto space-y-2 mb-3">
-                {chatMessages.map(msg => (
+                {chatMessages.map((msg) => (
                   <div key={msg.id} className="text-sm">
                     <span className="text-white/60">{msg.sender}:</span>
                     <span className="text-white ml-2">{msg.message}</span>
@@ -563,7 +585,7 @@ const VideoCallWidget = ({
                 Session Notes
               </h4>
               <div className="space-y-2 mb-3 max-h-40 overflow-y-auto">
-                {sessionNotes.map(note => (
+                {sessionNotes.map((note) => (
                   <div key={note.id} className="text-sm bg-white/10 rounded p-2">
                     <div className="text-white/60 text-xs">
                       {note.timestamp.toLocaleTimeString()} - {note.type}
@@ -613,19 +635,14 @@ const VideoCallWidget = ({
             <div className="text-center">
               {connectionStatus === 'disconnected' && (
                 <>
-                  <Button
-                    variant="hero"
-                    onClick={handleConnect}
-                    className="mb-2"
-                  >
+                  <Button variant="hero" onClick={handleConnect} className="mb-2">
                     <Phone className="h-4 w-4 mr-2" />
                     Join Session
                   </Button>
                   <p className="text-sm text-white/80">
-                    {isEmergency 
-                      ? "Emergency session ready - click to connect immediately"
-                      : "Click to start your confidential counseling session"
-                    }
+                    {isEmergency
+                      ? 'Emergency session ready - click to connect immediately'
+                      : 'Click to start your confidential counseling session'}
                   </p>
                 </>
               )}

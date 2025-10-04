@@ -2,17 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { 
-  Wind, 
-  Play, 
-  Pause, 
-  RotateCcw, 
-  Volume2, 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Wind,
+  Play,
+  Pause,
+  RotateCcw,
+  Volume2,
   VolumeX,
   Timer,
   Heart,
-  CheckCircle
+  CheckCircle,
 } from 'lucide-react';
 
 interface BreathingExercise {
@@ -36,7 +42,7 @@ const BREATHING_EXERCISES: BreathingExercise[] = [
     description: 'A calming technique that helps reduce anxiety and promote sleep',
     pattern: { inhale: 4, hold: 7, exhale: 8 },
     totalDuration: 3,
-    benefits: ['Reduces anxiety', 'Improves sleep', 'Calms nervous system']
+    benefits: ['Reduces anxiety', 'Improves sleep', 'Calms nervous system'],
   },
   {
     id: 'box',
@@ -44,7 +50,7 @@ const BREATHING_EXERCISES: BreathingExercise[] = [
     description: 'Equal-count breathing used by Navy SEALs for stress management',
     pattern: { inhale: 4, hold: 4, exhale: 4, holdEmpty: 4 },
     totalDuration: 5,
-    benefits: ['Reduces stress', 'Improves focus', 'Enhances performance']
+    benefits: ['Reduces stress', 'Improves focus', 'Enhances performance'],
   },
   {
     id: 'coherent',
@@ -52,7 +58,7 @@ const BREATHING_EXERCISES: BreathingExercise[] = [
     description: 'Simple 5-second in, 5-second out pattern for balance',
     pattern: { inhale: 5, hold: 0, exhale: 5 },
     totalDuration: 10,
-    benefits: ['Balances nervous system', 'Improves heart rate variability', 'Reduces stress']
+    benefits: ['Balances nervous system', 'Improves heart rate variability', 'Reduces stress'],
   },
   {
     id: 'bellows',
@@ -60,66 +66,74 @@ const BREATHING_EXERCISES: BreathingExercise[] = [
     description: 'Energizing breath to increase alertness and focus',
     pattern: { inhale: 2, hold: 0, exhale: 2 },
     totalDuration: 2,
-    benefits: ['Increases energy', 'Improves alertness', 'Enhances focus']
-  }
+    benefits: ['Increases energy', 'Improves alertness', 'Enhances focus'],
+  },
 ];
 
 const BreathingExercises = () => {
-  const [selectedExercise, setSelectedExercise] = useState<BreathingExercise>(BREATHING_EXERCISES[0]);
+  const [selectedExercise, setSelectedExercise] = useState<BreathingExercise>(
+    BREATHING_EXERCISES[0]
+  );
   const [isActive, setIsActive] = useState(false);
-  const [currentPhase, setCurrentPhase] = useState<'inhale' | 'hold' | 'exhale' | 'holdEmpty'>('inhale');
+  const [currentPhase, setCurrentPhase] = useState<'inhale' | 'hold' | 'exhale' | 'holdEmpty'>(
+    'inhale'
+  );
   const [phaseProgress, setPhaseProgress] = useState(0);
   const [cycleCount, setCycleCount] = useState(0);
   const [totalProgress, setTotalProgress] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [sessionComplete, setSessionComplete] = useState(false);
 
-  const totalCycles = selectedExercise.totalDuration * 60 / (
-    selectedExercise.pattern.inhale + 
-    selectedExercise.pattern.hold + 
-    selectedExercise.pattern.exhale + 
-    (selectedExercise.pattern.holdEmpty || 0)
-  );
+  const totalCycles =
+    (selectedExercise.totalDuration * 60) /
+    (selectedExercise.pattern.inhale +
+      selectedExercise.pattern.hold +
+      selectedExercise.pattern.exhale +
+      (selectedExercise.pattern.holdEmpty || 0));
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
     if (isActive && !sessionComplete) {
       interval = setInterval(() => {
-        setPhaseProgress(prev => {
+        setPhaseProgress((prev) => {
           const currentPhaseDuration = selectedExercise.pattern[currentPhase];
-          
+
           if (prev >= 100) {
             // Move to next phase
-            const phases: Array<keyof typeof selectedExercise.pattern> = ['inhale', 'hold', 'exhale'];
+            const phases: Array<keyof typeof selectedExercise.pattern> = [
+              'inhale',
+              'hold',
+              'exhale',
+            ];
             if (selectedExercise.pattern.holdEmpty) {
               phases.push('holdEmpty');
             }
-            
+
             const currentIndex = phases.indexOf(currentPhase);
             const nextIndex = (currentIndex + 1) % phases.length;
-            
+
             if (nextIndex === 0) {
               // Completed a full cycle
-              setCycleCount(prev => {
+              setCycleCount((prev) => {
                 const newCount = prev + 1;
                 const newTotalProgress = (newCount / totalCycles) * 100;
                 setTotalProgress(newTotalProgress);
-                
+
                 if (newCount >= totalCycles) {
                   setSessionComplete(true);
                   setIsActive(false);
                 }
-                
+
                 return newCount;
               });
             }
-            
+
             setCurrentPhase(phases[nextIndex]);
             return 0;
           }
-          
-          return prev + (100 / (currentPhaseDuration * 1000 / 100)); // Update every 100ms
+
+          return prev + 100 / ((currentPhaseDuration * 1000) / 100); // Update every 100ms
         });
       }, 100);
     }
@@ -203,7 +217,7 @@ const BreathingExercises = () => {
           </div>
         </div>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Take a moment to reconnect with your breath. These guided exercises help reduce stress, 
+          Take a moment to reconnect with your breath. These guided exercises help reduce stress,
           improve focus, and promote overall well-being.
         </p>
       </div>
@@ -221,7 +235,7 @@ const BreathingExercises = () => {
             <Select
               value={selectedExercise.id}
               onValueChange={(value) => {
-                const exercise = BREATHING_EXERCISES.find(ex => ex.id === value);
+                const exercise = BREATHING_EXERCISES.find((ex) => ex.id === value);
                 if (exercise) {
                   setSelectedExercise(exercise);
                   resetExercise();
@@ -283,11 +297,7 @@ const BreathingExercises = () => {
                 <Timer className="h-4 w-4" />
                 <span className="text-sm">{selectedExercise.totalDuration} minutes</span>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSoundEnabled(!soundEnabled)}
-              >
+              <Button variant="ghost" size="sm" onClick={() => setSoundEnabled(!soundEnabled)}>
                 {soundEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
               </Button>
             </div>
@@ -300,13 +310,13 @@ const BreathingExercises = () => {
             <div className="flex flex-col items-center space-y-8">
               {/* Breathing Circle */}
               <div className="relative flex items-center justify-center w-64 h-64">
-                <div 
+                <div
                   className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500/30 to-green-500/30 transition-transform duration-1000 ease-in-out flex items-center justify-center"
                   style={{ transform: getCircleScale() }}
                 >
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-green-500 opacity-80" />
                 </div>
-                
+
                 {/* Progress Ring */}
                 <svg className="absolute w-64 h-64 -rotate-90">
                   <circle
@@ -335,7 +345,9 @@ const BreathingExercises = () => {
 
               {/* Phase Instruction */}
               <div className="text-center space-y-2">
-                <h2 className={`text-3xl font-bold transition-colors duration-300 ${getPhaseColor()}`}>
+                <h2
+                  className={`text-3xl font-bold transition-colors duration-300 ${getPhaseColor()}`}
+                >
                   {getPhaseInstruction()}
                 </h2>
                 <p className="text-muted-foreground">
@@ -356,7 +368,7 @@ const BreathingExercises = () => {
                     Pause
                   </Button>
                 ) : null}
-                
+
                 <Button onClick={resetExercise} variant="outline" size="lg">
                   <RotateCcw className="h-5 w-5 mr-2" />
                   Reset
@@ -367,7 +379,9 @@ const BreathingExercises = () => {
               <div className="w-full max-w-md space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>Progress</span>
-                  <span>{cycleCount} of {Math.ceil(totalCycles)} cycles</span>
+                  <span>
+                    {cycleCount} of {Math.ceil(totalCycles)} cycles
+                  </span>
                 </div>
                 <Progress value={totalProgress} className="h-2" />
               </div>
@@ -379,7 +393,8 @@ const BreathingExercises = () => {
                     <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
                     <h3 className="font-semibold text-green-800">Session Complete!</h3>
                     <p className="text-sm text-green-600 mt-1">
-                      Great job! You've completed your {selectedExercise.totalDuration}-minute breathing session.
+                      Great job! You've completed your {selectedExercise.totalDuration}-minute
+                      breathing session.
                     </p>
                     <Button onClick={resetExercise} className="mt-3" size="sm">
                       Start New Session

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { 
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -11,7 +11,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useMoodTracking } from '@/hooks/useDashboardFeatures';
-import { useRealTimeUpdates, useSmoothAnimations, useStreakTracking } from '@/hooks/useRealTimeFeatures';
+import {
+  useRealTimeUpdates,
+  useSmoothAnimations,
+  useStreakTracking,
+} from '@/hooks/useRealTimeFeatures';
 import { showRealTimeNotification } from '@/components/dashboard/RealTimeFeedback';
 import notificationService from '@/services/notificationService';
 import { Heart, ChevronDown, Clock, TrendingUp, TrendingDown, Minus } from 'lucide-react';
@@ -21,7 +25,7 @@ const moodEmojis = {
   2: { emoji: '😕', label: 'Sad', color: 'text-orange-500' },
   3: { emoji: '😐', label: 'Neutral', color: 'text-yellow-500' },
   4: { emoji: '😊', label: 'Happy', color: 'text-green-500' },
-  5: { emoji: '😄', label: 'Very Happy', color: 'text-blue-500' }
+  5: { emoji: '😄', label: 'Very Happy', color: 'text-blue-500' },
 };
 
 interface QuickMoodHeaderProps {
@@ -33,7 +37,7 @@ interface QuickMoodHeaderProps {
 export const QuickMoodHeader: React.FC<QuickMoodHeaderProps> = ({
   variant = 'button',
   showTrend = false,
-  className = ''
+  className = '',
 }) => {
   const { addMoodEntry, getTodayMood, getWeeklyMoodAverage, getMoodTrend } = useMoodTracking();
   const { triggerUpdate } = useRealTimeUpdates();
@@ -48,17 +52,20 @@ export const QuickMoodHeader: React.FC<QuickMoodHeaderProps> = ({
     try {
       await smoothTransition(() => {
         addMoodEntry(mood);
-        
+
         // Update streak and trigger real-time updates
         const newStreak = updateStreak('mood_tracking');
         triggerUpdate('mood_logged', { mood: mood, streak: newStreak });
-        
+
         // Mark mood reminder notification as acted upon if present
         notificationService.markNotificationAsActedUpon('mood-reminder');
-        
+
         // Show success notification
-        showRealTimeNotification('success', `Mood logged! ${moodEmojis[mood as keyof typeof moodEmojis].label}`);
-        
+        showRealTimeNotification(
+          'success',
+          `Mood logged! ${moodEmojis[mood as keyof typeof moodEmojis].label}`
+        );
+
         // Check for streak milestones
         if (newStreak > 0 && newStreak % 3 === 0) {
           showRealTimeNotification('milestone', `🔥 ${newStreak} day mood tracking streak!`);
@@ -71,17 +78,23 @@ export const QuickMoodHeader: React.FC<QuickMoodHeaderProps> = ({
 
   const getTrendIcon = () => {
     switch (trend) {
-      case 'improving': return <TrendingUp className="h-3 w-3 text-green-500" />;
-      case 'declining': return <TrendingDown className="h-3 w-3 text-red-500" />;
-      default: return <Minus className="h-3 w-3 text-gray-500" />;
+      case 'improving':
+        return <TrendingUp className="h-3 w-3 text-green-500" />;
+      case 'declining':
+        return <TrendingDown className="h-3 w-3 text-red-500" />;
+      default:
+        return <Minus className="h-3 w-3 text-gray-500" />;
     }
   };
 
   const getTrendText = () => {
     switch (trend) {
-      case 'improving': return 'Improving';
-      case 'declining': return 'Declining';
-      default: return 'Stable';
+      case 'improving':
+        return 'Improving';
+      case 'declining':
+        return 'Declining';
+      default:
+        return 'Stable';
     }
   };
 
@@ -119,7 +132,7 @@ export const QuickMoodHeader: React.FC<QuickMoodHeaderProps> = ({
             ))}
           </div>
         )}
-        
+
         {showTrend && weeklyAverage > 0 && (
           <div className="flex items-center space-x-1 text-xs text-muted-foreground">
             {getTrendIcon()}
@@ -147,7 +160,7 @@ export const QuickMoodHeader: React.FC<QuickMoodHeaderProps> = ({
         <DropdownMenuContent align="end" className="w-48">
           <DropdownMenuLabel>Quick Mood Check-in</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          
+
           {todayMood ? (
             <div className="p-2 text-center">
               <div className="text-lg mb-1">{moodEmojis[todayMood.mood].emoji}</div>
@@ -157,13 +170,16 @@ export const QuickMoodHeader: React.FC<QuickMoodHeaderProps> = ({
               </div>
               <div className="flex items-center justify-center text-xs text-muted-foreground mt-1">
                 <Clock className="h-3 w-3 mr-1" />
-                {new Date(todayMood.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                {new Date(todayMood.timestamp).toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
               </div>
             </div>
           ) : (
             <>
               {Object.entries(moodEmojis).map(([value, { emoji, label }]) => (
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   key={value}
                   onClick={() => handleQuickMoodLog(Number(value))}
                   className="flex items-center space-x-2 cursor-pointer"
@@ -174,7 +190,7 @@ export const QuickMoodHeader: React.FC<QuickMoodHeaderProps> = ({
               ))}
             </>
           )}
-          
+
           {showTrend && weeklyAverage > 0 && (
             <>
               <DropdownMenuSeparator />

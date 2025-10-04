@@ -3,7 +3,17 @@
   "description": "A comprehensive mental health support platform built with React, TypeScript, and modern web technologies",
   "version": "1.0.0",
   "type": "module",
-  "keywords": ["mental-health", "healthcare", "react", "typescript", "vite", "tailwind", "shadcn", "open-source", "hacktoberfest"],
+  "keywords": [
+    "mental-health",
+    "healthcare",
+    "react",
+    "typescript",
+    "vite",
+    "tailwind",
+    "shadcn",
+    "open-source",
+    "hacktoberfest"
+  ],
   "author": "Abhishek Kumar Giri",
   "license": "MIT",
   "repository": {
@@ -14,14 +24,15 @@
     "url": "https://github.com/AbhishekChamp879/MInd_Care/issues"
   },
   "homepage": "https://github.com/AbhishekChamp879/MInd_Care#readme",
- "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "build:dev": "vite build --mode development",
-  "lint": "eslint .",
-  "preview": "vite preview"
-},
-
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:dev": "vite build --mode development",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "format:check": "prettier --check .",
+    "format": "prettier --write ."
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.11",
@@ -88,6 +99,7 @@
     "globals": "^15.15.0",
     "lovable-tagger": "^1.1.10",
     "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.38.0",

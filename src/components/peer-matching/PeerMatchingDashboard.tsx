@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
-import { 
+import {
   Users,
   MessageCircle,
   Star,
@@ -30,7 +30,7 @@ import {
   CheckCircle,
   AlertCircle,
   Radio,
-  Volume2
+  Volume2,
 } from 'lucide-react';
 
 import { PeerBuddyMatching } from './PeerBuddyMatching';
@@ -45,7 +45,7 @@ import {
   Mentor,
   RealTimeConnection,
   generateAnonymousDisplayName,
-  MENTAL_HEALTH_CONCERNS
+  MENTAL_HEALTH_CONCERNS,
 } from '@/types/peerMatching';
 
 interface DashboardStats {
@@ -75,7 +75,7 @@ interface PeerMatchingDashboardProps {
 
 export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
   currentUser,
-  className = ''
+  className = '',
 }) => {
   // State management
   const [activeTab, setActiveTab] = useState('overview');
@@ -85,7 +85,7 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
     mentorSessions: 1,
     totalConnections: 15,
     weeklyGrowth: 25,
-    engagementScore: 85
+    engagementScore: 85,
   });
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [activeConnections, setActiveConnections] = useState<RealTimeConnection[]>([]);
@@ -93,40 +93,57 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
   const [selectedConnectionId, setSelectedConnectionId] = useState<string | null>(null);
 
   // Mock user data
-  const user = currentUser || {
-    id: 'user_123',
-    anonymousId: 'anonymous_123',
-    displayName: generateAnonymousDisplayName(),
-    year: 'junior' as const,
-    major: 'Computer Science',
-    institution: 'University Demo',
-    mentalHealthConcerns: ['anxiety', 'academic-pressure'] as const,
-    interests: ['coding', 'meditation', 'peer-support'],
-    availableHours: {
-      monday: [{ start: '09:00', end: '12:00' }, { start: '14:00', end: '18:00' }],
-      tuesday: [{ start: '09:00', end: '12:00' }, { start: '14:00', end: '18:00' }],
-      wednesday: [{ start: '09:00', end: '12:00' }, { start: '14:00', end: '18:00' }],
-      thursday: [{ start: '09:00', end: '12:00' }, { start: '14:00', end: '18:00' }],
-      friday: [{ start: '09:00', end: '12:00' }, { start: '14:00', end: '18:00' }],
-      saturday: [{ start: '10:00', end: '16:00' }],
-      sunday: [{ start: '10:00', end: '16:00' }]
-    },
-    timeZone: 'EST',
-    preferences: {
-      genderPreference: 'any' as const,
-      ageRange: { min: 18, max: 25 },
-      communicationStyle: 'text-only' as const,
-      meetingFrequency: 'weekly' as const,
-      groupSizePreference: 'any' as const,
-      anonymityLevel: 'first-name-only' as const,
-      supportType: ['emotional-support', 'study-buddy'] as const
-    },
-    isOnline: true,
-    lastActive: new Date().toISOString(),
-    profileComplete: true,
-    verificationStatus: 'verified' as const,
-    createdAt: '2024-01-15T00:00:00Z'
-  } as PeerUser;
+  const user =
+    currentUser ||
+    ({
+      id: 'user_123',
+      anonymousId: 'anonymous_123',
+      displayName: generateAnonymousDisplayName(),
+      year: 'junior' as const,
+      major: 'Computer Science',
+      institution: 'University Demo',
+      mentalHealthConcerns: ['anxiety', 'academic-pressure'] as const,
+      interests: ['coding', 'meditation', 'peer-support'],
+      availableHours: {
+        monday: [
+          { start: '09:00', end: '12:00' },
+          { start: '14:00', end: '18:00' },
+        ],
+        tuesday: [
+          { start: '09:00', end: '12:00' },
+          { start: '14:00', end: '18:00' },
+        ],
+        wednesday: [
+          { start: '09:00', end: '12:00' },
+          { start: '14:00', end: '18:00' },
+        ],
+        thursday: [
+          { start: '09:00', end: '12:00' },
+          { start: '14:00', end: '18:00' },
+        ],
+        friday: [
+          { start: '09:00', end: '12:00' },
+          { start: '14:00', end: '18:00' },
+        ],
+        saturday: [{ start: '10:00', end: '16:00' }],
+        sunday: [{ start: '10:00', end: '16:00' }],
+      },
+      timeZone: 'EST',
+      preferences: {
+        genderPreference: 'any' as const,
+        ageRange: { min: 18, max: 25 },
+        communicationStyle: 'text-only' as const,
+        meetingFrequency: 'weekly' as const,
+        groupSizePreference: 'any' as const,
+        anonymityLevel: 'first-name-only' as const,
+        supportType: ['emotional-support', 'study-buddy'] as const,
+      },
+      isOnline: true,
+      lastActive: new Date().toISOString(),
+      profileComplete: true,
+      verificationStatus: 'verified' as const,
+      createdAt: '2024-01-15T00:00:00Z',
+    } as PeerUser);
 
   // Initialize mock data
   useEffect(() => {
@@ -136,21 +153,23 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
         id: 'notif_1',
         type: 'buddy-match',
         title: 'New Buddy Match Available!',
-        message: 'We found a highly compatible study buddy who shares your concerns about academic stress.',
+        message:
+          'We found a highly compatible study buddy who shares your concerns about academic stress.',
         timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
         isRead: false,
         actionRequired: true,
-        metadata: { matchScore: 92, concerns: ['academic-stress', 'anxiety'] }
+        metadata: { matchScore: 92, concerns: ['academic-stress', 'anxiety'] },
       },
       {
         id: 'notif_2',
         type: 'group-invite',
         title: 'Study Group Invitation',
-        message: 'You\'ve been invited to join "Mindful Coding" study group focusing on stress management.',
+        message:
+          'You\'ve been invited to join "Mindful Coding" study group focusing on stress management.',
         timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
         isRead: false,
         actionRequired: true,
-        metadata: { groupName: 'Mindful Coding', memberCount: 8 }
+        metadata: { groupName: 'Mindful Coding', memberCount: 8 },
       },
       {
         id: 'notif_3',
@@ -160,18 +179,18 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
         timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
         isRead: true,
         actionRequired: false,
-        metadata: { mentorName: 'Anonymous Senior', experience: '3 years' }
+        metadata: { mentorName: 'Anonymous Senior', experience: '3 years' },
       },
       {
         id: 'notif_4',
         type: 'achievement',
         title: 'Achievement Unlocked!',
-        message: 'You\'ve completed 5 peer support sessions this week. Great job!',
+        message: "You've completed 5 peer support sessions this week. Great job!",
         timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
         isRead: true,
         actionRequired: false,
-        metadata: { achievement: 'Supportive Peer', level: 2 }
-      }
+        metadata: { achievement: 'Supportive Peer', level: 2 },
+      },
     ];
 
     setNotifications(mockNotifications);
@@ -195,15 +214,15 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
               lastSeen: new Date().toISOString(),
               isTyping: false,
               connectionQuality: 95,
-              deviceType: 'desktop'
-            }
+              deviceType: 'desktop',
+            },
           ],
-          features: ['text-chat', 'end-to-end-encryption']
+          features: ['text-chat', 'end-to-end-encryption'],
         },
         messages: [],
         isEncrypted: true,
-        connectionQuality: 95
-      }
+        connectionQuality: 95,
+      },
     ];
 
     setActiveConnections(mockConnections);
@@ -211,12 +230,18 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
 
   const getNotificationIcon = (type: NotificationItem['type']) => {
     switch (type) {
-      case 'buddy-match': return <Users className="h-4 w-4 text-blue-500" />;
-      case 'group-invite': return <Users className="h-4 w-4 text-green-500" />;
-      case 'mentor-request': return <Star className="h-4 w-4 text-yellow-500" />;
-      case 'session-reminder': return <Clock className="h-4 w-4 text-purple-500" />;
-      case 'achievement': return <Award className="h-4 w-4 text-orange-500" />;
-      default: return <Bell className="h-4 w-4" />;
+      case 'buddy-match':
+        return <Users className="h-4 w-4 text-blue-500" />;
+      case 'group-invite':
+        return <Users className="h-4 w-4 text-green-500" />;
+      case 'mentor-request':
+        return <Star className="h-4 w-4 text-yellow-500" />;
+      case 'session-reminder':
+        return <Clock className="h-4 w-4 text-purple-500" />;
+      case 'achievement':
+        return <Award className="h-4 w-4 text-orange-500" />;
+      default:
+        return <Bell className="h-4 w-4" />;
     }
   };
 
@@ -230,10 +255,8 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
   };
 
   const markNotificationAsRead = (notificationId: string) => {
-    setNotifications(prev =>
-      prev.map(notif =>
-        notif.id === notificationId ? { ...notif, isRead: true } : notif
-      )
+    setNotifications((prev) =>
+      prev.map((notif) => (notif.id === notificationId ? { ...notif, isRead: true } : notif))
     );
   };
 
@@ -318,7 +341,9 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
                 <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
                 <div className="flex-1">
                   <p className="text-sm font-medium">Completed study session</p>
-                  <p className="text-xs text-muted-foreground">Anxiety Management Group • 2 hours ago</p>
+                  <p className="text-xs text-muted-foreground">
+                    Anxiety Management Group • 2 hours ago
+                  </p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
@@ -351,19 +376,26 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
           <CardContent>
             {activeConnections.length > 0 ? (
               <div className="space-y-3">
-                {activeConnections.map(connection => (
-                  <div key={connection.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                {activeConnections.map((connection) => (
+                  <div
+                    key={connection.id}
+                    className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
+                  >
                     <div className="flex items-center space-x-3">
                       <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                       <div>
                         <p className="text-sm font-medium">Anonymous Peer</p>
                         <p className="text-xs text-muted-foreground">
-                          {connection.type.replace('-', ' ')} • {Math.floor((Date.now() - new Date(connection.createdAt).getTime()) / 60000)} min
+                          {connection.type.replace('-', ' ')} •{' '}
+                          {Math.floor(
+                            (Date.now() - new Date(connection.createdAt).getTime()) / 60000
+                          )}{' '}
+                          min
                         </p>
                       </div>
                     </div>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       variant="outline"
                       onClick={() => {
                         setSelectedConnectionId(connection.id);
@@ -391,9 +423,7 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
             <div className="flex items-center space-x-2">
               <Bell className="h-5 w-5" />
               <span>Notifications</span>
-              <Badge variant="destructive">
-                {notifications.filter(n => !n.isRead).length}
-              </Badge>
+              <Badge variant="destructive">{notifications.filter((n) => !n.isRead).length}</Badge>
             </div>
             <Button variant="ghost" size="sm">
               <Settings className="h-4 w-4" />
@@ -403,7 +433,7 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
         <CardContent>
           <ScrollArea className="h-64">
             <div className="space-y-3">
-              {notifications.map(notification => (
+              {notifications.map((notification) => (
                 <div
                   key={notification.id}
                   className={`flex items-start space-x-3 p-3 rounded-lg cursor-pointer hover:bg-muted/50 ${
@@ -426,9 +456,7 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
                       </Badge>
                     )}
                   </div>
-                  {!notification.isRead && (
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  )}
+                  {!notification.isRead && <div className="w-2 h-2 bg-blue-500 rounded-full"></div>}
                 </div>
               ))}
             </div>
@@ -466,7 +494,7 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
           <div className="flex items-center space-x-2">
             <Shield className="h-5 w-5 text-green-600" />
             <p className="text-sm text-green-800 dark:text-green-200">
-              <strong>Your privacy is protected.</strong> All connections are anonymous by default, 
+              <strong>Your privacy is protected.</strong> All connections are anonymous by default,
               and you can control what information you share.
             </p>
           </div>
@@ -503,14 +531,12 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
           <Card>
             <CardHeader>
               <CardTitle>Active Connections</CardTitle>
-              <CardDescription>
-                Manage your real-time connections and chat history
-              </CardDescription>
+              <CardDescription>Manage your real-time connections and chat history</CardDescription>
             </CardHeader>
             <CardContent>
               {activeConnections.length > 0 ? (
                 <div className="space-y-4">
-                  {activeConnections.map(connection => (
+                  {activeConnections.map((connection) => (
                     <Card key={connection.id}>
                       <CardContent className="p-4">
                         <div className="flex items-center justify-between">
@@ -518,11 +544,13 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
                             <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse"></div>
                             <div>
                               <p className="font-medium">
-                                {connection.type.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                                {connection.type
+                                  .replace('-', ' ')
+                                  .replace(/\b\w/g, (l) => l.toUpperCase())}
                               </p>
                               <p className="text-sm text-muted-foreground">
-                                Started {formatTimeAgo(connection.createdAt)} • 
-                                Quality: {connection.connectionQuality}%
+                                Started {formatTimeAgo(connection.createdAt)} • Quality:{' '}
+                                {connection.connectionQuality}%
                               </p>
                             </div>
                           </div>
@@ -548,9 +576,7 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
                     Start connecting with peers through buddy matching or study groups
                   </p>
                   <div className="flex justify-center space-x-2">
-                    <Button onClick={() => setActiveTab('peer-buddies')}>
-                      Find Buddy
-                    </Button>
+                    <Button onClick={() => setActiveTab('peer-buddies')}>Find Buddy</Button>
                     <Button variant="outline" onClick={() => setActiveTab('study-groups')}>
                       Join Group
                     </Button>
@@ -568,11 +594,7 @@ export const PeerMatchingDashboard: React.FC<PeerMatchingDashboardProps> = ({
           <div className="w-full max-w-4xl max-h-[90vh] bg-background rounded-lg shadow-lg">
             <div className="flex items-center justify-between p-4 border-b">
               <h2 className="text-lg font-semibold">Real-Time Connection</h2>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowConnectionModal(false)}
-              >
+              <Button variant="ghost" size="sm" onClick={() => setShowConnectionModal(false)}>
                 ✕
               </Button>
             </div>

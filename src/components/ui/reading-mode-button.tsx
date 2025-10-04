@@ -13,7 +13,7 @@ interface ReadingModeButtonProps {
 const ReadingModeButton: React.FC<ReadingModeButtonProps> = ({
   className = '',
   size = 'default',
-  variant = 'outline'
+  variant = 'outline',
 }) => {
   const { settings, updateSettings } = useTheme();
   const isReadingMode = settings.readingMode?.enabled || false;
@@ -22,8 +22,8 @@ const ReadingModeButton: React.FC<ReadingModeButtonProps> = ({
     updateSettings({
       readingMode: {
         ...settings.readingMode,
-        enabled: !isReadingMode
-      }
+        enabled: !isReadingMode,
+      },
     });
   };
 
@@ -37,15 +37,9 @@ const ReadingModeButton: React.FC<ReadingModeButtonProps> = ({
           className={`transition-all duration-200 ${isReadingMode ? 'bg-primary text-primary-foreground' : ''} ${className}`}
           aria-label={isReadingMode ? 'Exit reading mode' : 'Enter reading mode'}
         >
-          {isReadingMode ? (
-            <BookOpenCheck className="h-4 w-4" />
-          ) : (
-            <BookOpen className="h-4 w-4" />
-          )}
+          {isReadingMode ? <BookOpenCheck className="h-4 w-4" /> : <BookOpen className="h-4 w-4" />}
           {size !== 'sm' && (
-            <span className="ml-2">
-              {isReadingMode ? 'Exit Reading' : 'Reading Mode'}
-            </span>
+            <span className="ml-2">{isReadingMode ? 'Exit Reading' : 'Reading Mode'}</span>
           )}
         </Button>
       </TooltipTrigger>

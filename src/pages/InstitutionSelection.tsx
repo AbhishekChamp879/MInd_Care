@@ -4,14 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { 
-  Building2, 
-  Users, 
-  GraduationCap, 
-  CheckCircle, 
-  Search, 
-  Filter, 
-  MapPin, 
+import {
+  Building2,
+  Users,
+  GraduationCap,
+  CheckCircle,
+  Search,
+  Filter,
+  MapPin,
   Calendar,
   Star,
   Clock,
@@ -25,7 +25,7 @@ import {
   Mail,
   Globe,
   Loader2,
-  ArrowRight
+  ArrowRight,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -78,12 +78,13 @@ const mockInstitutions: Institution[] = [
     established: '2001',
     featured: true,
     rating: 4.2,
-    description: 'A premier institute offering quality education in engineering and management with state-of-the-art facilities.',
+    description:
+      'A premier institute offering quality education in engineering and management with state-of-the-art facilities.',
     website: 'https://bppimt.ac.in',
     email: 'info@bppimt.ac.in',
     phone: '+91-33-2414-6100',
     programs: ['B.Tech', 'M.Tech', 'MBA', 'BBA'],
-    facilities: ['Library', 'Labs', 'Hostel', 'Sports Complex', 'Cafeteria']
+    facilities: ['Library', 'Labs', 'Hostel', 'Sports Complex', 'Cafeteria'],
   },
   {
     id: '2',
@@ -95,12 +96,13 @@ const mockInstitutions: Institution[] = [
     students: 8500,
     established: '1961',
     rating: 4.8,
-    description: 'One of India\'s premier engineering institutions known for excellence in research and academics.',
+    description:
+      "One of India's premier engineering institutions known for excellence in research and academics.",
     website: 'https://iitd.ac.in',
     email: 'info@iitd.ac.in',
     phone: '+91-11-2659-1785',
     programs: ['B.Tech', 'M.Tech', 'PhD', 'MBA'],
-    facilities: ['Research Labs', 'Library', 'Hostels', 'Sports Complex', 'Medical Center']
+    facilities: ['Research Labs', 'Library', 'Hostels', 'Sports Complex', 'Medical Center'],
   },
   {
     id: '3',
@@ -112,12 +114,13 @@ const mockInstitutions: Institution[] = [
     students: 130000,
     established: '1922',
     rating: 4.3,
-    description: 'One of India\'s largest and most prestigious universities offering diverse academic programs.',
+    description:
+      "One of India's largest and most prestigious universities offering diverse academic programs.",
     website: 'https://du.ac.in',
     email: 'info@du.ac.in',
     phone: '+91-11-2766-7049',
     programs: ['BA', 'BSc', 'BCom', 'MA', 'MSc', 'PhD'],
-    facilities: ['Multiple Libraries', 'Research Centers', 'Sports Facilities', 'Cultural Centers']
+    facilities: ['Multiple Libraries', 'Research Centers', 'Sports Facilities', 'Cultural Centers'],
   },
   {
     id: '4',
@@ -129,12 +132,13 @@ const mockInstitutions: Institution[] = [
     students: 12000,
     established: '1955',
     rating: 4.4,
-    description: 'Renowned for engineering and liberal arts education with a strong research focus.',
+    description:
+      'Renowned for engineering and liberal arts education with a strong research focus.',
     website: 'https://jaduniv.edu.in',
     email: 'info@jaduniv.edu.in',
     phone: '+91-33-2414-6666',
     programs: ['B.E', 'M.E', 'BA', 'MA', 'PhD'],
-    facilities: ['Central Library', 'Research Labs', 'Hostels', 'Auditorium']
+    facilities: ['Central Library', 'Research Labs', 'Hostels', 'Auditorium'],
   },
   {
     id: '5',
@@ -151,7 +155,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@iimcal.ac.in',
     phone: '+91-33-2467-8300',
     programs: ['MBA', 'Executive MBA', 'PhD', 'Fellow Programme'],
-    facilities: ['Business Library', 'Case Study Rooms', 'Hostels', 'Recreation Center']
+    facilities: ['Business Library', 'Case Study Rooms', 'Hostels', 'Recreation Center'],
   },
   {
     id: '6',
@@ -168,7 +172,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@christuniversity.in',
     phone: '+91-80-4012-9000',
     programs: ['Various UG/PG Programs', 'PhD', 'Diploma Courses'],
-    facilities: ['Multiple Campuses', 'Libraries', 'Sports Complex', 'Research Centers']
+    facilities: ['Multiple Campuses', 'Libraries', 'Sports Complex', 'Research Centers'],
   },
   {
     id: '7',
@@ -181,12 +185,12 @@ const mockInstitutions: Institution[] = [
     established: '1909',
     featured: true,
     rating: 4.9,
-    description: 'India\'s premier institute for advanced scientific and technological research.',
+    description: "India's premier institute for advanced scientific and technological research.",
     website: 'https://iisc.ac.in',
     email: 'info@iisc.ac.in',
     phone: '+91-80-2293-2001',
     programs: ['MSc', 'PhD', 'MTech', 'Research Programs'],
-    facilities: ['World-class Labs', 'Central Library', 'Hostels', 'Research Centers']
+    facilities: ['World-class Labs', 'Central Library', 'Hostels', 'Research Centers'],
   },
   {
     id: '8',
@@ -203,7 +207,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@jnu.ac.in',
     phone: '+91-11-2670-4000',
     programs: ['BA', 'MA', 'MPhil', 'PhD'],
-    facilities: ['Central Library', 'Language Labs', 'Hostels', 'Cultural Centers']
+    facilities: ['Central Library', 'Language Labs', 'Hostels', 'Cultural Centers'],
   },
   // Additional IITs
   {
@@ -217,12 +221,12 @@ const mockInstitutions: Institution[] = [
     established: '1958',
     featured: true,
     rating: 4.9,
-    description: 'India\'s top engineering institute known for innovation and entrepreneurship.',
+    description: "India's top engineering institute known for innovation and entrepreneurship.",
     website: 'https://iitb.ac.in',
     email: 'info@iitb.ac.in',
     phone: '+91-22-2572-2545',
     programs: ['B.Tech', 'M.Tech', 'PhD', 'Dual Degree'],
-    facilities: ['Advanced Labs', 'Central Library', 'Hostels', 'Incubation Center']
+    facilities: ['Advanced Labs', 'Central Library', 'Hostels', 'Incubation Center'],
   },
   {
     id: '10',
@@ -239,7 +243,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@iitm.ac.in',
     phone: '+91-44-2257-4802',
     programs: ['B.Tech', 'M.Tech', 'PhD', 'MS'],
-    facilities: ['Research Parks', 'Libraries', 'Hostels', 'Innovation Labs']
+    facilities: ['Research Parks', 'Libraries', 'Hostels', 'Innovation Labs'],
   },
   {
     id: '11',
@@ -256,7 +260,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@iitk.ac.in',
     phone: '+91-512-259-7410',
     programs: ['B.Tech', 'M.Tech', 'PhD', 'MS'],
-    facilities: ['Computer Center', 'Libraries', 'Hostels', 'Sports Complex']
+    facilities: ['Computer Center', 'Libraries', 'Hostels', 'Sports Complex'],
   },
   {
     id: '12',
@@ -268,12 +272,12 @@ const mockInstitutions: Institution[] = [
     students: 12000,
     established: '1951',
     rating: 4.6,
-    description: 'India\'s first IIT, known for comprehensive technical education.',
+    description: "India's first IIT, known for comprehensive technical education.",
     website: 'https://iitkgp.ac.in',
     email: 'info@iitkgp.ac.in',
     phone: '+91-3222-255221',
     programs: ['B.Tech', 'M.Tech', 'PhD', 'Integrated Programs'],
-    facilities: ['Central Library', 'Research Labs', 'Hostels', 'Medical Center']
+    facilities: ['Central Library', 'Research Labs', 'Hostels', 'Medical Center'],
   },
   // Additional IIMs
   {
@@ -287,12 +291,12 @@ const mockInstitutions: Institution[] = [
     established: '1961',
     featured: true,
     rating: 4.8,
-    description: 'India\'s premier management institute with global recognition.',
+    description: "India's premier management institute with global recognition.",
     website: 'https://iima.ac.in',
     email: 'info@iima.ac.in',
     phone: '+91-79-6632-4000',
     programs: ['PGP', 'Executive MBA', 'PhD', 'Fellow Programme'],
-    facilities: ['Louis Kahn Plaza', 'Library', 'Hostels', 'Sports Complex']
+    facilities: ['Louis Kahn Plaza', 'Library', 'Hostels', 'Sports Complex'],
   },
   {
     id: '14',
@@ -309,7 +313,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@iimb.ac.in',
     phone: '+91-80-2699-3000',
     programs: ['PGP', 'Executive MBA', 'PhD', 'Management Programs'],
-    facilities: ['Management Library', 'Computing Center', 'Hostels', 'Guest House']
+    facilities: ['Management Library', 'Computing Center', 'Hostels', 'Guest House'],
   },
   // NITs
   {
@@ -327,7 +331,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@nitt.edu',
     phone: '+91-431-250-3000',
     programs: ['B.Tech', 'M.Tech', 'PhD', 'MBA'],
-    facilities: ['Central Library', 'Computer Center', 'Hostels', 'Sports Complex']
+    facilities: ['Central Library', 'Computer Center', 'Hostels', 'Sports Complex'],
   },
   {
     id: '16',
@@ -344,7 +348,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@nitw.ac.in',
     phone: '+91-870-246-2721',
     programs: ['B.Tech', 'M.Tech', 'PhD', 'MBA'],
-    facilities: ['Central Library', 'Labs', 'Hostels', 'Medical Center']
+    facilities: ['Central Library', 'Labs', 'Hostels', 'Medical Center'],
   },
   // Medical Colleges
   {
@@ -358,12 +362,12 @@ const mockInstitutions: Institution[] = [
     established: '1956',
     featured: true,
     rating: 4.9,
-    description: 'India\'s premier medical institute and hospital.',
+    description: "India's premier medical institute and hospital.",
     website: 'https://aiims.edu',
     email: 'info@aiims.edu',
     phone: '+91-11-2658-8500',
     programs: ['MBBS', 'MD', 'MS', 'PhD'],
-    facilities: ['Teaching Hospital', 'Medical Library', 'Research Labs', 'Hostels']
+    facilities: ['Teaching Hospital', 'Medical Library', 'Research Labs', 'Hostels'],
   },
   {
     id: '18',
@@ -380,12 +384,12 @@ const mockInstitutions: Institution[] = [
     email: 'info@cmch-vellore.edu',
     phone: '+91-416-228-1000',
     programs: ['MBBS', 'MD', 'MS', 'Nursing'],
-    facilities: ['Multi-specialty Hospital', 'Medical Library', 'Research Centers', 'Hostels']
+    facilities: ['Multi-specialty Hospital', 'Medical Library', 'Research Centers', 'Hostels'],
   },
   // Arts & Commerce Colleges
   {
     id: '19',
-    name: 'St. Stephen\'s College',
+    name: "St. Stephen's College",
     type: 'Liberal Arts & Sciences',
     location: 'New Delhi',
     city: 'New Delhi',
@@ -399,7 +403,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@ststephens.edu',
     phone: '+91-11-2766-7491',
     programs: ['BA', 'BSc', 'MA', 'MSc'],
-    facilities: ['Historic Library', 'Chapel', 'Sports Grounds', 'Auditorium']
+    facilities: ['Historic Library', 'Chapel', 'Sports Grounds', 'Auditorium'],
   },
   {
     id: '20',
@@ -411,12 +415,12 @@ const mockInstitutions: Institution[] = [
     students: 2000,
     established: '1956',
     rating: 4.5,
-    description: 'Premier women\'s college known for academic excellence.',
+    description: "Premier women's college known for academic excellence.",
     website: 'https://lsr.edu.in',
     email: 'info@lsr.edu.in',
     phone: '+91-11-2434-2893',
     programs: ['BA', 'BCom', 'BSc', 'MA'],
-    facilities: ['Library', 'Auditorium', 'Sports Facilities', 'Cafeteria']
+    facilities: ['Library', 'Auditorium', 'Sports Facilities', 'Cafeteria'],
   },
   // Mumbai Universities
   {
@@ -429,12 +433,12 @@ const mockInstitutions: Institution[] = [
     students: 350000,
     established: '1857',
     rating: 4.1,
-    description: 'One of India\'s oldest and largest universities.',
+    description: "One of India's oldest and largest universities.",
     website: 'https://mu.ac.in',
     email: 'info@mu.ac.in',
     phone: '+91-22-2270-5000',
     programs: ['Various UG/PG Programs', 'PhD', 'Professional Courses'],
-    facilities: ['Multiple Campuses', 'Libraries', 'Research Centers', 'Sports Facilities']
+    facilities: ['Multiple Campuses', 'Libraries', 'Research Centers', 'Sports Facilities'],
   },
   {
     id: '22',
@@ -451,7 +455,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@tifr.res.in',
     phone: '+91-22-2278-2000',
     programs: ['MSc', 'PhD', 'Integrated PhD'],
-    facilities: ['Research Labs', 'Library', 'Computer Center', 'Hostels']
+    facilities: ['Research Labs', 'Library', 'Computer Center', 'Hostels'],
   },
   // Pune Colleges
   {
@@ -469,7 +473,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@unipune.ac.in',
     phone: '+91-20-2569-2000',
     programs: ['Various UG/PG Programs', 'PhD', 'Distance Education'],
-    facilities: ['Multiple Departments', 'Libraries', 'Sports Complex', 'Guest House']
+    facilities: ['Multiple Departments', 'Libraries', 'Sports Complex', 'Guest House'],
   },
   {
     id: '24',
@@ -481,12 +485,12 @@ const mockInstitutions: Institution[] = [
     students: 4500,
     established: '1854',
     rating: 4.3,
-    description: 'One of India\'s oldest engineering colleges.',
+    description: "One of India's oldest engineering colleges.",
     website: 'https://coep.org.in',
     email: 'info@coep.org.in',
     phone: '+91-20-2550-7001',
     programs: ['B.Tech', 'M.Tech', 'PhD'],
-    facilities: ['Historic Campus', 'Labs', 'Library', 'Hostels']
+    facilities: ['Historic Campus', 'Labs', 'Library', 'Hostels'],
   },
   // Hyderabad Colleges
   {
@@ -504,7 +508,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@uohyd.ac.in',
     phone: '+91-40-2313-4000',
     programs: ['Various UG/PG Programs', 'PhD', 'Integrated Programs'],
-    facilities: ['Beautiful Campus', 'Libraries', 'Research Centers', 'Hostels']
+    facilities: ['Beautiful Campus', 'Libraries', 'Research Centers', 'Hostels'],
   },
   {
     id: '26',
@@ -521,7 +525,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@iiit.ac.in',
     phone: '+91-40-6653-1000',
     programs: ['B.Tech', 'M.Tech', 'MS', 'PhD'],
-    facilities: ['Modern Campus', 'Labs', 'Library', 'Research Centers']
+    facilities: ['Modern Campus', 'Labs', 'Library', 'Research Centers'],
   },
   // Additional State Universities
   {
@@ -539,7 +543,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@bhu.ac.in',
     phone: '+91-542-230-7000',
     programs: ['Various UG/PG Programs', 'PhD', 'Professional Courses'],
-    facilities: ['Large Campus', 'Multiple Libraries', 'Sports Complex', 'Medical College']
+    facilities: ['Large Campus', 'Multiple Libraries', 'Sports Complex', 'Medical College'],
   },
   {
     id: '28',
@@ -556,7 +560,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@annauniv.edu',
     phone: '+91-44-2235-7000',
     programs: ['B.Tech', 'M.Tech', 'MBA', 'PhD'],
-    facilities: ['Multiple Campuses', 'Research Centers', 'Libraries', 'Sports Facilities']
+    facilities: ['Multiple Campuses', 'Research Centers', 'Libraries', 'Sports Facilities'],
   },
   // Private Universities
   {
@@ -574,7 +578,7 @@ const mockInstitutions: Institution[] = [
     email: 'info@manipal.edu',
     phone: '+91-820-292-3000',
     programs: ['Medical', 'Engineering', 'Management', 'Arts & Sciences'],
-    facilities: ['Multiple Campuses', 'Hospitals', 'Research Centers', 'Sports Complex']
+    facilities: ['Multiple Campuses', 'Hospitals', 'Research Centers', 'Sports Complex'],
   },
   {
     id: '30',
@@ -591,8 +595,8 @@ const mockInstitutions: Institution[] = [
     email: 'info@srmist.edu.in',
     phone: '+91-44-4743-5000',
     programs: ['B.Tech', 'M.Tech', 'MBA', 'Medical Programs'],
-    facilities: ['Modern Campus', 'Research Centers', 'Hostels', 'Sports Complex']
-  }
+    facilities: ['Modern Campus', 'Research Centers', 'Hostels', 'Sports Complex'],
+  },
 ];
 
 // Skeleton component for loading state - Enhanced Mobile Responsive
@@ -647,7 +651,7 @@ const InstitutionSelection = () => {
   const [institutions, setInstitutions] = useState<Institution[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [recentSelections, setRecentSelections] = useState<string[]>([]);
-  
+
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -658,22 +662,22 @@ const InstitutionSelection = () => {
     const fetchInstitutions = async () => {
       setIsLoading(true);
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
       // Load favorites and recent selections from localStorage
       const savedFavorites = JSON.parse(localStorage.getItem('institution_favorites') || '[]');
       const savedRecent = JSON.parse(localStorage.getItem('recent_institutions') || '[]');
-      
+
       setFavorites(savedFavorites);
       setRecentSelections(savedRecent);
-      
+
       // Add favorites and recent view data to institutions
-      const institutionsWithMeta = mockInstitutions.map(inst => ({
+      const institutionsWithMeta = mockInstitutions.map((inst) => ({
         ...inst,
         isFavorite: savedFavorites.includes(inst.id),
-        lastViewed: savedRecent.includes(inst.id) ? new Date() : undefined
+        lastViewed: savedRecent.includes(inst.id) ? new Date() : undefined,
       }));
-      
+
       setInstitutions(institutionsWithMeta);
       setIsLoading(false);
     };
@@ -683,21 +687,22 @@ const InstitutionSelection = () => {
 
   // Filter and sort institutions
   const filteredAndSortedInstitutions = useMemo(() => {
-    const filtered = institutions.filter(institution => {
-      const matchesSearch = institution.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-                           institution.location.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-                           institution.type.toLowerCase().includes(debouncedSearch.toLowerCase());
-      
+    const filtered = institutions.filter((institution) => {
+      const matchesSearch =
+        institution.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+        institution.location.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+        institution.type.toLowerCase().includes(debouncedSearch.toLowerCase());
+
       const matchesType = filterType === 'all' || institution.type === filterType;
       const matchesState = filterState === 'all' || institution.state === filterState;
-      
+
       return matchesSearch && matchesType && matchesState;
     });
 
     // Sorting logic
     filtered.sort((a, b) => {
       let comparison = 0;
-      
+
       switch (sortBy) {
         case 'name':
           comparison = a.name.localeCompare(b.name);
@@ -714,7 +719,7 @@ const InstitutionSelection = () => {
         default:
           comparison = 0;
       }
-      
+
       return sortDirection === 'asc' ? comparison : -comparison;
     });
 
@@ -723,18 +728,21 @@ const InstitutionSelection = () => {
 
   // Get unique types and states for filters
   const institutionTypes = useMemo(() => {
-    return Array.from(new Set(institutions.map(inst => inst.type)));
+    return Array.from(new Set(institutions.map((inst) => inst.type)));
   }, [institutions]);
 
   const institutionStates = useMemo(() => {
-    return Array.from(new Set(institutions.map(inst => inst.state)));
+    return Array.from(new Set(institutions.map((inst) => inst.state)));
   }, [institutions]);
 
   const handleInstitutionSelect = (institutionId: string) => {
     setSelectedInstitution(institutionId);
-    
+
     // Add to recent selections
-    const updatedRecent = [institutionId, ...recentSelections.filter(id => id !== institutionId)].slice(0, 5);
+    const updatedRecent = [
+      institutionId,
+      ...recentSelections.filter((id) => id !== institutionId),
+    ].slice(0, 5);
     setRecentSelections(updatedRecent);
     localStorage.setItem('recent_institutions', JSON.stringify(updatedRecent));
   };
@@ -742,23 +750,23 @@ const InstitutionSelection = () => {
   const toggleFavorite = (institutionId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     const updatedFavorites = favorites.includes(institutionId)
-      ? favorites.filter(id => id !== institutionId)
+      ? favorites.filter((id) => id !== institutionId)
       : [...favorites, institutionId];
-    
+
     setFavorites(updatedFavorites);
     localStorage.setItem('institution_favorites', JSON.stringify(updatedFavorites));
-    
+
     // Update institutions state
-    setInstitutions(prev => prev.map(inst => 
-      inst.id === institutionId 
-        ? { ...inst, isFavorite: !inst.isFavorite }
-        : inst
-    ));
+    setInstitutions((prev) =>
+      prev.map((inst) =>
+        inst.id === institutionId ? { ...inst, isFavorite: !inst.isFavorite } : inst
+      )
+    );
   };
 
   const handleContinue = () => {
     if (selectedInstitution) {
-      const selectedInst = institutions.find(inst => inst.id === selectedInstitution);
+      const selectedInst = institutions.find((inst) => inst.id === selectedInstitution);
       localStorage.setItem('selected_institution', JSON.stringify(selectedInst));
       navigate('/');
     }
@@ -774,7 +782,7 @@ const InstitutionSelection = () => {
 
   const toggleSort = (field: SortOption) => {
     if (sortBy === field) {
-      setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+      setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
     } else {
       setSortBy(field);
       setSortDirection('asc');
@@ -818,7 +826,7 @@ const InstitutionSelection = () => {
                 <Filter className="h-4 w-4 text-muted-foreground" />
                 <span className="text-sm font-medium">Filters</span>
               </div>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <Select value={filterType} onValueChange={setFilterType}>
                   <SelectTrigger className="w-full h-10">
@@ -826,7 +834,7 @@ const InstitutionSelection = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">All Types</SelectItem>
-                    {institutionTypes.map(type => (
+                    {institutionTypes.map((type) => (
                       <SelectItem key={type} value={type}>
                         <span className="truncate">{type}</span>
                       </SelectItem>
@@ -840,7 +848,7 @@ const InstitutionSelection = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">All States</SelectItem>
-                    {institutionStates.map(state => (
+                    {institutionStates.map((state) => (
                       <SelectItem key={state} value={state}>
                         <span className="truncate">{state}</span>
                       </SelectItem>
@@ -875,7 +883,12 @@ const InstitutionSelection = () => {
                   className="gap-1 h-8 text-xs sm:text-sm"
                 >
                   Name
-                  {sortBy === 'name' && (sortDirection === 'asc' ? <SortAsc className="h-3 w-3" /> : <SortDesc className="h-3 w-3" />)}
+                  {sortBy === 'name' &&
+                    (sortDirection === 'asc' ? (
+                      <SortAsc className="h-3 w-3" />
+                    ) : (
+                      <SortDesc className="h-3 w-3" />
+                    ))}
                 </Button>
                 <Button
                   variant={sortBy === 'students' ? 'default' : 'outline'}
@@ -884,7 +897,12 @@ const InstitutionSelection = () => {
                   className="gap-1 h-8 text-xs sm:text-sm"
                 >
                   Students
-                  {sortBy === 'students' && (sortDirection === 'asc' ? <SortAsc className="h-3 w-3" /> : <SortDesc className="h-3 w-3" />)}
+                  {sortBy === 'students' &&
+                    (sortDirection === 'asc' ? (
+                      <SortAsc className="h-3 w-3" />
+                    ) : (
+                      <SortDesc className="h-3 w-3" />
+                    ))}
                 </Button>
                 <Button
                   variant={sortBy === 'rating' ? 'default' : 'outline'}
@@ -893,7 +911,12 @@ const InstitutionSelection = () => {
                   className="gap-1 h-8 text-xs sm:text-sm"
                 >
                   Rating
-                  {sortBy === 'rating' && (sortDirection === 'asc' ? <SortAsc className="h-3 w-3" /> : <SortDesc className="h-3 w-3" />)}
+                  {sortBy === 'rating' &&
+                    (sortDirection === 'asc' ? (
+                      <SortAsc className="h-3 w-3" />
+                    ) : (
+                      <SortDesc className="h-3 w-3" />
+                    ))}
                 </Button>
                 <Button
                   variant={sortBy === 'established' ? 'default' : 'outline'}
@@ -902,7 +925,12 @@ const InstitutionSelection = () => {
                   className="gap-1 h-8 text-xs sm:text-sm"
                 >
                   Year
-                  {sortBy === 'established' && (sortDirection === 'asc' ? <SortAsc className="h-3 w-3" /> : <SortDesc className="h-3 w-3" />)}
+                  {sortBy === 'established' &&
+                    (sortDirection === 'asc' ? (
+                      <SortAsc className="h-3 w-3" />
+                    ) : (
+                      <SortDesc className="h-3 w-3" />
+                    ))}
                 </Button>
               </div>
             </div>
@@ -919,15 +947,20 @@ const InstitutionSelection = () => {
               </span>
             ) : (
               <span>
-                Showing <span className="font-semibold">{filteredAndSortedInstitutions.length}</span> of <span className="font-semibold">{institutions.length}</span> institutions
+                Showing{' '}
+                <span className="font-semibold">{filteredAndSortedInstitutions.length}</span> of{' '}
+                <span className="font-semibold">{institutions.length}</span> institutions
               </span>
             )}
           </p>
           {selectedInstitution && (
-            <Badge variant="outline" className="bg-primary/10 text-primary text-xs sm:text-sm px-2 py-1">
+            <Badge
+              variant="outline"
+              className="bg-primary/10 text-primary text-xs sm:text-sm px-2 py-1"
+            >
               <CheckCircle className="h-3 w-3 mr-1" />
               <span className="truncate max-w-[200px] sm:max-w-none">
-                {institutions.find(inst => inst.id === selectedInstitution)?.name} selected
+                {institutions.find((inst) => inst.id === selectedInstitution)?.name} selected
               </span>
             </Badge>
           )}
@@ -941,8 +974,8 @@ const InstitutionSelection = () => {
               Recently Viewed
             </h3>
             <div className="flex flex-wrap gap-2">
-              {recentSelections.slice(0, 3).map(instId => {
-                const inst = institutions.find(i => i.id === instId);
+              {recentSelections.slice(0, 3).map((instId) => {
+                const inst = institutions.find((i) => i.id === instId);
                 return inst ? (
                   <Button
                     key={instId}
@@ -966,9 +999,7 @@ const InstitutionSelection = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8 px-1">
           {isLoading ? (
             // Loading skeletons - responsive count based on screen size
-            Array.from({ length: 8 }).map((_, index) => (
-              <InstitutionCardSkeleton key={index} />
-            ))
+            Array.from({ length: 8 }).map((_, index) => <InstitutionCardSkeleton key={index} />)
           ) : filteredAndSortedInstitutions.length > 0 ? (
             filteredAndSortedInstitutions.map((institution) => (
               <InstitutionCard
@@ -996,7 +1027,7 @@ const InstitutionSelection = () => {
         {/* Enhanced Mobile-First Continue Button */}
         <div className="sticky bottom-0 sm:static bg-background/95 sm:bg-transparent backdrop-blur-sm sm:backdrop-blur-none p-3 sm:p-0 rounded-t-xl sm:rounded-none border sm:border-none shadow-lg sm:shadow-none mb-4 sm:mb-0 -mx-4 sm:mx-0">
           <div className="text-center max-w-md mx-auto sm:max-w-none">
-            <Button 
+            <Button
               onClick={handleContinue}
               disabled={!selectedInstitution}
               size="lg"
@@ -1035,11 +1066,9 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
 
   return (
     <>
-      <Card 
+      <Card
         className={`cursor-pointer transition-all duration-300 hover:shadow-elegant hover:scale-[1.02] ${
-          isSelected 
-            ? 'ring-2 ring-primary shadow-elegant scale-[1.02]' 
-            : 'hover:shadow-medium'
+          isSelected ? 'ring-2 ring-primary shadow-elegant scale-[1.02]' : 'hover:shadow-medium'
         } ${institution.featured ? 'bg-gradient-to-br from-primary/5 to-secondary/5' : ''} h-fit`}
         onClick={onSelect}
       >
@@ -1061,8 +1090,8 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
               >
                 <Heart
                   className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${
-                    institution.isFavorite 
-                      ? 'fill-red-500 text-red-500' 
+                    institution.isFavorite
+                      ? 'fill-red-500 text-red-500'
                       : 'text-muted-foreground hover:text-red-500'
                   }`}
                 />
@@ -1095,10 +1124,9 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
             <div className="flex items-center gap-2">
               <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
               <span className="text-xs sm:text-sm">
-                {institution.students > 1000 
+                {institution.students > 1000
                   ? `${Math.round(institution.students / 1000)}k students`
-                  : `${institution.students.toLocaleString()} students`
-                }
+                  : `${institution.students.toLocaleString()} students`}
               </span>
             </div>
             <div className="flex items-center gap-2 justify-between">
@@ -1112,7 +1140,7 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
               </div>
             </div>
           </div>
-          
+
           <div className="pt-2 border-t">
             <Button
               variant="outline"
@@ -1147,7 +1175,7 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
               )}
             </DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-4 sm:space-y-6">
             {/* Basic Info */}
             <div>
@@ -1164,14 +1192,18 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
                   <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
                   <span className="font-medium">Location:</span>
                 </div>
-                <p className="text-sm text-muted-foreground pl-6 leading-relaxed">{institution.location}</p>
+                <p className="text-sm text-muted-foreground pl-6 leading-relaxed">
+                  {institution.location}
+                </p>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   <Users className="h-4 w-4 text-primary flex-shrink-0" />
                   <span className="font-medium">Students:</span>
                 </div>
-                <p className="text-sm text-muted-foreground pl-6">{institution.students.toLocaleString()}</p>
+                <p className="text-sm text-muted-foreground pl-6">
+                  {institution.students.toLocaleString()}
+                </p>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm">
@@ -1219,9 +1251,9 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
               <div className="space-y-3">
                 <div className="flex items-start gap-2 text-sm">
                   <Globe className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                  <a 
-                    href={institution.website} 
-                    target="_blank" 
+                  <a
+                    href={institution.website}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary hover:underline break-all"
                   >
@@ -1230,7 +1262,7 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
                 </div>
                 <div className="flex items-start gap-2 text-sm">
                   <Mail className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                  <a 
+                  <a
                     href={`mailto:${institution.email}`}
                     className="text-primary hover:underline break-all"
                   >
@@ -1239,10 +1271,7 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
                 </div>
                 <div className="flex items-start gap-2 text-sm">
                   <Phone className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                  <a 
-                    href={`tel:${institution.phone}`}
-                    className="text-primary hover:underline"
-                  >
+                  <a href={`tel:${institution.phone}`} className="text-primary hover:underline">
                     {institution.phone}
                   </a>
                 </div>
@@ -1270,9 +1299,7 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
               >
                 <Heart
                   className={`h-4 w-4 ${
-                    institution.isFavorite 
-                      ? 'fill-red-500 text-red-500' 
-                      : 'text-muted-foreground'
+                    institution.isFavorite ? 'fill-red-500 text-red-500' : 'text-muted-foreground'
                   }`}
                 />
                 <span className="text-sm">

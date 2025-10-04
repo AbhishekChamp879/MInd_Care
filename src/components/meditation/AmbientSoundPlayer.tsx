@@ -4,11 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Volume2, 
-  VolumeX, 
-  Play, 
-  Pause, 
+import {
+  Volume2,
+  VolumeX,
+  Play,
+  Pause,
   RotateCcw,
   Shuffle,
   Music,
@@ -17,14 +17,9 @@ import {
   Flame,
   Zap,
   Bell,
-  Coffee
+  Coffee,
 } from 'lucide-react';
-import { 
-  AmbientSound, 
-  AmbientSoundType, 
-  SoundCategory,
-  AMBIENT_SOUNDS 
-} from '@/types/meditation';
+import { AmbientSound, AmbientSoundType, SoundCategory, AMBIENT_SOUNDS } from '@/types/meditation';
 
 interface AmbientSoundPlayerProps {
   onSoundChange?: (sound: AmbientSoundType | null) => void;
@@ -41,7 +36,7 @@ export const AmbientSoundPlayer: React.FC<AmbientSoundPlayerProps> = ({
   autoPlay = false,
   defaultSound,
   defaultVolume = 50,
-  className = ''
+  className = '',
 }) => {
   // State
   const [selectedSound, setSelectedSound] = useState<AmbientSoundType | null>(defaultSound || null);
@@ -70,7 +65,7 @@ export const AmbientSoundPlayer: React.FC<AmbientSoundPlayerProps> = ({
       audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
       gainNodeRef.current = audioContextRef.current.createGain();
       analyserRef.current = audioContextRef.current.createAnalyser();
-      
+
       gainNodeRef.current.connect(analyserRef.current);
       analyserRef.current.connect(audioContextRef.current.destination);
     }
@@ -85,7 +80,11 @@ export const AmbientSoundPlayer: React.FC<AmbientSoundPlayerProps> = ({
     if (!audioContextRef.current) return null;
 
     const bufferSize = audioContextRef.current.sampleRate * length;
-    const buffer = audioContextRef.current.createBuffer(1, bufferSize, audioContextRef.current.sampleRate);
+    const buffer = audioContextRef.current.createBuffer(
+      1,
+      bufferSize,
+      audioContextRef.current.sampleRate
+    );
     const output = buffer.getChannelData(0);
 
     for (let i = 0; i < bufferSize; i++) {
@@ -93,7 +92,7 @@ export const AmbientSoundPlayer: React.FC<AmbientSoundPlayerProps> = ({
         output[i] = Math.random() * 2 - 1;
       } else if (type === 'pink') {
         // Simplified pink noise generation
-        output[i] = (Math.random() * 2 - 1) * (0.5 + 0.5 * Math.cos(i / bufferSize * Math.PI));
+        output[i] = (Math.random() * 2 - 1) * (0.5 + 0.5 * Math.cos((i / bufferSize) * Math.PI));
       } else if (type === 'brown') {
         // Simplified brown noise generation
         output[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
@@ -104,143 +103,158 @@ export const AmbientSoundPlayer: React.FC<AmbientSoundPlayerProps> = ({
   }, []);
 
   // Create synthetic audio for different sound types
-  const createSyntheticAudio = useCallback(async (soundType: AmbientSoundType) => {
-    await initAudioContext();
-    if (!audioContextRef.current || !gainNodeRef.current) return;
+  const createSyntheticAudio = useCallback(
+    async (soundType: AmbientSoundType) => {
+      await initAudioContext();
+      if (!audioContextRef.current || !gainNodeRef.current) return;
 
-    // Stop any existing audio
-    stopAudio();
+      // Stop any existing audio
+      stopAudio();
 
-    try {
-      switch (soundType) {
-        case 'white-noise':
-        case 'pink-noise':
-        case 'brown-noise':
-          const noiseType = soundType.replace('-noise', '') as 'white' | 'pink' | 'brown';
-          const noiseBuffer = createNoiseBuffer(noiseType);
-          if (noiseBuffer) {
-            noiseNodeRef.current = audioContextRef.current.createBufferSource();
-            noiseNodeRef.current.buffer = noiseBuffer;
-            noiseNodeRef.current.loop = true;
-            noiseNodeRef.current.connect(gainNodeRef.current);
-            noiseNodeRef.current.start();
-          }
-          break;
+      try {
+        switch (soundType) {
+          case 'white-noise':
+          case 'pink-noise':
+          case 'brown-noise':
+            const noiseType = soundType.replace('-noise', '') as 'white' | 'pink' | 'brown';
+            const noiseBuffer = createNoiseBuffer(noiseType);
+            if (noiseBuffer) {
+              noiseNodeRef.current = audioContextRef.current.createBufferSource();
+              noiseNodeRef.current.buffer = noiseBuffer;
+              noiseNodeRef.current.loop = true;
+              noiseNodeRef.current.connect(gainNodeRef.current);
+              noiseNodeRef.current.start();
+            }
+            break;
 
-        case 'rain':
-          // Simulate rain with filtered white noise
-          const rainBuffer = createNoiseBuffer('white');
-          if (rainBuffer) {
-            noiseNodeRef.current = audioContextRef.current.createBufferSource();
-            noiseNodeRef.current.buffer = rainBuffer;
-            noiseNodeRef.current.loop = true;
-            
-            // Add low-pass filter for rain effect
-            const filter = audioContextRef.current.createBiquadFilter();
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(800, audioContextRef.current.currentTime);
-            
-            noiseNodeRef.current.connect(filter);
-            filter.connect(gainNodeRef.current);
-            noiseNodeRef.current.start();
-          }
-          break;
+          case 'rain':
+            // Simulate rain with filtered white noise
+            const rainBuffer = createNoiseBuffer('white');
+            if (rainBuffer) {
+              noiseNodeRef.current = audioContextRef.current.createBufferSource();
+              noiseNodeRef.current.buffer = rainBuffer;
+              noiseNodeRef.current.loop = true;
 
-        case 'ocean-waves':
-          // Simulate ocean waves with oscillating low frequency
-          oscillatorRef.current = audioContextRef.current.createOscillator();
-          const waveFilter = audioContextRef.current.createBiquadFilter();
-          waveFilter.type = 'lowpass';
-          waveFilter.frequency.setValueAtTime(200, audioContextRef.current.currentTime);
-          
-          oscillatorRef.current.type = 'sine';
-          oscillatorRef.current.frequency.setValueAtTime(0.3, audioContextRef.current.currentTime);
-          
-          // Modulate amplitude for wave effect
-          const waveLfo = audioContextRef.current.createOscillator();
-          const waveLfoGain = audioContextRef.current.createGain();
-          waveLfo.frequency.setValueAtTime(0.1, audioContextRef.current.currentTime);
-          waveLfo.connect(waveLfoGain);
-          waveLfoGain.connect(gainNodeRef.current.gain);
-          
-          oscillatorRef.current.connect(waveFilter);
-          waveFilter.connect(gainNodeRef.current);
-          oscillatorRef.current.start();
-          waveLfo.start();
-          break;
+              // Add low-pass filter for rain effect
+              const filter = audioContextRef.current.createBiquadFilter();
+              filter.type = 'lowpass';
+              filter.frequency.setValueAtTime(800, audioContextRef.current.currentTime);
 
-        case 'forest':
-          // Simulate forest with multiple oscillators
-          const frequencies = [220, 440, 880, 1760];
-          frequencies.forEach((freq, index) => {
-            const osc = audioContextRef.current!.createOscillator();
-            const oscGain = audioContextRef.current!.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq + Math.random() * 20, audioContextRef.current!.currentTime);
-            oscGain.gain.setValueAtTime(0.05, audioContextRef.current!.currentTime);
-            
-            osc.connect(oscGain);
-            oscGain.connect(gainNodeRef.current!);
-            osc.start();
-            
-            setTimeout(() => osc.stop(), 2000 + Math.random() * 3000);
-          });
-          break;
+              noiseNodeRef.current.connect(filter);
+              filter.connect(gainNodeRef.current);
+              noiseNodeRef.current.start();
+            }
+            break;
 
-        case 'fireplace':
-          // Simulate fireplace crackling
-          const crackling = createNoiseBuffer('brown');
-          if (crackling) {
-            noiseNodeRef.current = audioContextRef.current.createBufferSource();
-            noiseNodeRef.current.buffer = crackling;
-            noiseNodeRef.current.loop = true;
-            
-            const crackleFilter = audioContextRef.current.createBiquadFilter();
-            crackleFilter.type = 'bandpass';
-            crackleFilter.frequency.setValueAtTime(400, audioContextRef.current.currentTime);
-            
-            noiseNodeRef.current.connect(crackleFilter);
-            crackleFilter.connect(gainNodeRef.current);
-            noiseNodeRef.current.start();
-          }
-          break;
+          case 'ocean-waves':
+            // Simulate ocean waves with oscillating low frequency
+            oscillatorRef.current = audioContextRef.current.createOscillator();
+            const waveFilter = audioContextRef.current.createBiquadFilter();
+            waveFilter.type = 'lowpass';
+            waveFilter.frequency.setValueAtTime(200, audioContextRef.current.currentTime);
 
-        case 'tibetan-bowls':
-          // Simulate singing bowls with harmonics
-          const bowlFreqs = [256, 384, 512, 768];
-          bowlFreqs.forEach((freq, index) => {
-            setTimeout(() => {
-              const bowlOsc = audioContextRef.current!.createOscillator();
-              const bowlGain = audioContextRef.current!.createGain();
-              bowlOsc.type = 'sine';
-              bowlOsc.frequency.setValueAtTime(freq, audioContextRef.current!.currentTime);
-              bowlGain.gain.setValueAtTime(0.3, audioContextRef.current!.currentTime);
-              bowlGain.gain.exponentialRampToValueAtTime(0.01, audioContextRef.current!.currentTime + 3);
-              
-              bowlOsc.connect(bowlGain);
-              bowlGain.connect(gainNodeRef.current!);
-              bowlOsc.start();
-              bowlOsc.stop(audioContextRef.current!.currentTime + 3);
-            }, index * 4000);
-          });
-          break;
+            oscillatorRef.current.type = 'sine';
+            oscillatorRef.current.frequency.setValueAtTime(
+              0.3,
+              audioContextRef.current.currentTime
+            );
 
-        default:
-          // Default to soft sine wave
-          oscillatorRef.current = audioContextRef.current.createOscillator();
-          oscillatorRef.current.type = 'sine';
-          oscillatorRef.current.frequency.setValueAtTime(220, audioContextRef.current.currentTime);
-          oscillatorRef.current.connect(gainNodeRef.current);
-          oscillatorRef.current.start();
+            // Modulate amplitude for wave effect
+            const waveLfo = audioContextRef.current.createOscillator();
+            const waveLfoGain = audioContextRef.current.createGain();
+            waveLfo.frequency.setValueAtTime(0.1, audioContextRef.current.currentTime);
+            waveLfo.connect(waveLfoGain);
+            waveLfoGain.connect(gainNodeRef.current.gain);
+
+            oscillatorRef.current.connect(waveFilter);
+            waveFilter.connect(gainNodeRef.current);
+            oscillatorRef.current.start();
+            waveLfo.start();
+            break;
+
+          case 'forest':
+            // Simulate forest with multiple oscillators
+            const frequencies = [220, 440, 880, 1760];
+            frequencies.forEach((freq, index) => {
+              const osc = audioContextRef.current!.createOscillator();
+              const oscGain = audioContextRef.current!.createGain();
+              osc.type = 'sine';
+              osc.frequency.setValueAtTime(
+                freq + Math.random() * 20,
+                audioContextRef.current!.currentTime
+              );
+              oscGain.gain.setValueAtTime(0.05, audioContextRef.current!.currentTime);
+
+              osc.connect(oscGain);
+              oscGain.connect(gainNodeRef.current!);
+              osc.start();
+
+              setTimeout(() => osc.stop(), 2000 + Math.random() * 3000);
+            });
+            break;
+
+          case 'fireplace':
+            // Simulate fireplace crackling
+            const crackling = createNoiseBuffer('brown');
+            if (crackling) {
+              noiseNodeRef.current = audioContextRef.current.createBufferSource();
+              noiseNodeRef.current.buffer = crackling;
+              noiseNodeRef.current.loop = true;
+
+              const crackleFilter = audioContextRef.current.createBiquadFilter();
+              crackleFilter.type = 'bandpass';
+              crackleFilter.frequency.setValueAtTime(400, audioContextRef.current.currentTime);
+
+              noiseNodeRef.current.connect(crackleFilter);
+              crackleFilter.connect(gainNodeRef.current);
+              noiseNodeRef.current.start();
+            }
+            break;
+
+          case 'tibetan-bowls':
+            // Simulate singing bowls with harmonics
+            const bowlFreqs = [256, 384, 512, 768];
+            bowlFreqs.forEach((freq, index) => {
+              setTimeout(() => {
+                const bowlOsc = audioContextRef.current!.createOscillator();
+                const bowlGain = audioContextRef.current!.createGain();
+                bowlOsc.type = 'sine';
+                bowlOsc.frequency.setValueAtTime(freq, audioContextRef.current!.currentTime);
+                bowlGain.gain.setValueAtTime(0.3, audioContextRef.current!.currentTime);
+                bowlGain.gain.exponentialRampToValueAtTime(
+                  0.01,
+                  audioContextRef.current!.currentTime + 3
+                );
+
+                bowlOsc.connect(bowlGain);
+                bowlGain.connect(gainNodeRef.current!);
+                bowlOsc.start();
+                bowlOsc.stop(audioContextRef.current!.currentTime + 3);
+              }, index * 4000);
+            });
+            break;
+
+          default:
+            // Default to soft sine wave
+            oscillatorRef.current = audioContextRef.current.createOscillator();
+            oscillatorRef.current.type = 'sine';
+            oscillatorRef.current.frequency.setValueAtTime(
+              220,
+              audioContextRef.current.currentTime
+            );
+            oscillatorRef.current.connect(gainNodeRef.current);
+            oscillatorRef.current.start();
+        }
+
+        setIsPlaying(true);
+        setError(null);
+      } catch (err) {
+        setError('Failed to play audio');
+        console.error('Audio error:', err);
       }
-
-      setIsPlaying(true);
-      setError(null);
-    } catch (err) {
-      setError('Failed to play audio');
-      console.error('Audio error:', err);
-    }
-  }, [initAudioContext, createNoiseBuffer]);
+    },
+    [initAudioContext, createNoiseBuffer]
+  );
 
   // Stop audio
   const stopAudio = useCallback(() => {
@@ -277,7 +291,7 @@ export const AmbientSoundPlayer: React.FC<AmbientSoundPlayerProps> = ({
   const handleSoundSelect = async (sound: AmbientSoundType) => {
     setSelectedSound(sound);
     setIsLoading(true);
-    
+
     if (isPlaying) {
       stopAudio();
     }
@@ -312,35 +326,38 @@ export const AmbientSoundPlayer: React.FC<AmbientSoundPlayerProps> = ({
   // Get icon for sound type
   const getSoundIcon = (soundType: AmbientSoundType) => {
     const iconMap = {
-      'rain': '🌧️',
+      rain: '🌧️',
       'ocean-waves': '🌊',
-      'forest': '🌲',
+      forest: '🌲',
       'mountain-stream': '🏔️',
-      'fireplace': '🔥',
+      fireplace: '🔥',
       'white-noise': '📊',
       'pink-noise': '📈',
       'brown-noise': '📉',
-      'thunder': '⛈️',
-      'wind': '💨',
-      'birds': '🐦',
-      'crickets': '🦗',
+      thunder: '⛈️',
+      wind: '💨',
+      birds: '🐦',
+      crickets: '🦗',
       'cafe-ambience': '☕',
       'tibetan-bowls': '🎵',
-      'chimes': '🔔',
-      'silence': '🤫'
+      chimes: '🔔',
+      silence: '🤫',
     };
     return iconMap[soundType] || '🔊';
   };
 
   // Group sounds by category
-  const groupedSounds = AMBIENT_SOUNDS.reduce((groups, sound) => {
-    const category = sound.category;
-    if (!groups[category]) {
-      groups[category] = [];
-    }
-    groups[category].push(sound);
-    return groups;
-  }, {} as Record<SoundCategory, AmbientSound[]>);
+  const groupedSounds = AMBIENT_SOUNDS.reduce(
+    (groups, sound) => {
+      const category = sound.category;
+      if (!groups[category]) {
+        groups[category] = [];
+      }
+      groups[category].push(sound);
+      return groups;
+    },
+    {} as Record<SoundCategory, AmbientSound[]>
+  );
 
   // Auto-play effect
   useEffect(() => {
@@ -378,13 +395,15 @@ export const AmbientSoundPlayer: React.FC<AmbientSoundPlayerProps> = ({
             <div className="flex items-center space-x-3">
               <span className="text-2xl">{getSoundIcon(selectedSound)}</span>
               <div>
-                <h3 className="font-medium">{AMBIENT_SOUNDS.find(s => s.type === selectedSound)?.name}</h3>
+                <h3 className="font-medium">
+                  {AMBIENT_SOUNDS.find((s) => s.type === selectedSound)?.name}
+                </h3>
                 <p className="text-sm text-muted-foreground">
-                  {AMBIENT_SOUNDS.find(s => s.type === selectedSound)?.description}
+                  {AMBIENT_SOUNDS.find((s) => s.type === selectedSound)?.description}
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-center space-x-2">
               <Button
                 onClick={handlePlayPause}
@@ -411,16 +430,16 @@ export const AmbientSoundPlayer: React.FC<AmbientSoundPlayerProps> = ({
             <label className="text-sm font-medium">Volume</label>
             <div className="flex items-center space-x-2">
               <span className="text-sm font-mono">{volume}%</span>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => setIsMuted(!isMuted)}
-              >
-                {isMuted || volume === 0 ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+              <Button size="sm" variant="ghost" onClick={() => setIsMuted(!isMuted)}>
+                {isMuted || volume === 0 ? (
+                  <VolumeX className="h-4 w-4" />
+                ) : (
+                  <Volume2 className="h-4 w-4" />
+                )}
               </Button>
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-3">
             <VolumeX className="h-4 w-4 text-muted-foreground" />
             <Slider
@@ -445,20 +464,18 @@ export const AmbientSoundPlayer: React.FC<AmbientSoundPlayerProps> = ({
                   {sounds.length}
                 </Badge>
               </h3>
-              
+
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {sounds.map((sound) => (
                   <Button
                     key={sound.id}
-                    variant={selectedSound === sound.type ? "default" : "outline"}
+                    variant={selectedSound === sound.type ? 'default' : 'outline'}
                     onClick={() => handleSoundSelect(sound.type)}
                     disabled={isLoading}
                     className="h-auto p-3 flex flex-col items-center space-y-2 text-center"
                   >
                     <span className="text-xl">{sound.icon}</span>
-                    <span className="text-xs font-medium leading-tight">
-                      {sound.name}
-                    </span>
+                    <span className="text-xs font-medium leading-tight">{sound.name}</span>
                   </Button>
                 ))}
               </div>
@@ -486,7 +503,7 @@ export const AmbientSoundPlayer: React.FC<AmbientSoundPlayerProps> = ({
                   className="w-1 bg-primary rounded-full animate-pulse"
                   style={{
                     height: `${Math.random() * 20 + 5}px`,
-                    animationDelay: `${i * 0.1}s`
+                    animationDelay: `${i * 0.1}s`,
                   }}
                 />
               ))}
@@ -507,7 +524,7 @@ export const AmbientSoundPlayer: React.FC<AmbientSoundPlayerProps> = ({
             <VolumeX className="h-4 w-4 mr-1" />
             Silence
           </Button>
-          
+
           <Button
             variant="ghost"
             size="sm"

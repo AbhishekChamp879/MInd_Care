@@ -6,12 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { 
-  Shield, 
-  Search, 
-  AlertTriangle, 
-  CheckCircle, 
-  X, 
+import {
+  Shield,
+  Search,
+  AlertTriangle,
+  CheckCircle,
+  X,
   Eye,
   Flag,
   MessageCircle,
@@ -19,7 +19,7 @@ import {
   BookOpen,
   Clock,
   Filter,
-  Download
+  Download,
 } from 'lucide-react';
 
 interface ContentItem {
@@ -38,13 +38,13 @@ const mockContent: ContentItem[] = [
   {
     id: '1',
     type: 'chat',
-    content: 'I\'ve been having really dark thoughts lately and I don\'t know what to do...',
+    content: "I've been having really dark thoughts lately and I don't know what to do...",
     author: 'Anonymous User',
     timestamp: '2024-01-15 14:23:12',
     status: 'flagged',
     severity: 'high',
     reports: 3,
-    reason: 'Self-harm mentions'
+    reason: 'Self-harm mentions',
   },
   {
     id: '2',
@@ -54,7 +54,7 @@ const mockContent: ContentItem[] = [
     timestamp: '2024-01-15 13:45:33',
     status: 'approved',
     severity: 'low',
-    reports: 0
+    reports: 0,
   },
   {
     id: '3',
@@ -65,7 +65,7 @@ const mockContent: ContentItem[] = [
     status: 'pending',
     severity: 'medium',
     reports: 2,
-    reason: 'Inappropriate language'
+    reason: 'Inappropriate language',
   },
   {
     id: '4',
@@ -75,7 +75,7 @@ const mockContent: ContentItem[] = [
     timestamp: '2024-01-15 11:30:21',
     status: 'approved',
     severity: 'low',
-    reports: 0
+    reports: 0,
   },
   {
     id: '5',
@@ -86,8 +86,8 @@ const mockContent: ContentItem[] = [
     status: 'flagged',
     severity: 'critical',
     reports: 5,
-    reason: 'Suicide ideation'
-  }
+    reason: 'Suicide ideation',
+  },
 ];
 
 const ContentModeration = () => {
@@ -97,9 +97,10 @@ const ContentModeration = () => {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [severityFilter, setSeverityFilter] = useState<string>('all');
 
-  const filteredContent = content.filter(item => {
-    const matchesSearch = item.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.author.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredContent = content.filter((item) => {
+    const matchesSearch =
+      item.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.author.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesType = typeFilter === 'all' || item.type === typeFilter;
     const matchesStatus = statusFilter === 'all' || item.status === statusFilter;
     const matchesSeverity = severityFilter === 'all' || item.severity === severityFilter;
@@ -108,58 +109,73 @@ const ContentModeration = () => {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'chat': return MessageCircle;
-      case 'forum': return Users;
-      case 'resource': return BookOpen;
-      case 'comment': return MessageCircle;
-      default: return MessageCircle;
+      case 'chat':
+        return MessageCircle;
+      case 'forum':
+        return Users;
+      case 'resource':
+        return BookOpen;
+      case 'comment':
+        return MessageCircle;
+      default:
+        return MessageCircle;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'approved': return 'bg-severity-low text-white';
-      case 'rejected': return 'bg-severity-high text-white';
-      case 'flagged': return 'bg-severity-medium text-white';
-      case 'pending': return 'bg-secondary text-secondary-foreground';
-      default: return 'bg-muted text-muted-foreground';
+      case 'approved':
+        return 'bg-severity-low text-white';
+      case 'rejected':
+        return 'bg-severity-high text-white';
+      case 'flagged':
+        return 'bg-severity-medium text-white';
+      case 'pending':
+        return 'bg-secondary text-secondary-foreground';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'low': return 'bg-severity-low text-white';
-      case 'medium': return 'bg-severity-medium text-white';
-      case 'high': return 'bg-severity-high text-white';
-      case 'critical': return 'bg-destructive text-destructive-foreground';
-      default: return 'bg-muted text-muted-foreground';
+      case 'low':
+        return 'bg-severity-low text-white';
+      case 'medium':
+        return 'bg-severity-medium text-white';
+      case 'high':
+        return 'bg-severity-high text-white';
+      case 'critical':
+        return 'bg-destructive text-destructive-foreground';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   const handleApprove = (id: string) => {
-    setContent(prev => prev.map(item => 
-      item.id === id ? { ...item, status: 'approved' as const } : item
-    ));
+    setContent((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, status: 'approved' as const } : item))
+    );
   };
 
   const handleReject = (id: string) => {
-    setContent(prev => prev.map(item => 
-      item.id === id ? { ...item, status: 'rejected' as const } : item
-    ));
+    setContent((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, status: 'rejected' as const } : item))
+    );
   };
 
   const handleFlag = (id: string) => {
-    setContent(prev => prev.map(item => 
-      item.id === id ? { ...item, status: 'flagged' as const } : item
-    ));
+    setContent((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, status: 'flagged' as const } : item))
+    );
   };
 
   const contentStats = {
     total: content.length,
-    pending: content.filter(c => c.status === 'pending').length,
-    flagged: content.filter(c => c.status === 'flagged').length,
-    critical: content.filter(c => c.severity === 'critical').length,
-    highReports: content.filter(c => c.reports >= 3).length
+    pending: content.filter((c) => c.status === 'pending').length,
+    flagged: content.filter((c) => c.status === 'flagged').length,
+    critical: content.filter((c) => c.severity === 'critical').length,
+    highReports: content.filter((c) => c.reports >= 3).length,
   };
 
   return (
@@ -198,7 +214,7 @@ const ContentModeration = () => {
             <CardDescription>Content Items</CardDescription>
           </CardHeader>
         </Card>
-        
+
         <Card>
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
@@ -269,7 +285,7 @@ const ContentModeration = () => {
             </div>
             <div className="space-y-2">
               <Label>Content Type</Label>
-              <select 
+              <select
                 className="w-full p-2 border rounded-md bg-background"
                 value={typeFilter}
                 onChange={(e) => setTypeFilter(e.target.value)}
@@ -283,7 +299,7 @@ const ContentModeration = () => {
             </div>
             <div className="space-y-2">
               <Label>Status</Label>
-              <select 
+              <select
                 className="w-full p-2 border rounded-md bg-background"
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -297,7 +313,7 @@ const ContentModeration = () => {
             </div>
             <div className="space-y-2">
               <Label>Severity</Label>
-              <select 
+              <select
                 className="w-full p-2 border rounded-md bg-background"
                 value={severityFilter}
                 onChange={(e) => setSeverityFilter(e.target.value)}
@@ -334,19 +350,13 @@ const ContentModeration = () => {
                       <TypeIcon className="h-5 w-5 text-primary" />
                       <div className="space-y-1">
                         <div className="flex items-center space-x-2">
-                          <Badge className={getStatusColor(item.status)}>
-                            {item.status}
-                          </Badge>
-                          <Badge className={getSeverityColor(item.severity)}>
-                            {item.severity}
-                          </Badge>
+                          <Badge className={getStatusColor(item.status)}>{item.status}</Badge>
+                          <Badge className={getSeverityColor(item.severity)}>{item.severity}</Badge>
                           <Badge variant="outline" className="capitalize">
                             {item.type}
                           </Badge>
                           {item.reports > 0 && (
-                            <Badge variant="destructive">
-                              {item.reports} reports
-                            </Badge>
+                            <Badge variant="destructive">{item.reports} reports</Badge>
                           )}
                         </div>
                         <div className="flex items-center space-x-4 text-sm text-muted-foreground">
@@ -356,11 +366,11 @@ const ContentModeration = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="bg-background p-4 rounded-md border">
                     <p className="text-sm">{item.content}</p>
                   </div>
-                  
+
                   {item.reason && (
                     <div className="bg-severity-medium/10 p-3 rounded-md">
                       <p className="text-sm font-medium text-severity-medium">
@@ -368,11 +378,11 @@ const ContentModeration = () => {
                       </p>
                     </div>
                   )}
-                  
+
                   <div className="flex justify-between items-center">
                     <div className="flex space-x-2">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         onClick={() => handleApprove(item.id)}
                         className="text-severity-low hover:text-severity-low"
@@ -380,8 +390,8 @@ const ContentModeration = () => {
                         <CheckCircle className="h-4 w-4 mr-1" />
                         Approve
                       </Button>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         onClick={() => handleReject(item.id)}
                         className="text-destructive hover:text-destructive"
@@ -389,8 +399,8 @@ const ContentModeration = () => {
                         <X className="h-4 w-4 mr-1" />
                         Reject
                       </Button>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         onClick={() => handleFlag(item.id)}
                         className="text-severity-medium hover:text-severity-medium"

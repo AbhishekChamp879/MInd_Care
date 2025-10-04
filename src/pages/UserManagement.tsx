@@ -5,19 +5,43 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { toast } from '@/hooks/use-toast';
-import { 
-  Users, 
-  Search, 
-  Plus, 
-  Edit, 
-  Trash2, 
-  Shield, 
+import {
+  Users,
+  Search,
+  Plus,
+  Edit,
+  Trash2,
+  Shield,
   UserCheck,
   UserX,
   Mail,
@@ -38,7 +62,7 @@ import {
   UserPlus,
   MessageSquare,
   Heart,
-  TrendingUp
+  TrendingUp,
 } from 'lucide-react';
 
 interface User {
@@ -84,45 +108,103 @@ interface BulkAction {
 // Generate more comprehensive mock data
 const generateMockUsers = (): User[] => {
   const names = [
-    'Sarah Johnson', 'Dr. Michael Chen', 'Emily Rodriguez', 'Admin Wilson', 'Dr. Lisa Park',
-    'Alex Thompson', 'Dr. Jennifer Martinez', 'Ryan Davis', 'Maria Garcia', 'Dr. David Kim',
-    'Jessica Brown', 'Dr. Robert Taylor', 'Kevin Wilson', 'Dr. Amanda White', 'Nicole Miller',
-    'Dr. James Anderson', 'Ashley Martinez', 'Dr. Sarah Lee', 'Christopher Moore', 'Dr. Laura Adams'
+    'Sarah Johnson',
+    'Dr. Michael Chen',
+    'Emily Rodriguez',
+    'Admin Wilson',
+    'Dr. Lisa Park',
+    'Alex Thompson',
+    'Dr. Jennifer Martinez',
+    'Ryan Davis',
+    'Maria Garcia',
+    'Dr. David Kim',
+    'Jessica Brown',
+    'Dr. Robert Taylor',
+    'Kevin Wilson',
+    'Dr. Amanda White',
+    'Nicole Miller',
+    'Dr. James Anderson',
+    'Ashley Martinez',
+    'Dr. Sarah Lee',
+    'Christopher Moore',
+    'Dr. Laura Adams',
   ];
-  
-  const departments = ['Computer Science', 'Psychology', 'Medicine', 'Engineering', 'Business', 'Arts', 'Biology', 'Chemistry'];
-  const specialties = ['Anxiety', 'Depression', 'Academic Stress', 'PTSD', 'Crisis Intervention', 'Relationship Issues', 'Addiction', 'Eating Disorders'];
+
+  const departments = [
+    'Computer Science',
+    'Psychology',
+    'Medicine',
+    'Engineering',
+    'Business',
+    'Arts',
+    'Biology',
+    'Chemistry',
+  ];
+  const specialties = [
+    'Anxiety',
+    'Depression',
+    'Academic Stress',
+    'PTSD',
+    'Crisis Intervention',
+    'Relationship Issues',
+    'Addiction',
+    'Eating Disorders',
+  ];
   const roles: ('student' | 'counselor' | 'admin')[] = ['student', 'counselor', 'admin'];
-  const statuses: ('active' | 'inactive' | 'suspended' | 'pending')[] = ['active', 'inactive', 'suspended', 'pending'];
+  const statuses: ('active' | 'inactive' | 'suspended' | 'pending')[] = [
+    'active',
+    'inactive',
+    'suspended',
+    'pending',
+  ];
   const riskLevels: ('low' | 'medium' | 'high' | 'crisis')[] = ['low', 'medium', 'high', 'crisis'];
 
   return names.map((name, index) => {
     const role = index < 12 ? 'student' : index < 18 ? 'counselor' : 'admin';
     const status = statuses[Math.floor(Math.random() * statuses.length)];
-    
+
     return {
       id: (index + 1).toString(),
       name,
       email: `${name.toLowerCase().replace(/\s+/g, '.').replace('dr.', '')}@${role === 'student' ? 'university.edu' : role === 'counselor' ? 'counseling.edu' : 'mindbuddy.com'}`,
       role,
       status,
-      joinDate: new Date(2023 + Math.floor(Math.random() * 2), Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)).toISOString().split('T')[0],
+      joinDate: new Date(
+        2023 + Math.floor(Math.random() * 2),
+        Math.floor(Math.random() * 12),
+        Math.floor(Math.random() * 28)
+      )
+        .toISOString()
+        .split('T')[0],
       lastActive: `${Math.floor(Math.random() * 168)} hours ago`,
       lastLoginIP: `192.168.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`,
       sessionsCount: Math.floor(Math.random() * 150),
-      department: role === 'student' ? departments[Math.floor(Math.random() * departments.length)] : undefined,
-      specialties: role === 'counselor' ? [specialties[Math.floor(Math.random() * specialties.length)], specialties[Math.floor(Math.random() * specialties.length)]] : undefined,
+      department:
+        role === 'student'
+          ? departments[Math.floor(Math.random() * departments.length)]
+          : undefined,
+      specialties:
+        role === 'counselor'
+          ? [
+              specialties[Math.floor(Math.random() * specialties.length)],
+              specialties[Math.floor(Math.random() * specialties.length)],
+            ]
+          : undefined,
       phoneNumber: `+1 (${Math.floor(Math.random() * 900) + 100}) ${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 9000) + 1000}`,
-      riskLevel: role === 'student' ? riskLevels[Math.floor(Math.random() * riskLevels.length)] : undefined,
+      riskLevel:
+        role === 'student' ? riskLevels[Math.floor(Math.random() * riskLevels.length)] : undefined,
       moodScore: role === 'student' ? Math.floor(Math.random() * 10) + 1 : undefined,
       totalChatMessages: Math.floor(Math.random() * 500),
       averageSessionRating: Math.round((Math.random() * 2 + 3) * 10) / 10,
       isOnline: Math.random() > 0.7,
       createdBy: role !== 'admin' ? 'system' : undefined,
       notes: Math.random() > 0.8 ? 'Special attention required' : undefined,
-      permissions: role === 'admin' ? ['user_management', 'system_settings', 'crisis_intervention'] : 
-                  role === 'counselor' ? ['view_students', 'manage_sessions', 'crisis_intervention'] : 
-                  ['view_resources', 'book_sessions']
+      permissions:
+        role === 'admin'
+          ? ['user_management', 'system_settings', 'crisis_intervention']
+          : role === 'counselor'
+            ? ['view_students', 'manage_sessions', 'crisis_intervention']
+            : ['view_resources', 'book_sessions'],
     };
   });
 };
@@ -154,17 +236,18 @@ const UserManagement = () => {
     specialties: [],
     phoneNumber: '',
     permissions: [],
-    notes: ''
+    notes: '',
   });
 
   // Real-time data simulation
   useEffect(() => {
     const interval = setInterval(() => {
-      setUsers(prevUsers => 
-        prevUsers.map(user => ({
+      setUsers((prevUsers) =>
+        prevUsers.map((user) => ({
           ...user,
           isOnline: Math.random() > 0.8 ? !user.isOnline : user.isOnline,
-          lastActive: Math.random() > 0.9 ? `${Math.floor(Math.random() * 60)} minutes ago` : user.lastActive
+          lastActive:
+            Math.random() > 0.9 ? `${Math.floor(Math.random() * 60)} minutes ago` : user.lastActive,
         }))
       );
     }, 30000); // Update every 30 seconds
@@ -174,10 +257,11 @@ const UserManagement = () => {
 
   // Filtering and sorting logic
   const filteredAndSortedUsers = users
-    .filter(user => {
-      const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           (user.department && user.department.toLowerCase().includes(searchTerm.toLowerCase()));
+    .filter((user) => {
+      const matchesSearch =
+        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (user.department && user.department.toLowerCase().includes(searchTerm.toLowerCase()));
       const matchesRole = roleFilter === 'all' || user.role === roleFilter;
       const matchesStatus = statusFilter === 'all' || user.status === statusFilter;
       const matchesRisk = riskFilter === 'all' || user.riskLevel === riskFilter;
@@ -206,7 +290,7 @@ const UserManagement = () => {
           aValue = a.name;
           bValue = b.name;
       }
-      
+
       if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
       if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
       return 0;
@@ -221,26 +305,26 @@ const UserManagement = () => {
   // User statistics
   const userStats = {
     total: users.length,
-    active: users.filter(u => u.status === 'active').length,
-    students: users.filter(u => u.role === 'student').length,
-    counselors: users.filter(u => u.role === 'counselor').length,
-    admins: users.filter(u => u.role === 'admin').length,
-    online: users.filter(u => u.isOnline).length,
-    highRisk: users.filter(u => u.riskLevel === 'high' || u.riskLevel === 'crisis').length,
-    newThisMonth: users.filter(u => {
+    active: users.filter((u) => u.status === 'active').length,
+    students: users.filter((u) => u.role === 'student').length,
+    counselors: users.filter((u) => u.role === 'counselor').length,
+    admins: users.filter((u) => u.role === 'admin').length,
+    online: users.filter((u) => u.isOnline).length,
+    highRisk: users.filter((u) => u.riskLevel === 'high' || u.riskLevel === 'crisis').length,
+    newThisMonth: users.filter((u) => {
       const joinDate = new Date(u.joinDate);
       const now = new Date();
       return joinDate.getMonth() === now.getMonth() && joinDate.getFullYear() === now.getFullYear();
-    }).length
+    }).length,
   };
 
   // CRUD Operations
   const handleCreateUser = () => {
     if (!newUserForm.name || !newUserForm.email) {
       toast({
-        title: "Error",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Please fill in all required fields.',
+        variant: 'destructive',
       });
       return;
     }
@@ -262,10 +346,10 @@ const UserManagement = () => {
       notes: newUserForm.notes || undefined,
       permissions: newUserForm.permissions,
       totalChatMessages: 0,
-      averageSessionRating: 0
+      averageSessionRating: 0,
     };
 
-    setUsers(prevUsers => [...prevUsers, newUser]);
+    setUsers((prevUsers) => [...prevUsers, newUser]);
     setIsCreateDialogOpen(false);
     setNewUserForm({
       name: '',
@@ -275,11 +359,11 @@ const UserManagement = () => {
       specialties: [],
       phoneNumber: '',
       permissions: [],
-      notes: ''
+      notes: '',
     });
 
     toast({
-      title: "Success",
+      title: 'Success',
       description: `User ${newUser.name} has been created successfully.`,
     });
   };
@@ -287,43 +371,35 @@ const UserManagement = () => {
   const handleEditUser = () => {
     if (!selectedUser) return;
 
-    setUsers(prevUsers => 
-      prevUsers.map(user => 
-        user.id === selectedUser.id 
-          ? { ...selectedUser }
-          : user
-      )
+    setUsers((prevUsers) =>
+      prevUsers.map((user) => (user.id === selectedUser.id ? { ...selectedUser } : user))
     );
 
     setIsEditDialogOpen(false);
     setSelectedUser(null);
 
     toast({
-      title: "Success",
-      description: "User has been updated successfully.",
+      title: 'Success',
+      description: 'User has been updated successfully.',
     });
   };
 
   const handleDeleteUser = (userId: string) => {
-    setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
-    
+    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+
     toast({
-      title: "Success",
-      description: "User has been deleted successfully.",
+      title: 'Success',
+      description: 'User has been deleted successfully.',
     });
   };
 
   const handleStatusChange = (userId: string, newStatus: User['status']) => {
-    setUsers(prevUsers => 
-      prevUsers.map(user => 
-        user.id === userId 
-          ? { ...user, status: newStatus }
-          : user
-      )
+    setUsers((prevUsers) =>
+      prevUsers.map((user) => (user.id === userId ? { ...user, status: newStatus } : user))
     );
 
     toast({
-      title: "Success",
+      title: 'Success',
       description: `User status has been changed to ${newStatus}.`,
     });
   };
@@ -332,59 +408,51 @@ const UserManagement = () => {
   const handleBulkAction = () => {
     if (selectedUsers.length === 0) {
       toast({
-        title: "Error",
-        description: "Please select users to perform bulk action.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Please select users to perform bulk action.',
+        variant: 'destructive',
       });
       return;
     }
 
     switch (bulkActionType) {
       case 'activate':
-        setUsers(prevUsers => 
-          prevUsers.map(user => 
-            selectedUsers.includes(user.id) 
-              ? { ...user, status: 'active' as const }
-              : user
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            selectedUsers.includes(user.id) ? { ...user, status: 'active' as const } : user
           )
         );
         toast({
-          title: "Success",
+          title: 'Success',
           description: `${selectedUsers.length} users have been activated.`,
         });
         break;
       case 'deactivate':
-        setUsers(prevUsers => 
-          prevUsers.map(user => 
-            selectedUsers.includes(user.id) 
-              ? { ...user, status: 'inactive' as const }
-              : user
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            selectedUsers.includes(user.id) ? { ...user, status: 'inactive' as const } : user
           )
         );
         toast({
-          title: "Success",
+          title: 'Success',
           description: `${selectedUsers.length} users have been deactivated.`,
         });
         break;
       case 'suspend':
-        setUsers(prevUsers => 
-          prevUsers.map(user => 
-            selectedUsers.includes(user.id) 
-              ? { ...user, status: 'suspended' as const }
-              : user
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            selectedUsers.includes(user.id) ? { ...user, status: 'suspended' as const } : user
           )
         );
         toast({
-          title: "Success",
+          title: 'Success',
           description: `${selectedUsers.length} users have been suspended.`,
         });
         break;
       case 'delete':
-        setUsers(prevUsers => 
-          prevUsers.filter(user => !selectedUsers.includes(user.id))
-        );
+        setUsers((prevUsers) => prevUsers.filter((user) => !selectedUsers.includes(user.id)));
         toast({
-          title: "Success",
+          title: 'Success',
           description: `${selectedUsers.length} users have been deleted.`,
         });
         break;
@@ -400,24 +468,37 @@ const UserManagement = () => {
 
   // Export functionality
   const handleExportUsers = (userIds?: string[]) => {
-    const usersToExport = userIds 
-      ? users.filter(user => userIds.includes(user.id))
+    const usersToExport = userIds
+      ? users.filter((user) => userIds.includes(user.id))
       : filteredAndSortedUsers;
 
     const csvContent = [
-      ['Name', 'Email', 'Role', 'Status', 'Join Date', 'Last Active', 'Sessions Count', 'Department', 'Risk Level', 'Online Status'].join(','),
-      ...usersToExport.map(user => [
-        user.name,
-        user.email,
-        user.role,
-        user.status,
-        user.joinDate,
-        user.lastActive,
-        user.sessionsCount.toString(),
-        user.department || '',
-        user.riskLevel || '',
-        user.isOnline ? 'Online' : 'Offline'
-      ].join(','))
+      [
+        'Name',
+        'Email',
+        'Role',
+        'Status',
+        'Join Date',
+        'Last Active',
+        'Sessions Count',
+        'Department',
+        'Risk Level',
+        'Online Status',
+      ].join(','),
+      ...usersToExport.map((user) =>
+        [
+          user.name,
+          user.email,
+          user.role,
+          user.status,
+          user.joinDate,
+          user.lastActive,
+          user.sessionsCount.toString(),
+          user.department || '',
+          user.riskLevel || '',
+          user.isOnline ? 'Online' : 'Offline',
+        ].join(',')
+      ),
     ].join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -431,8 +512,8 @@ const UserManagement = () => {
     window.URL.revokeObjectURL(url);
 
     toast({
-      title: "Success",
-      description: "Users exported successfully.",
+      title: 'Success',
+      description: 'Users exported successfully.',
     });
   };
 
@@ -441,37 +522,51 @@ const UserManagement = () => {
     if (selectedUsers.length === currentUsers.length) {
       setSelectedUsers([]);
     } else {
-      setSelectedUsers(currentUsers.map(user => user.id));
+      setSelectedUsers(currentUsers.map((user) => user.id));
     }
   };
 
   // Helper functions for styling
   const getRoleColor = (role: string) => {
     switch (role) {
-      case 'admin': return 'bg-primary/20 text-primary border-primary/20';
-      case 'counselor': return 'bg-secondary/20 text-secondary border-secondary/20';
-      case 'student': return 'bg-accent/20 text-accent border-accent/20';
-      default: return 'bg-muted/20 text-muted-foreground border-muted/20';
+      case 'admin':
+        return 'bg-primary/20 text-primary border-primary/20';
+      case 'counselor':
+        return 'bg-secondary/20 text-secondary border-secondary/20';
+      case 'student':
+        return 'bg-accent/20 text-accent border-accent/20';
+      default:
+        return 'bg-muted/20 text-muted-foreground border-muted/20';
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'active': return 'bg-green-500/20 text-green-600 border-green-500/20';
-      case 'inactive': return 'bg-yellow-500/20 text-yellow-600 border-yellow-500/20';
-      case 'suspended': return 'bg-red-500/20 text-red-600 border-red-500/20';
-      case 'pending': return 'bg-blue-500/20 text-blue-600 border-blue-500/20';
-      default: return 'bg-muted/20 text-muted-foreground border-muted/20';
+      case 'active':
+        return 'bg-green-500/20 text-green-600 border-green-500/20';
+      case 'inactive':
+        return 'bg-yellow-500/20 text-yellow-600 border-yellow-500/20';
+      case 'suspended':
+        return 'bg-red-500/20 text-red-600 border-red-500/20';
+      case 'pending':
+        return 'bg-blue-500/20 text-blue-600 border-blue-500/20';
+      default:
+        return 'bg-muted/20 text-muted-foreground border-muted/20';
     }
   };
 
   const getRiskColor = (risk?: string) => {
     switch (risk) {
-      case 'crisis': return 'bg-red-600/20 text-red-700 border-red-600/20';
-      case 'high': return 'bg-red-500/20 text-red-600 border-red-500/20';
-      case 'medium': return 'bg-yellow-500/20 text-yellow-600 border-yellow-500/20';
-      case 'low': return 'bg-green-500/20 text-green-600 border-green-500/20';
-      default: return 'bg-muted/20 text-muted-foreground border-muted/20';
+      case 'crisis':
+        return 'bg-red-600/20 text-red-700 border-red-600/20';
+      case 'high':
+        return 'bg-red-500/20 text-red-600 border-red-500/20';
+      case 'medium':
+        return 'bg-yellow-500/20 text-yellow-600 border-yellow-500/20';
+      case 'low':
+        return 'bg-green-500/20 text-green-600 border-green-500/20';
+      default:
+        return 'bg-muted/20 text-muted-foreground border-muted/20';
     }
   };
 
@@ -489,21 +584,21 @@ const UserManagement = () => {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => handleExportUsers()}
               className="group hover:bg-primary/10"
             >
               <Download className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform" />
               Export All
             </Button>
-            <Button 
+            <Button
               variant="outline"
               onClick={() => {
                 setUsers(generateMockUsers());
                 toast({
-                  title: "Data Refreshed",
-                  description: "User data has been refreshed with latest information.",
+                  title: 'Data Refreshed',
+                  description: 'User data has been refreshed with latest information.',
                 });
               }}
               className="group hover:bg-secondary/10"
@@ -530,29 +625,47 @@ const UserManagement = () => {
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="create-name" className="text-sm font-semibold">Full Name *</Label>
-                      <Input 
-                        id="create-name" 
-                        placeholder="Enter full name" 
+                      <Label htmlFor="create-name" className="text-sm font-semibold">
+                        Full Name *
+                      </Label>
+                      <Input
+                        id="create-name"
+                        placeholder="Enter full name"
                         value={newUserForm.name}
-                        onChange={(e) => setNewUserForm(prev => ({...prev, name: e.target.value}))}
+                        onChange={(e) =>
+                          setNewUserForm((prev) => ({ ...prev, name: e.target.value }))
+                        }
                         className="bg-white/50"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="create-email" className="text-sm font-semibold">Email *</Label>
-                      <Input 
-                        id="create-email" 
-                        type="email" 
-                        placeholder="Enter email address" 
+                      <Label htmlFor="create-email" className="text-sm font-semibold">
+                        Email *
+                      </Label>
+                      <Input
+                        id="create-email"
+                        type="email"
+                        placeholder="Enter email address"
                         value={newUserForm.email}
-                        onChange={(e) => setNewUserForm(prev => ({...prev, email: e.target.value}))}
+                        onChange={(e) =>
+                          setNewUserForm((prev) => ({ ...prev, email: e.target.value }))
+                        }
                         className="bg-white/50"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="create-role" className="text-sm font-semibold">Role *</Label>
-                      <Select value={newUserForm.role} onValueChange={(value) => setNewUserForm(prev => ({...prev, role: value as 'student' | 'counselor' | 'admin'}))}>
+                      <Label htmlFor="create-role" className="text-sm font-semibold">
+                        Role *
+                      </Label>
+                      <Select
+                        value={newUserForm.role}
+                        onValueChange={(value) =>
+                          setNewUserForm((prev) => ({
+                            ...prev,
+                            role: value as 'student' | 'counselor' | 'admin',
+                          }))
+                        }
+                      >
                         <SelectTrigger className="bg-white/50">
                           <SelectValue />
                         </SelectTrigger>
@@ -564,34 +677,46 @@ const UserManagement = () => {
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="create-phone" className="text-sm font-semibold">Phone Number</Label>
-                      <Input 
-                        id="create-phone" 
-                        placeholder="+1 (555) 123-4567" 
+                      <Label htmlFor="create-phone" className="text-sm font-semibold">
+                        Phone Number
+                      </Label>
+                      <Input
+                        id="create-phone"
+                        placeholder="+1 (555) 123-4567"
                         value={newUserForm.phoneNumber}
-                        onChange={(e) => setNewUserForm(prev => ({...prev, phoneNumber: e.target.value}))}
+                        onChange={(e) =>
+                          setNewUserForm((prev) => ({ ...prev, phoneNumber: e.target.value }))
+                        }
                         className="bg-white/50"
                       />
                     </div>
                     {newUserForm.role === 'student' && (
                       <div className="space-y-2">
-                        <Label htmlFor="create-department" className="text-sm font-semibold">Department</Label>
-                        <Input 
-                          id="create-department" 
-                          placeholder="e.g., Computer Science" 
+                        <Label htmlFor="create-department" className="text-sm font-semibold">
+                          Department
+                        </Label>
+                        <Input
+                          id="create-department"
+                          placeholder="e.g., Computer Science"
                           value={newUserForm.department}
-                          onChange={(e) => setNewUserForm(prev => ({...prev, department: e.target.value}))}
+                          onChange={(e) =>
+                            setNewUserForm((prev) => ({ ...prev, department: e.target.value }))
+                          }
                           className="bg-white/50"
                         />
                       </div>
                     )}
                     <div className="space-y-2">
-                      <Label htmlFor="create-notes" className="text-sm font-semibold">Notes</Label>
-                      <Textarea 
-                        id="create-notes" 
-                        placeholder="Additional notes or comments..." 
+                      <Label htmlFor="create-notes" className="text-sm font-semibold">
+                        Notes
+                      </Label>
+                      <Textarea
+                        id="create-notes"
+                        placeholder="Additional notes or comments..."
                         value={newUserForm.notes}
-                        onChange={(e) => setNewUserForm(prev => ({...prev, notes: e.target.value}))}
+                        onChange={(e) =>
+                          setNewUserForm((prev) => ({ ...prev, notes: e.target.value }))
+                        }
                         className="bg-white/50 resize-none"
                         rows={3}
                       />
@@ -602,7 +727,10 @@ const UserManagement = () => {
                   <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
                     Cancel
                   </Button>
-                  <Button onClick={handleCreateUser} className="bg-gradient-to-r from-primary to-secondary">
+                  <Button
+                    onClick={handleCreateUser}
+                    className="bg-gradient-to-r from-primary to-secondary"
+                  >
                     Create User
                   </Button>
                 </DialogFooter>
@@ -617,13 +745,15 @@ const UserManagement = () => {
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <Users className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
-                <Badge variant="secondary" className="bg-primary/20 text-primary">Total</Badge>
+                <Badge variant="secondary" className="bg-primary/20 text-primary">
+                  Total
+                </Badge>
               </div>
               <CardTitle className="text-2xl font-bold">{userStats.total}</CardTitle>
               <CardDescription className="text-sm">All Users</CardDescription>
             </CardHeader>
           </Card>
-          
+
           <Card className="bg-white/10 backdrop-blur-xl border-white/20 hover:bg-white/15 transition-all duration-300 group">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
@@ -650,7 +780,9 @@ const UserManagement = () => {
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <Users className="h-5 w-5 text-secondary group-hover:scale-110 transition-transform" />
-                <Badge variant="secondary" className="bg-secondary/20 text-secondary">Students</Badge>
+                <Badge variant="secondary" className="bg-secondary/20 text-secondary">
+                  Students
+                </Badge>
               </div>
               <CardTitle className="text-2xl font-bold">{userStats.students}</CardTitle>
               <CardDescription className="text-sm">Student Accounts</CardDescription>
@@ -720,7 +852,9 @@ const UserManagement = () => {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
               <div className="lg:col-span-2 space-y-2">
-                <Label htmlFor="search" className="text-sm font-semibold">Search Users</Label>
+                <Label htmlFor="search" className="text-sm font-semibold">
+                  Search Users
+                </Label>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -733,7 +867,9 @@ const UserManagement = () => {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="role-filter" className="text-sm font-semibold">Role</Label>
+                <Label htmlFor="role-filter" className="text-sm font-semibold">
+                  Role
+                </Label>
                 <Select value={roleFilter} onValueChange={setRoleFilter}>
                   <SelectTrigger className="bg-white/50">
                     <SelectValue />
@@ -747,7 +883,9 @@ const UserManagement = () => {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="status-filter" className="text-sm font-semibold">Status</Label>
+                <Label htmlFor="status-filter" className="text-sm font-semibold">
+                  Status
+                </Label>
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
                   <SelectTrigger className="bg-white/50">
                     <SelectValue />
@@ -762,7 +900,9 @@ const UserManagement = () => {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="risk-filter" className="text-sm font-semibold">Risk Level</Label>
+                <Label htmlFor="risk-filter" className="text-sm font-semibold">
+                  Risk Level
+                </Label>
                 <Select value={riskFilter} onValueChange={setRiskFilter}>
                   <SelectTrigger className="bg-white/50">
                     <SelectValue />
@@ -777,10 +917,12 @@ const UserManagement = () => {
                 </Select>
               </div>
             </div>
-            
+
             <div className="flex flex-wrap gap-3 mt-6">
               <div className="flex items-center space-x-2">
-                <Label htmlFor="sort-by" className="text-sm font-semibold">Sort by:</Label>
+                <Label htmlFor="sort-by" className="text-sm font-semibold">
+                  Sort by:
+                </Label>
                 <Select value={sortBy} onValueChange={setSortBy}>
                   <SelectTrigger className="w-40 bg-white/50">
                     <SelectValue />
@@ -793,8 +935,8 @@ const UserManagement = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
                 className="hover:bg-primary/10"
@@ -814,9 +956,9 @@ const UserManagement = () => {
                   <Badge variant="secondary" className="bg-primary/20 text-primary font-semibold">
                     {selectedUsers.length} users selected
                   </Badge>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     onClick={() => setSelectedUsers([])}
                     className="hover:bg-red-500/10"
                   >
@@ -825,8 +967,8 @@ const UserManagement = () => {
                   </Button>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     variant="outline"
                     onClick={() => {
                       setBulkActionType('activate');
@@ -837,8 +979,8 @@ const UserManagement = () => {
                     <CheckCircle className="h-4 w-4 mr-2" />
                     Activate
                   </Button>
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     variant="outline"
                     onClick={() => {
                       setBulkActionType('suspend');
@@ -849,8 +991,8 @@ const UserManagement = () => {
                     <Ban className="h-4 w-4 mr-2" />
                     Suspend
                   </Button>
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     variant="outline"
                     onClick={() => {
                       setBulkActionType('export');
@@ -863,8 +1005,8 @@ const UserManagement = () => {
                   </Button>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         variant="outline"
                         className="hover:bg-red-500/10 text-red-600 hover:text-red-700"
                       >
@@ -876,12 +1018,13 @@ const UserManagement = () => {
                       <AlertDialogHeader>
                         <AlertDialogTitle>Confirm Bulk Delete</AlertDialogTitle>
                         <AlertDialogDescription>
-                          Are you sure you want to delete {selectedUsers.length} selected users? This action cannot be undone.
+                          Are you sure you want to delete {selectedUsers.length} selected users?
+                          This action cannot be undone.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction 
+                        <AlertDialogAction
                           onClick={() => {
                             setBulkActionType('delete');
                             handleBulkAction();
@@ -913,13 +1056,14 @@ const UserManagement = () => {
               </CardTitle>
               <div className="flex items-center space-x-4">
                 <div className="text-sm text-muted-foreground">
-                  Showing {startIndex + 1}-{Math.min(endIndex, filteredAndSortedUsers.length)} of {filteredAndSortedUsers.length}
+                  Showing {startIndex + 1}-{Math.min(endIndex, filteredAndSortedUsers.length)} of{' '}
+                  {filteredAndSortedUsers.length}
                 </div>
                 <div className="flex items-center space-x-2">
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
                   >
                     Previous
@@ -930,7 +1074,7 @@ const UserManagement = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                     disabled={currentPage === totalPages}
                   >
                     Next
@@ -943,8 +1087,10 @@ const UserManagement = () => {
             <div className="space-y-2 mb-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    checked={selectedUsers.length === currentUsers.length && currentUsers.length > 0}
+                  <Checkbox
+                    checked={
+                      selectedUsers.length === currentUsers.length && currentUsers.length > 0
+                    }
                     onCheckedChange={handleSelectAll}
                   />
                   <Label className="text-sm font-semibold">Select All</Label>
@@ -954,60 +1100,64 @@ const UserManagement = () => {
 
             <div className="space-y-4">
               {currentUsers.map((user) => (
-                <div 
-                  key={user.id} 
+                <div
+                  key={user.id}
                   className={`group relative p-6 rounded-xl border-2 transition-all duration-300 hover:shadow-lg ${
-                    selectedUsers.includes(user.id) 
-                      ? 'bg-primary/10 border-primary/30 shadow-md' 
+                    selectedUsers.includes(user.id)
+                      ? 'bg-primary/10 border-primary/30 shadow-md'
                       : 'bg-white/5 border-white/20 hover:bg-white/10 hover:border-white/30'
                   }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4">
-                      <Checkbox 
+                      <Checkbox
                         checked={selectedUsers.includes(user.id)}
                         onCheckedChange={(checked) => {
                           if (checked) {
-                            setSelectedUsers(prev => [...prev, user.id]);
+                            setSelectedUsers((prev) => [...prev, user.id]);
                           } else {
-                            setSelectedUsers(prev => prev.filter(id => id !== user.id));
+                            setSelectedUsers((prev) => prev.filter((id) => id !== user.id));
                           }
                         }}
                         className="mt-2"
                       />
                       <div className="relative">
-                        <div className={`w-16 h-16 rounded-full flex items-center justify-center bg-gradient-to-br ${
-                          user.role === 'admin' ? 'from-primary to-primary/70' :
-                          user.role === 'counselor' ? 'from-secondary to-secondary/70' :
-                          'from-accent to-accent/70'
-                        } shadow-lg`}>
-                          {user.role === 'admin' ? <Shield className="h-8 w-8 text-white" /> :
-                           user.role === 'counselor' ? <Heart className="h-8 w-8 text-white" /> :
-                           <Users className="h-8 w-8 text-white" />}
+                        <div
+                          className={`w-16 h-16 rounded-full flex items-center justify-center bg-gradient-to-br ${
+                            user.role === 'admin'
+                              ? 'from-primary to-primary/70'
+                              : user.role === 'counselor'
+                                ? 'from-secondary to-secondary/70'
+                                : 'from-accent to-accent/70'
+                          } shadow-lg`}
+                        >
+                          {user.role === 'admin' ? (
+                            <Shield className="h-8 w-8 text-white" />
+                          ) : user.role === 'counselor' ? (
+                            <Heart className="h-8 w-8 text-white" />
+                          ) : (
+                            <Users className="h-8 w-8 text-white" />
+                          )}
                         </div>
                         {user.isOnline && (
                           <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full animate-pulse"></div>
                         )}
                       </div>
-                      
+
                       <div className="flex-1 space-y-3">
                         <div className="flex items-start justify-between">
                           <div className="space-y-2">
                             <div className="flex items-center space-x-3">
                               <h3 className="text-lg font-bold">{user.name}</h3>
-                              <Badge className={getRoleColor(user.role)}>
-                                {user.role}
-                              </Badge>
-                              <Badge className={getStatusColor(user.status)}>
-                                {user.status}
-                              </Badge>
+                              <Badge className={getRoleColor(user.role)}>{user.role}</Badge>
+                              <Badge className={getStatusColor(user.status)}>{user.status}</Badge>
                               {user.riskLevel && user.role === 'student' && (
                                 <Badge className={getRiskColor(user.riskLevel)}>
                                   {user.riskLevel} risk
                                 </Badge>
                               )}
                             </div>
-                            
+
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-muted-foreground">
                               <span className="flex items-center space-x-2">
                                 <Mail className="h-4 w-4" />
@@ -1040,27 +1190,33 @@ const UserManagement = () => {
                                 </span>
                               )}
                             </div>
-                            
+
                             {user.specialties && (
                               <div className="flex flex-wrap gap-2 mt-2">
                                 {user.specialties.map((specialty, index) => (
-                                  <Badge key={index} variant="outline" className="text-xs bg-white/20">
+                                  <Badge
+                                    key={index}
+                                    variant="outline"
+                                    className="text-xs bg-white/20"
+                                  >
                                     {specialty}
                                   </Badge>
                                 ))}
                               </div>
                             )}
-                            
+
                             {user.notes && (
                               <p className="text-sm text-muted-foreground bg-white/10 p-2 rounded border-l-4 border-yellow-500">
                                 <strong>Note:</strong> {user.notes}
                               </p>
                             )}
                           </div>
-                          
+
                           <div className="flex flex-col items-end space-y-3">
                             <div className="text-right">
-                              <p className="text-2xl font-bold text-primary">{user.sessionsCount}</p>
+                              <p className="text-2xl font-bold text-primary">
+                                {user.sessionsCount}
+                              </p>
                               <p className="text-sm text-muted-foreground">sessions</p>
                               {user.averageSessionRating && (
                                 <p className="text-sm text-muted-foreground">
@@ -1068,10 +1224,10 @@ const UserManagement = () => {
                                 </p>
                               )}
                             </div>
-                            
+
                             <div className="flex items-center space-x-2">
-                              <Button 
-                                variant="outline" 
+                              <Button
+                                variant="outline"
                                 size="sm"
                                 onClick={() => {
                                   setSelectedUser(user);
@@ -1082,8 +1238,8 @@ const UserManagement = () => {
                                 <Eye className="h-4 w-4 mr-1" />
                                 View
                               </Button>
-                              <Button 
-                                variant="outline" 
+                              <Button
+                                variant="outline"
                                 size="sm"
                                 onClick={() => {
                                   setSelectedUser(user);
@@ -1096,9 +1252,9 @@ const UserManagement = () => {
                               </Button>
                               <AlertDialog>
                                 <AlertDialogTrigger asChild>
-                                  <Button 
-                                    variant="outline" 
-                                    size="sm" 
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
                                     className="hover:bg-red-500/10 text-red-600 hover:text-red-700"
                                   >
                                     <Trash2 className="h-4 w-4" />
@@ -1108,12 +1264,13 @@ const UserManagement = () => {
                                   <AlertDialogHeader>
                                     <AlertDialogTitle>Delete User</AlertDialogTitle>
                                     <AlertDialogDescription>
-                                      Are you sure you want to delete {user.name}? This action cannot be undone.
+                                      Are you sure you want to delete {user.name}? This action
+                                      cannot be undone.
                                     </AlertDialogDescription>
                                   </AlertDialogHeader>
                                   <AlertDialogFooter>
                                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction 
+                                    <AlertDialogAction
                                       onClick={() => handleDeleteUser(user.id)}
                                       className="bg-red-600 hover:bg-red-700"
                                     >
@@ -1128,14 +1285,14 @@ const UserManagement = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Quick Status Actions */}
                   <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
                     <div className="flex space-x-1">
                       {user.status !== 'active' && (
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
+                        <Button
+                          size="sm"
+                          variant="ghost"
                           onClick={() => handleStatusChange(user.id, 'active')}
                           className="h-8 w-8 p-0 hover:bg-green-500/20 text-green-600"
                         >
@@ -1143,9 +1300,9 @@ const UserManagement = () => {
                         </Button>
                       )}
                       {user.status === 'active' && (
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
+                        <Button
+                          size="sm"
+                          variant="ghost"
                           onClick={() => handleStatusChange(user.id, 'suspended')}
                           className="h-8 w-8 p-0 hover:bg-yellow-500/20 text-yellow-600"
                         >
@@ -1157,12 +1314,14 @@ const UserManagement = () => {
                 </div>
               ))}
             </div>
-            
+
             {filteredAndSortedUsers.length === 0 && (
               <div className="text-center py-12">
                 <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-muted-foreground mb-2">No users found</h3>
-                <p className="text-muted-foreground">Try adjusting your search criteria or filters.</p>
+                <p className="text-muted-foreground">
+                  Try adjusting your search criteria or filters.
+                </p>
               </div>
             )}
           </CardContent>
@@ -1176,56 +1335,100 @@ const UserManagement = () => {
                 <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                   User Details - {selectedUser.name}
                 </DialogTitle>
-                <DialogDescription>
-                  Comprehensive user information and statistics
-                </DialogDescription>
+                <DialogDescription>Comprehensive user information and statistics</DialogDescription>
               </DialogHeader>
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div>
-                      <Label className="text-sm font-semibold text-muted-foreground">Basic Information</Label>
+                      <Label className="text-sm font-semibold text-muted-foreground">
+                        Basic Information
+                      </Label>
                       <div className="mt-2 space-y-2 p-4 bg-white/10 rounded-lg">
-                        <p><strong>Name:</strong> {selectedUser.name}</p>
-                        <p><strong>Email:</strong> {selectedUser.email}</p>
-                        <p><strong>Role:</strong> {selectedUser.role}</p>
-                        <p><strong>Status:</strong> {selectedUser.status}</p>
-                        {selectedUser.phoneNumber && <p><strong>Phone:</strong> {selectedUser.phoneNumber}</p>}
-                        {selectedUser.department && <p><strong>Department:</strong> {selectedUser.department}</p>}
+                        <p>
+                          <strong>Name:</strong> {selectedUser.name}
+                        </p>
+                        <p>
+                          <strong>Email:</strong> {selectedUser.email}
+                        </p>
+                        <p>
+                          <strong>Role:</strong> {selectedUser.role}
+                        </p>
+                        <p>
+                          <strong>Status:</strong> {selectedUser.status}
+                        </p>
+                        {selectedUser.phoneNumber && (
+                          <p>
+                            <strong>Phone:</strong> {selectedUser.phoneNumber}
+                          </p>
+                        )}
+                        {selectedUser.department && (
+                          <p>
+                            <strong>Department:</strong> {selectedUser.department}
+                          </p>
+                        )}
                       </div>
                     </div>
-                    
+
                     <div>
-                      <Label className="text-sm font-semibold text-muted-foreground">Activity Information</Label>
+                      <Label className="text-sm font-semibold text-muted-foreground">
+                        Activity Information
+                      </Label>
                       <div className="mt-2 space-y-2 p-4 bg-white/10 rounded-lg">
-                        <p><strong>Join Date:</strong> {selectedUser.joinDate}</p>
-                        <p><strong>Last Active:</strong> {selectedUser.lastActive}</p>
-                        <p><strong>Sessions:</strong> {selectedUser.sessionsCount}</p>
-                        <p><strong>Online Status:</strong> {selectedUser.isOnline ? '🟢 Online' : '🔴 Offline'}</p>
-                        {selectedUser.totalChatMessages && <p><strong>Chat Messages:</strong> {selectedUser.totalChatMessages}</p>}
-                        {selectedUser.averageSessionRating && <p><strong>Avg Rating:</strong> ⭐ {selectedUser.averageSessionRating}/5.0</p>}
+                        <p>
+                          <strong>Join Date:</strong> {selectedUser.joinDate}
+                        </p>
+                        <p>
+                          <strong>Last Active:</strong> {selectedUser.lastActive}
+                        </p>
+                        <p>
+                          <strong>Sessions:</strong> {selectedUser.sessionsCount}
+                        </p>
+                        <p>
+                          <strong>Online Status:</strong>{' '}
+                          {selectedUser.isOnline ? '🟢 Online' : '🔴 Offline'}
+                        </p>
+                        {selectedUser.totalChatMessages && (
+                          <p>
+                            <strong>Chat Messages:</strong> {selectedUser.totalChatMessages}
+                          </p>
+                        )}
+                        {selectedUser.averageSessionRating && (
+                          <p>
+                            <strong>Avg Rating:</strong> ⭐ {selectedUser.averageSessionRating}/5.0
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-4">
                     {selectedUser.role === 'student' && selectedUser.riskLevel && (
                       <div>
-                        <Label className="text-sm font-semibold text-muted-foreground">Mental Health Status</Label>
+                        <Label className="text-sm font-semibold text-muted-foreground">
+                          Mental Health Status
+                        </Label>
                         <div className="mt-2 space-y-2 p-4 bg-white/10 rounded-lg">
-                          <p><strong>Risk Level:</strong> 
+                          <p>
+                            <strong>Risk Level:</strong>
                             <Badge className={getRiskColor(selectedUser.riskLevel)}>
                               {selectedUser.riskLevel}
                             </Badge>
                           </p>
-                          {selectedUser.moodScore && <p><strong>Mood Score:</strong> {selectedUser.moodScore}/10</p>}
+                          {selectedUser.moodScore && (
+                            <p>
+                              <strong>Mood Score:</strong> {selectedUser.moodScore}/10
+                            </p>
+                          )}
                         </div>
                       </div>
                     )}
-                    
+
                     {selectedUser.specialties && (
                       <div>
-                        <Label className="text-sm font-semibold text-muted-foreground">Specialties</Label>
+                        <Label className="text-sm font-semibold text-muted-foreground">
+                          Specialties
+                        </Label>
                         <div className="mt-2 p-4 bg-white/10 rounded-lg">
                           <div className="flex flex-wrap gap-2">
                             {selectedUser.specialties.map((specialty, index) => (
@@ -1237,7 +1440,7 @@ const UserManagement = () => {
                         </div>
                       </div>
                     )}
-                    
+
                     {selectedUser.notes && (
                       <div>
                         <Label className="text-sm font-semibold text-muted-foreground">Notes</Label>
@@ -1261,34 +1464,46 @@ const UserManagement = () => {
                 <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                   Edit User - {selectedUser.name}
                 </DialogTitle>
-                <DialogDescription>
-                  Update user information and settings
-                </DialogDescription>
+                <DialogDescription>Update user information and settings</DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="edit-name" className="text-sm font-semibold">Full Name</Label>
-                  <Input 
-                    id="edit-name" 
+                  <Label htmlFor="edit-name" className="text-sm font-semibold">
+                    Full Name
+                  </Label>
+                  <Input
+                    id="edit-name"
                     value={selectedUser.name}
-                    onChange={(e) => setSelectedUser(prev => prev ? {...prev, name: e.target.value} : null)}
+                    onChange={(e) =>
+                      setSelectedUser((prev) => (prev ? { ...prev, name: e.target.value } : null))
+                    }
                     className="bg-white/50"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="edit-email" className="text-sm font-semibold">Email</Label>
-                  <Input 
-                    id="edit-email" 
+                  <Label htmlFor="edit-email" className="text-sm font-semibold">
+                    Email
+                  </Label>
+                  <Input
+                    id="edit-email"
                     value={selectedUser.email}
-                    onChange={(e) => setSelectedUser(prev => prev ? {...prev, email: e.target.value} : null)}
+                    onChange={(e) =>
+                      setSelectedUser((prev) => (prev ? { ...prev, email: e.target.value } : null))
+                    }
                     className="bg-white/50"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="edit-status" className="text-sm font-semibold">Status</Label>
-                  <Select 
-                    value={selectedUser.status} 
-                    onValueChange={(value) => setSelectedUser(prev => prev ? {...prev, status: value as User['status']} : null)}
+                  <Label htmlFor="edit-status" className="text-sm font-semibold">
+                    Status
+                  </Label>
+                  <Select
+                    value={selectedUser.status}
+                    onValueChange={(value) =>
+                      setSelectedUser((prev) =>
+                        prev ? { ...prev, status: value as User['status'] } : null
+                      )
+                    }
                   >
                     <SelectTrigger className="bg-white/50">
                       <SelectValue />
@@ -1303,22 +1518,34 @@ const UserManagement = () => {
                 </div>
                 {selectedUser.phoneNumber !== undefined && (
                   <div className="space-y-2">
-                    <Label htmlFor="edit-phone" className="text-sm font-semibold">Phone Number</Label>
-                    <Input 
-                      id="edit-phone" 
+                    <Label htmlFor="edit-phone" className="text-sm font-semibold">
+                      Phone Number
+                    </Label>
+                    <Input
+                      id="edit-phone"
                       value={selectedUser.phoneNumber || ''}
-                      onChange={(e) => setSelectedUser(prev => prev ? {...prev, phoneNumber: e.target.value} : null)}
+                      onChange={(e) =>
+                        setSelectedUser((prev) =>
+                          prev ? { ...prev, phoneNumber: e.target.value } : null
+                        )
+                      }
                       className="bg-white/50"
                     />
                   </div>
                 )}
                 {selectedUser.notes !== undefined && (
                   <div className="space-y-2">
-                    <Label htmlFor="edit-notes" className="text-sm font-semibold">Notes</Label>
-                    <Textarea 
-                      id="edit-notes" 
+                    <Label htmlFor="edit-notes" className="text-sm font-semibold">
+                      Notes
+                    </Label>
+                    <Textarea
+                      id="edit-notes"
                       value={selectedUser.notes || ''}
-                      onChange={(e) => setSelectedUser(prev => prev ? {...prev, notes: e.target.value} : null)}
+                      onChange={(e) =>
+                        setSelectedUser((prev) =>
+                          prev ? { ...prev, notes: e.target.value } : null
+                        )
+                      }
                       className="bg-white/50 resize-none"
                       rows={3}
                     />
@@ -1329,7 +1556,10 @@ const UserManagement = () => {
                 <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
                   Cancel
                 </Button>
-                <Button onClick={handleEditUser} className="bg-gradient-to-r from-primary to-secondary">
+                <Button
+                  onClick={handleEditUser}
+                  className="bg-gradient-to-r from-primary to-secondary"
+                >
                   Update User
                 </Button>
               </DialogFooter>
@@ -1350,7 +1580,10 @@ const UserManagement = () => {
               <Button variant="outline" onClick={() => setIsBulkActionDialogOpen(false)}>
                 Cancel
               </Button>
-              <Button onClick={handleBulkAction} className="bg-gradient-to-r from-primary to-secondary">
+              <Button
+                onClick={handleBulkAction}
+                className="bg-gradient-to-r from-primary to-secondary"
+              >
                 Confirm
               </Button>
             </DialogFooter>

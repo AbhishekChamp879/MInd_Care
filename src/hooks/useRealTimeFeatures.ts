@@ -6,12 +6,14 @@ export const useRealTimeUpdates = () => {
   const [updateTrigger, setUpdateTrigger] = useState(0);
 
   const triggerUpdate = useCallback((eventType: string, data?: any) => {
-    setUpdateTrigger(prev => prev + 1);
-    
+    setUpdateTrigger((prev) => prev + 1);
+
     // Dispatch custom event for cross-component communication
-    window.dispatchEvent(new CustomEvent('dashboardUpdate', {
-      detail: { eventType, data, timestamp: Date.now() }
-    }));
+    window.dispatchEvent(
+      new CustomEvent('dashboardUpdate', {
+        detail: { eventType, data, timestamp: Date.now() },
+      })
+    );
   }, []);
 
   return { updateTrigger, triggerUpdate };
@@ -23,11 +25,11 @@ export const useSmoothAnimations = () => {
 
   const smoothTransition = useCallback(async (callback: () => void, duration: number = 300) => {
     setIsAnimating(true);
-    
+
     // Add smooth transition
-    await new Promise(resolve => setTimeout(resolve, 50));
+    await new Promise((resolve) => setTimeout(resolve, 50));
     callback();
-    
+
     // Complete animation
     setTimeout(() => setIsAnimating(false), duration);
   }, []);
@@ -37,13 +39,15 @@ export const useSmoothAnimations = () => {
 
 // Hook for real-time notifications
 export const useRealTimeNotifications = () => {
-  const [notifications, setNotifications] = useState<Array<{
-    id: string;
-    type: 'success' | 'info' | 'achievement' | 'milestone';
-    title: string;
-    message: string;
-    timestamp: number;
-  }>>([]);
+  const [notifications, setNotifications] = useState<
+    Array<{
+      id: string;
+      type: 'success' | 'info' | 'achievement' | 'milestone';
+      title: string;
+      message: string;
+      timestamp: number;
+    }>
+  >([]);
 
   const addNotification = useCallback((type: string, title: string, message: string) => {
     const notification = {
@@ -51,14 +55,14 @@ export const useRealTimeNotifications = () => {
       type: type as any,
       title,
       message,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
-    setNotifications(prev => [...prev, notification]);
+    setNotifications((prev) => [...prev, notification]);
 
     // Auto-remove after 3 seconds
     setTimeout(() => {
-      setNotifications(prev => prev.filter(n => n.id !== notification.id));
+      setNotifications((prev) => prev.filter((n) => n.id !== notification.id));
     }, 3000);
   }, []);
 
@@ -69,29 +73,32 @@ export const useRealTimeNotifications = () => {
 export const useRealTimeProgress = () => {
   const [progressAnimations, setProgressAnimations] = useState<Record<string, number>>({});
 
-  const animateProgress = useCallback((key: string, from: number, to: number, duration: number = 1000) => {
-    const startTime = Date.now();
-    
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      // Easing function for smooth animation
-      const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-      const currentValue = from + (to - from) * easeOutCubic;
-      
-      setProgressAnimations(prev => ({
-        ...prev,
-        [key]: currentValue
-      }));
+  const animateProgress = useCallback(
+    (key: string, from: number, to: number, duration: number = 1000) => {
+      const startTime = Date.now();
 
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
 
-    requestAnimationFrame(animate);
-  }, []);
+        // Easing function for smooth animation
+        const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+        const currentValue = from + (to - from) * easeOutCubic;
+
+        setProgressAnimations((prev) => ({
+          ...prev,
+          [key]: currentValue,
+        }));
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+
+      requestAnimationFrame(animate);
+    },
+    []
+  );
 
   return { progressAnimations, animateProgress };
 };
@@ -102,17 +109,19 @@ export const useLiveSync = () => {
 
   const syncData = useCallback(async (key: string, data: any) => {
     setSyncStatus('syncing');
-    
+
     try {
       // Simulate smooth sync with localStorage
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
       localStorage.setItem(key, JSON.stringify(data));
-      
+
       // Trigger sync event for other components
-      window.dispatchEvent(new CustomEvent('dataSync', {
-        detail: { key, data }
-      }));
-      
+      window.dispatchEvent(
+        new CustomEvent('dataSync', {
+          detail: { key, data },
+        })
+      );
+
       setSyncStatus('synced');
     } catch (error) {
       setSyncStatus('error');
@@ -131,30 +140,33 @@ export const useStreakTracking = () => {
     const today = new Date().toDateString();
     const streakKey = `streak_${type}`;
     const lastUpdateKey = `${streakKey}_last_update`;
-    
+
     const lastUpdate = localStorage.getItem(lastUpdateKey);
     const currentStreak = parseInt(localStorage.getItem(streakKey) || '0');
-    
+
     let newStreak = currentStreak;
-    
+
     if (lastUpdate !== today) {
       newStreak = currentStreak + 1;
       localStorage.setItem(streakKey, newStreak.toString());
       localStorage.setItem(lastUpdateKey, today);
-      
-      setStreaks(prev => ({
+
+      setStreaks((prev) => ({
         ...prev,
-        [type]: newStreak
+        [type]: newStreak,
       }));
-      
+
       // Trigger streak milestone events
-      if (newStreak % 7 === 0) { // Weekly milestone
-        window.dispatchEvent(new CustomEvent('streakMilestone', {
-          detail: { type, streak: newStreak }
-        }));
+      if (newStreak % 7 === 0) {
+        // Weekly milestone
+        window.dispatchEvent(
+          new CustomEvent('streakMilestone', {
+            detail: { type, streak: newStreak },
+          })
+        );
       }
     }
-    
+
     return newStreak;
   }, []);
 
@@ -167,37 +179,45 @@ export const useStreakTracking = () => {
 
 // Hook for smooth UI feedback
 export const useSmoothFeedback = () => {
-  const [feedbackStates, setFeedbackStates] = useState<Record<string, {
-    isActive: boolean;
-    type: 'success' | 'error' | 'loading' | 'idle';
-    message?: string;
-  }>>({});
+  const [feedbackStates, setFeedbackStates] = useState<
+    Record<
+      string,
+      {
+        isActive: boolean;
+        type: 'success' | 'error' | 'loading' | 'idle';
+        message?: string;
+      }
+    >
+  >({});
 
-  const triggerFeedback = useCallback((
-    key: string, 
-    type: 'success' | 'error' | 'loading' | 'idle',
-    message?: string,
-    duration: number = 2000
-  ) => {
-    setFeedbackStates(prev => ({
-      ...prev,
-      [key]: { isActive: true, type, message }
-    }));
+  const triggerFeedback = useCallback(
+    (
+      key: string,
+      type: 'success' | 'error' | 'loading' | 'idle',
+      message?: string,
+      duration: number = 2000
+    ) => {
+      setFeedbackStates((prev) => ({
+        ...prev,
+        [key]: { isActive: true, type, message },
+      }));
 
-    if (type !== 'loading') {
-      setTimeout(() => {
-        setFeedbackStates(prev => ({
-          ...prev,
-          [key]: { isActive: false, type: 'idle' }
-        }));
-      }, duration);
-    }
-  }, []);
+      if (type !== 'loading') {
+        setTimeout(() => {
+          setFeedbackStates((prev) => ({
+            ...prev,
+            [key]: { isActive: false, type: 'idle' },
+          }));
+        }, duration);
+      }
+    },
+    []
+  );
 
   const clearFeedback = useCallback((key: string) => {
-    setFeedbackStates(prev => ({
+    setFeedbackStates((prev) => ({
       ...prev,
-      [key]: { isActive: false, type: 'idle' }
+      [key]: { isActive: false, type: 'idle' },
     }));
   }, []);
 

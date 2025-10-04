@@ -37,13 +37,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (credentials: LoginCredentials): Promise<boolean> => {
     setIsLoading(true);
-    
+
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
+    await new Promise((resolve) => setTimeout(resolve, 800));
+
     const mockUser = mockUsers[credentials.email];
-    
-    if (mockUser && mockUser.password === credentials.password && mockUser.user.role === credentials.role) {
+
+    if (
+      mockUser &&
+      mockUser.password === credentials.password &&
+      mockUser.user.role === credentials.role
+    ) {
       setUser(mockUser.user);
       localStorage.setItem('mindbuddy_user', JSON.stringify(mockUser.user));
       setIsLoading(false);
@@ -51,7 +55,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       window.location.href = '/select-institution';
       return true;
     }
-    
+
     setIsLoading(false);
     return false;
   };
@@ -71,7 +75,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     login,
     logout,
-    isLoading
+    isLoading,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

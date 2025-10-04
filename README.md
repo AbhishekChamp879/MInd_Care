@@ -14,6 +14,7 @@ MInd_Care is a comprehensive mental health support platform designed to provide 
 ## 🌟 Features
 
 ### 🎯 Core Features
+
 - **Dashboard Analytics**: Interactive mood tracking and mental health analytics
 - **AI-Powered Chat**: Intelligent chatbot for immediate support and guidance
 - **Video Consultations**: Secure video calls with mental health professionals
@@ -24,6 +25,7 @@ MInd_Care is a comprehensive mental health support platform designed to provide 
 - **Mood Tracking**: Daily mood logging with insights and patterns
 
 ### 🔧 Technical Features
+
 - **Real-time Messaging**: Instant communication capabilities
 - **Progressive Web App**: Works offline and installable
 - **Dark/Light Theme**: User preference-based theming
@@ -34,19 +36,22 @@ MInd_Care is a comprehensive mental health support platform designed to provide 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **Node.js** 18+ 
+
+- **Node.js** 18+
 - **Bun** (recommended) or **npm**
 - **Git**
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/AbhishekChamp879/Mind_Care.git
    cd Mind_Care
    ```
 
 2. **Install dependencies**
+
    ```bash
    bun install
    # or
@@ -54,6 +59,7 @@ MInd_Care is a comprehensive mental health support platform designed to provide 
    ```
 
 3. **Start development server**
+
    ```bash
    bun dev
    # or
@@ -64,6 +70,7 @@ MInd_Care is a comprehensive mental health support platform designed to provide 
    Navigate to `http://localhost:5173`
 
 ### 🏗️ Build for Production
+
 ```bash
 bun run build
 # or
@@ -73,6 +80,7 @@ npm run build
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **React 18** - UI library
 - **TypeScript** - Type safety
 - **Vite** - Build tool and dev server
@@ -84,6 +92,7 @@ npm run build
 - **Recharts** - Data visualization
 
 ### Development Tools
+
 - **ESLint** - Code linting
 - **Prettier** - Code formatting
 - **Bun** - Package manager and runtime
@@ -117,6 +126,7 @@ MInd_Care/
 We're excited to participate in Hacktoberfest 2025! Here are ways you can contribute:
 
 ### 🏷️ Issue Labels for Hacktoberfest
+
 - `hacktoberfest` - Issues specifically for Hacktoberfest
 - `good first issue` - Perfect for newcomers
 - `beginner-friendly` - Great for developers new to the tech stack
@@ -126,6 +136,7 @@ We're excited to participate in Hacktoberfest 2025! Here are ways you can contri
 - `ui/ux` - Interface and experience improvements
 
 ### 🎯 Contribution Ideas
+
 - **Add new mental health resources** to the resource library
 - **Improve accessibility** features
 - **Add new dashboard widgets** for analytics
@@ -138,6 +149,7 @@ We're excited to participate in Hacktoberfest 2025! Here are ways you can contri
 - **Enhance form validation** and user feedback
 
 ### 📝 Before Contributing
+
 1. Check out our [Contributing Guidelines](CONTRIBUTING.md)
 2. Look for issues labeled `hacktoberfest` and `good first issue`
 3. Comment on an issue before starting work
@@ -152,7 +164,7 @@ We're excited to participate in Hacktoberfest 2025! Here are ways you can contri
 
 ## 🌐 Live Demo
 
-*Coming soon* - We're working on deploying a live demo!
+_Coming soon_ - We're working on deploying a live demo!
 
 ## 🧪 Testing
 

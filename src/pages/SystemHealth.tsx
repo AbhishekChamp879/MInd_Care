@@ -4,12 +4,12 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Activity, 
-  Server, 
-  Database, 
-  Wifi, 
-  Shield, 
+import {
+  Activity,
+  Server,
+  Database,
+  Wifi,
+  Shield,
   AlertTriangle,
   CheckCircle,
   Clock,
@@ -18,7 +18,7 @@ import {
   MemoryStick,
   Globe,
   RefreshCw,
-  Download
+  Download,
 } from 'lucide-react';
 
 const SystemHealth = () => {
@@ -40,42 +40,79 @@ const SystemHealth = () => {
     { service: 'Web Server', status: 'online', uptime: '99.98%', responseTime: '45ms' },
     { service: 'Database', status: 'online', uptime: '99.95%', responseTime: '12ms' },
     { service: 'AI Chat Service', status: 'online', uptime: '99.92%', responseTime: '156ms' },
-    { service: 'Video Call Service', status: 'maintenance', uptime: '99.87%', responseTime: '89ms' },
+    {
+      service: 'Video Call Service',
+      status: 'maintenance',
+      uptime: '99.87%',
+      responseTime: '89ms',
+    },
     { service: 'Email Service', status: 'online', uptime: '100%', responseTime: '234ms' },
     { service: 'File Storage', status: 'online', uptime: '99.99%', responseTime: '67ms' },
   ];
 
   const securityEvents = [
-    { timestamp: '2024-01-15 14:23:12', type: 'Authentication', severity: 'low', description: 'Failed login attempt from suspicious IP' },
-    { timestamp: '2024-01-15 13:45:33', type: 'Access Control', severity: 'medium', description: 'Privilege escalation attempt detected' },
-    { timestamp: '2024-01-15 12:12:45', type: 'Data Protection', severity: 'low', description: 'HIPAA compliance check completed' },
-    { timestamp: '2024-01-15 11:30:21', type: 'Network Security', severity: 'high', description: 'DDoS attack mitigated successfully' },
+    {
+      timestamp: '2024-01-15 14:23:12',
+      type: 'Authentication',
+      severity: 'low',
+      description: 'Failed login attempt from suspicious IP',
+    },
+    {
+      timestamp: '2024-01-15 13:45:33',
+      type: 'Access Control',
+      severity: 'medium',
+      description: 'Privilege escalation attempt detected',
+    },
+    {
+      timestamp: '2024-01-15 12:12:45',
+      type: 'Data Protection',
+      severity: 'low',
+      description: 'HIPAA compliance check completed',
+    },
+    {
+      timestamp: '2024-01-15 11:30:21',
+      type: 'Network Security',
+      severity: 'high',
+      description: 'DDoS attack mitigated successfully',
+    },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'online': return 'bg-severity-low';
-      case 'maintenance': return 'bg-severity-medium';
-      case 'offline': return 'bg-severity-high';
-      default: return 'bg-muted';
+      case 'online':
+        return 'bg-severity-low';
+      case 'maintenance':
+        return 'bg-severity-medium';
+      case 'offline':
+        return 'bg-severity-high';
+      default:
+        return 'bg-muted';
     }
   };
 
   const getMetricColor = (status: string) => {
     switch (status) {
-      case 'healthy': return 'bg-severity-low';
-      case 'warning': return 'bg-severity-medium';
-      case 'critical': return 'bg-severity-high';
-      default: return 'bg-muted';
+      case 'healthy':
+        return 'bg-severity-low';
+      case 'warning':
+        return 'bg-severity-medium';
+      case 'critical':
+        return 'bg-severity-high';
+      default:
+        return 'bg-muted';
     }
   };
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'low': return 'bg-severity-low';
-      case 'medium': return 'bg-severity-medium';
-      case 'high': return 'bg-severity-high';
-      default: return 'bg-muted';
+      case 'low':
+        return 'bg-severity-low';
+      case 'medium':
+        return 'bg-severity-medium';
+      case 'high':
+        return 'bg-severity-high';
+      default:
+        return 'bg-muted';
     }
   };
 
@@ -92,11 +129,7 @@ const SystemHealth = () => {
           </p>
         </div>
         <div className="flex space-x-2">
-          <Button 
-            variant="outline" 
-            onClick={handleRefresh}
-            disabled={isRefreshing}
-          >
+          <Button variant="outline" onClick={handleRefresh} disabled={isRefreshing}>
             <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
             Refresh
           </Button>
@@ -188,9 +221,7 @@ const SystemHealth = () => {
                       <metric.icon className="h-5 w-5 text-primary" />
                       <CardTitle className="text-lg">{metric.name}</CardTitle>
                     </div>
-                    <Badge 
-                      className={`text-white ${getMetricColor(metric.status)}`}
-                    >
+                    <Badge className={`text-white ${getMetricColor(metric.status)}`}>
                       {metric.status}
                     </Badge>
                   </div>
@@ -201,10 +232,7 @@ const SystemHealth = () => {
                       <span>Usage</span>
                       <span className="font-medium">{metric.value}%</span>
                     </div>
-                    <Progress 
-                      value={metric.value} 
-                      className="h-2"
-                    />
+                    <Progress value={metric.value} className="h-2" />
                   </div>
                 </CardContent>
               </Card>
@@ -219,16 +247,19 @@ const SystemHealth = () => {
                 <Server className="h-5 w-5" />
                 <span>Service Status</span>
               </CardTitle>
-              <CardDescription>
-                Current status of all platform services
-              </CardDescription>
+              <CardDescription>Current status of all platform services</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {systemStatus.map((service, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 rounded-lg bg-muted/50">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-4 rounded-lg bg-muted/50"
+                  >
                     <div className="flex items-center space-x-3">
-                      <div className={`w-3 h-3 rounded-full ${getStatusColor(service.status)}`}></div>
+                      <div
+                        className={`w-3 h-3 rounded-full ${getStatusColor(service.status)}`}
+                      ></div>
                       <div>
                         <p className="font-medium">{service.service}</p>
                         <p className="text-sm text-muted-foreground">
@@ -236,7 +267,7 @@ const SystemHealth = () => {
                         </p>
                       </div>
                     </div>
-                    <Badge 
+                    <Badge
                       variant="secondary"
                       className={`capitalize text-white ${getStatusColor(service.status)}`}
                     >
@@ -256,20 +287,23 @@ const SystemHealth = () => {
                 <Shield className="h-5 w-5" />
                 <span>Security Events</span>
               </CardTitle>
-              <CardDescription>
-                Recent security incidents and alerts
-              </CardDescription>
+              <CardDescription>Recent security incidents and alerts</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {securityEvents.map((event, index) => (
-                  <div key={index} className="flex items-start justify-between p-4 rounded-lg bg-muted/50">
+                  <div
+                    key={index}
+                    className="flex items-start justify-between p-4 rounded-lg bg-muted/50"
+                  >
                     <div className="flex items-start space-x-3">
-                      <div className={`w-2 h-2 rounded-full mt-2 ${getSeverityColor(event.severity)}`}></div>
+                      <div
+                        className={`w-2 h-2 rounded-full mt-2 ${getSeverityColor(event.severity)}`}
+                      ></div>
                       <div className="space-y-1">
                         <div className="flex items-center space-x-2">
                           <p className="font-medium">{event.type}</p>
-                          <Badge 
+                          <Badge
                             variant="secondary"
                             className={`text-xs text-white ${getSeverityColor(event.severity)}`}
                           >
@@ -294,19 +328,31 @@ const SystemHealth = () => {
                 <Database className="h-5 w-5" />
                 <span>System Logs</span>
               </CardTitle>
-              <CardDescription>
-                Recent system events and error logs
-              </CardDescription>
+              <CardDescription>Recent system events and error logs</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="bg-background border rounded-lg p-4 font-mono text-sm space-y-1 max-h-96 overflow-y-auto">
-                <div className="text-severity-low">[2024-01-15 14:23:15] INFO: System health check completed successfully</div>
-                <div className="text-muted-foreground">[2024-01-15 14:22:45] DEBUG: Database connection pool optimized</div>
-                <div className="text-severity-medium">[2024-01-15 14:21:33] WARN: High memory usage detected on server-02</div>
-                <div className="text-muted-foreground">[2024-01-15 14:20:12] INFO: Backup process initiated</div>
-                <div className="text-severity-high">[2024-01-15 14:19:45] ERROR: Failed to connect to external API endpoint</div>
-                <div className="text-muted-foreground">[2024-01-15 14:18:23] INFO: User session cleanup completed</div>
-                <div className="text-severity-low">[2024-01-15 14:17:56] INFO: Security scan completed - no threats detected</div>
+                <div className="text-severity-low">
+                  [2024-01-15 14:23:15] INFO: System health check completed successfully
+                </div>
+                <div className="text-muted-foreground">
+                  [2024-01-15 14:22:45] DEBUG: Database connection pool optimized
+                </div>
+                <div className="text-severity-medium">
+                  [2024-01-15 14:21:33] WARN: High memory usage detected on server-02
+                </div>
+                <div className="text-muted-foreground">
+                  [2024-01-15 14:20:12] INFO: Backup process initiated
+                </div>
+                <div className="text-severity-high">
+                  [2024-01-15 14:19:45] ERROR: Failed to connect to external API endpoint
+                </div>
+                <div className="text-muted-foreground">
+                  [2024-01-15 14:18:23] INFO: User session cleanup completed
+                </div>
+                <div className="text-severity-low">
+                  [2024-01-15 14:17:56] INFO: Security scan completed - no threats detected
+                </div>
               </div>
             </CardContent>
           </Card>

@@ -1,5 +1,11 @@
 import React from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Globe } from 'lucide-react';
 
 export interface Language {
@@ -36,7 +42,7 @@ export const languages: Language[] = [
   { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
   { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' },
   { code: 'ms', name: 'Bahasa Melayu', flag: '🇲🇾' },
-  { code: 'sw', name: 'Kiswahili', flag: '🇰🇪' }
+  { code: 'sw', name: 'Kiswahili', flag: '🇰🇪' },
 ];
 
 interface LanguageSelectorProps {
@@ -46,9 +52,9 @@ interface LanguageSelectorProps {
 
 const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   selectedLanguage,
-  onLanguageChange
+  onLanguageChange,
 }) => {
-  const currentLanguage = languages.find(lang => lang.code === selectedLanguage);
+  const currentLanguage = languages.find((lang) => lang.code === selectedLanguage);
 
   return (
     <Select value={selectedLanguage} onValueChange={onLanguageChange}>
@@ -69,8 +75,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       </SelectTrigger>
       <SelectContent className="max-h-64 bg-card/95 backdrop-blur-md border-border/60 shadow-elegant z-50">
         {languages.map((language) => (
-          <SelectItem 
-            key={language.code} 
+          <SelectItem
+            key={language.code}
             value={language.code}
             className="hover:bg-primary/10 focus:bg-primary/10 transition-colors"
           >

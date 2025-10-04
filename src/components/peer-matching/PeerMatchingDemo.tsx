@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
-import { 
+import {
   Users,
   MessageCircle,
   Star,
@@ -31,7 +31,7 @@ import {
   TrendingUp,
   Calendar,
   Settings,
-  HelpCircle
+  HelpCircle,
 } from 'lucide-react';
 
 import { PeerMatchingDashboard } from './PeerMatchingDashboard';
@@ -43,7 +43,7 @@ import { RealTimeConnectionSystem } from './RealTimeConnectionSystem';
 import {
   PeerUser,
   generateAnonymousDisplayName,
-  MENTAL_HEALTH_CONCERNS
+  MENTAL_HEALTH_CONCERNS,
 } from '@/types/peerMatching';
 
 interface DemoScenario {
@@ -69,9 +69,7 @@ interface PeerMatchingDemoProps {
   className?: string;
 }
 
-export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
-  className = ''
-}) => {
+export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({ className = '' }) => {
   const [activeDemo, setActiveDemo] = useState<string>('overview');
   const [demoUser, setDemoUser] = useState<PeerUser | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -85,10 +83,15 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
       description: 'Complete peer matching hub with integrated features',
       component: PeerMatchingDashboard,
       icon: <Activity className="h-5 w-5" />,
-      features: ['Real-time notifications', 'Activity tracking', 'Cross-system integration', 'Privacy controls'],
+      features: [
+        'Real-time notifications',
+        'Activity tracking',
+        'Cross-system integration',
+        'Privacy controls',
+      ],
       difficulty: 'basic',
       estimatedTime: '5 min',
-      category: 'overview'
+      category: 'overview',
     },
     {
       id: 'peer-buddy',
@@ -96,10 +99,15 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
       description: 'Find compatible study buddies with privacy protection',
       component: PeerBuddyMatching,
       icon: <Users className="h-5 w-5" />,
-      features: ['Compatibility scoring', 'Anonymous profiles', 'Safety features', 'Real-time matching'],
+      features: [
+        'Compatibility scoring',
+        'Anonymous profiles',
+        'Safety features',
+        'Real-time matching',
+      ],
       difficulty: 'intermediate',
       estimatedTime: '8 min',
-      category: 'matching'
+      category: 'matching',
     },
     {
       id: 'study-groups',
@@ -107,10 +115,15 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
       description: 'Collaborative learning focused on wellbeing',
       component: StudyGroupSystem,
       icon: <BookOpen className="h-5 w-5" />,
-      features: ['Topic-based groups', 'Session scheduling', 'Progress tracking', 'Group analytics'],
+      features: [
+        'Topic-based groups',
+        'Session scheduling',
+        'Progress tracking',
+        'Group analytics',
+      ],
       difficulty: 'intermediate',
       estimatedTime: '10 min',
-      category: 'groups'
+      category: 'groups',
     },
     {
       id: 'mentorship',
@@ -121,7 +134,7 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
       features: ['Goal tracking', 'Mentor verification', 'Progress milestones', 'Resource sharing'],
       difficulty: 'advanced',
       estimatedTime: '12 min',
-      category: 'mentorship'
+      category: 'mentorship',
     },
     {
       id: 'real-time',
@@ -129,11 +142,16 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
       description: 'Encrypted peer-to-peer communication',
       component: RealTimeConnectionSystem,
       icon: <MessageCircle className="h-5 w-5" />,
-      features: ['End-to-end encryption', 'Typing indicators', 'Connection quality', 'Message reactions'],
+      features: [
+        'End-to-end encryption',
+        'Typing indicators',
+        'Connection quality',
+        'Message reactions',
+      ],
       difficulty: 'advanced',
       estimatedTime: '6 min',
-      category: 'communication'
-    }
+      category: 'communication',
+    },
   ];
 
   const featureHighlights: FeatureHighlight[] = [
@@ -141,38 +159,38 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
       title: 'Privacy-First Design',
       description: 'Anonymous matching with granular privacy controls',
       icon: <Shield className="h-6 w-6 text-green-500" />,
-      status: 'implemented'
+      status: 'implemented',
     },
     {
       title: 'AI-Powered Matching',
       description: 'Intelligent compatibility scoring based on concerns and preferences',
       icon: <Zap className="h-6 w-6 text-blue-500" />,
-      status: 'implemented'
+      status: 'implemented',
     },
     {
       title: 'Real-time Communication',
       description: 'Secure, encrypted chat with typing indicators and reactions',
       icon: <Radio className="h-6 w-6 text-purple-500" />,
-      status: 'implemented'
+      status: 'implemented',
     },
     {
       title: 'Mental Health Focus',
       description: 'Specialized support for 20+ mental health concerns',
       icon: <Heart className="h-6 w-6 text-red-500" />,
-      status: 'implemented'
+      status: 'implemented',
     },
     {
       title: 'Progress Tracking',
       description: 'Goal setting and achievement monitoring for growth',
       icon: <Target className="h-6 w-6 text-orange-500" />,
-      status: 'implemented'
+      status: 'implemented',
     },
     {
       title: 'Safety & Moderation',
       description: 'Comprehensive reporting and moderation systems',
       icon: <AlertTriangle className="h-6 w-6 text-yellow-500" />,
-      status: 'partial'
-    }
+      status: 'partial',
+    },
   ];
 
   // Initialize demo user
@@ -187,13 +205,28 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
       mentalHealthConcerns: ['anxiety', 'academic-pressure'],
       interests: ['coding', 'mindfulness', 'peer-support'],
       availableHours: {
-        monday: [{ start: '09:00', end: '12:00' }, { start: '14:00', end: '18:00' }],
-        tuesday: [{ start: '09:00', end: '12:00' }, { start: '14:00', end: '18:00' }],
-        wednesday: [{ start: '09:00', end: '12:00' }, { start: '14:00', end: '18:00' }],
-        thursday: [{ start: '09:00', end: '12:00' }, { start: '14:00', end: '18:00' }],
-        friday: [{ start: '09:00', end: '12:00' }, { start: '14:00', end: '18:00' }],
+        monday: [
+          { start: '09:00', end: '12:00' },
+          { start: '14:00', end: '18:00' },
+        ],
+        tuesday: [
+          { start: '09:00', end: '12:00' },
+          { start: '14:00', end: '18:00' },
+        ],
+        wednesday: [
+          { start: '09:00', end: '12:00' },
+          { start: '14:00', end: '18:00' },
+        ],
+        thursday: [
+          { start: '09:00', end: '12:00' },
+          { start: '14:00', end: '18:00' },
+        ],
+        friday: [
+          { start: '09:00', end: '12:00' },
+          { start: '14:00', end: '18:00' },
+        ],
         saturday: [{ start: '10:00', end: '16:00' }],
-        sunday: [{ start: '10:00', end: '16:00' }]
+        sunday: [{ start: '10:00', end: '16:00' }],
       },
       timeZone: 'EST',
       preferences: {
@@ -203,13 +236,13 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
         meetingFrequency: 'weekly',
         groupSizePreference: 'any',
         anonymityLevel: 'first-name-only',
-        supportType: ['emotional-support', 'study-buddy']
+        supportType: ['emotional-support', 'study-buddy'],
       },
       isOnline: true,
       lastActive: new Date().toISOString(),
       profileComplete: true,
       verificationStatus: 'verified',
-      createdAt: '2024-01-15T00:00:00Z'
+      createdAt: '2024-01-15T00:00:00Z',
     };
 
     setDemoUser(mockUser);
@@ -217,30 +250,39 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
 
   const getDifficultyColor = (difficulty: DemoScenario['difficulty']) => {
     switch (difficulty) {
-      case 'basic': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-      case 'intermediate': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-      case 'advanced': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+      case 'basic':
+        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+      case 'intermediate':
+        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+      case 'advanced':
+        return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
     }
   };
 
   const getStatusColor = (status: FeatureHighlight['status']) => {
     switch (status) {
-      case 'implemented': return 'text-green-500';
-      case 'partial': return 'text-yellow-500';
-      case 'planned': return 'text-gray-500';
+      case 'implemented':
+        return 'text-green-500';
+      case 'partial':
+        return 'text-yellow-500';
+      case 'planned':
+        return 'text-gray-500';
     }
   };
 
   const getStatusIcon = (status: FeatureHighlight['status']) => {
     switch (status) {
-      case 'implemented': return <CheckCircle className="h-4 w-4" />;
-      case 'partial': return <Clock className="h-4 w-4" />;
-      case 'planned': return <HelpCircle className="h-4 w-4" />;
+      case 'implemented':
+        return <CheckCircle className="h-4 w-4" />;
+      case 'partial':
+        return <Clock className="h-4 w-4" />;
+      case 'planned':
+        return <HelpCircle className="h-4 w-4" />;
     }
   };
 
   const renderDemoComponent = () => {
-    const scenario = demoScenarios.find(s => s.id === activeDemo);
+    const scenario = demoScenarios.find((s) => s.id === activeDemo);
     if (!scenario || !demoUser) return null;
 
     const Component = scenario.component;
@@ -253,7 +295,7 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
     // Simulate guided tour steps
     const totalSteps = 5;
     const interval = setInterval(() => {
-      setCurrentStep(prev => {
+      setCurrentStep((prev) => {
         if (prev >= totalSteps - 1) {
           setIsPlaying(false);
           clearInterval(interval);
@@ -270,15 +312,13 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center space-x-2 mb-4">
           <Shield className="h-8 w-8 text-primary" />
-          <h1 className="text-4xl font-bold tracking-tight">
-            Real-time Peer Matching System
-          </h1>
+          <h1 className="text-4xl font-bold tracking-tight">Real-time Peer Matching System</h1>
         </div>
-        
+
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          A comprehensive mental health support platform connecting students through 
-          anonymous peer matching, study groups, and mentorship programs with 
-          end-to-end encryption and privacy protection.
+          A comprehensive mental health support platform connecting students through anonymous peer
+          matching, study groups, and mentorship programs with end-to-end encryption and privacy
+          protection.
         </p>
 
         <div className="flex items-center justify-center space-x-4 mt-6">
@@ -307,7 +347,7 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
                 </span>
               </div>
               <div className="w-full bg-muted rounded-full h-2 mt-2">
-                <div 
+                <div
                   className="bg-primary h-2 rounded-full transition-all duration-300"
                   style={{ width: `${((currentStep + 1) / 5) * 100}%` }}
                 ></div>
@@ -336,7 +376,9 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-1">
                     <h4 className="font-medium">{feature.title}</h4>
-                    <div className={`flex items-center space-x-1 ${getStatusColor(feature.status)}`}>
+                    <div
+                      className={`flex items-center space-x-1 ${getStatusColor(feature.status)}`}
+                    >
                       {getStatusIcon(feature.status)}
                       <span className="text-xs capitalize">{feature.status}</span>
                     </div>
@@ -391,8 +433,12 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
         <CardContent>
           <Tabs value={activeDemo} onValueChange={setActiveDemo} className="w-full">
             <TabsList className="grid w-full grid-cols-5">
-              {demoScenarios.map(scenario => (
-                <TabsTrigger key={scenario.id} value={scenario.id} className="flex items-center space-x-2">
+              {demoScenarios.map((scenario) => (
+                <TabsTrigger
+                  key={scenario.id}
+                  value={scenario.id}
+                  className="flex items-center space-x-2"
+                >
                   {scenario.icon}
                   <span className="hidden sm:inline">{scenario.title.split(' ')[0]}</span>
                 </TabsTrigger>
@@ -401,7 +447,7 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
 
             {/* Scenario Info */}
             <div className="mt-6 mb-4">
-              {demoScenarios.map(scenario => (
+              {demoScenarios.map((scenario) => (
                 <div key={scenario.id} className={activeDemo === scenario.id ? 'block' : 'hidden'}>
                   <div className="flex items-center justify-between mb-4">
                     <div>
@@ -418,7 +464,7 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
                       </Badge>
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-wrap gap-2 mb-6">
                     {scenario.features.map((feature, index) => (
                       <Badge key={index} variant="secondary">
@@ -433,9 +479,7 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
             <Separator className="my-6" />
 
             {/* Demo Component */}
-            <div className="min-h-[600px]">
-              {renderDemoComponent()}
-            </div>
+            <div className="min-h-[600px]">{renderDemoComponent()}</div>
           </Tabs>
         </CardContent>
       </Card>
@@ -474,7 +518,7 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-3">Security & Privacy</h4>
               <div className="space-y-2">
@@ -505,8 +549,8 @@ export const PeerMatchingDemo: React.FC<PeerMatchingDemoProps> = ({
         <CardContent className="p-8 text-center">
           <h3 className="text-2xl font-bold mb-4">Ready to Connect?</h3>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Join thousands of students finding support, building connections, and 
-            improving their mental health through peer-to-peer interactions.
+            Join thousands of students finding support, building connections, and improving their
+            mental health through peer-to-peer interactions.
           </p>
           <div className="flex items-center justify-center space-x-4">
             <Button size="lg">

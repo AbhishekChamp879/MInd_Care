@@ -52,7 +52,7 @@ export interface FeedbackQuestion {
   maxLength?: number;
 }
 
-export type FeedbackCategory = 
+export type FeedbackCategory =
   | 'overall-experience'
   | 'counselor-performance'
   | 'session-environment'
@@ -69,7 +69,7 @@ export interface FeedbackTemplate {
   isActive: boolean;
 }
 
-export type SessionType = 
+export type SessionType =
   | 'individual-counseling'
   | 'group-therapy'
   | 'crisis-intervention'
@@ -117,21 +117,21 @@ export const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
     type: 'rating',
     category: 'overall-experience',
     question: 'How would you rate your overall experience with this session?',
-    required: true
+    required: true,
   },
   {
     id: 'recommend',
     type: 'boolean',
     category: 'overall-experience',
     question: 'Would you recommend this counselor to other students?',
-    required: true
+    required: true,
   },
   {
     id: 'satisfaction',
     type: 'scale',
     category: 'overall-experience',
     question: 'How satisfied are you with the session outcomes?',
-    required: true
+    required: true,
   },
 
   // Counselor Performance
@@ -140,28 +140,28 @@ export const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
     type: 'rating',
     category: 'counselor-performance',
     question: 'How helpful was your counselor during this session?',
-    required: true
+    required: true,
   },
   {
     id: 'counselor-communication',
     type: 'rating',
     category: 'counselor-performance',
-    question: 'How clear and effective was the counselor\'s communication?',
-    required: true
+    question: "How clear and effective was the counselor's communication?",
+    required: true,
   },
   {
     id: 'felt-heard',
     type: 'boolean',
     category: 'counselor-performance',
     question: 'Did you feel heard and understood by your counselor?',
-    required: true
+    required: true,
   },
   {
     id: 'professional-manner',
     type: 'rating',
     category: 'counselor-performance',
-    question: 'How would you rate the counselor\'s professionalism?',
-    required: true
+    question: "How would you rate the counselor's professionalism?",
+    required: true,
   },
 
   // Session Environment
@@ -170,14 +170,14 @@ export const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
     type: 'boolean',
     category: 'session-environment',
     question: 'Did you feel safe and comfortable during the session?',
-    required: true
+    required: true,
   },
   {
     id: 'environment-rating',
     type: 'rating',
     category: 'session-environment',
     question: 'How would you rate the session environment (privacy, comfort, etc.)?',
-    required: false
+    required: false,
   },
   {
     id: 'session-length',
@@ -185,7 +185,7 @@ export const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
     category: 'session-environment',
     question: 'How was the session length?',
     required: false,
-    options: ['Too short', 'Just right', 'Too long']
+    options: ['Too short', 'Just right', 'Too long'],
   },
 
   // Personal Outcomes
@@ -194,21 +194,21 @@ export const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
     type: 'boolean',
     category: 'personal-outcomes',
     question: 'Were your goals for this session met?',
-    required: true
+    required: true,
   },
   {
     id: 'coping-strategies',
     type: 'boolean',
     category: 'personal-outcomes',
     question: 'Did you learn new coping strategies or techniques?',
-    required: false
+    required: false,
   },
   {
     id: 'progress-feeling',
     type: 'scale',
     category: 'personal-outcomes',
     question: 'How much progress do you feel you made today?',
-    required: false
+    required: false,
   },
 
   // Open-ended questions
@@ -219,7 +219,7 @@ export const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
     question: 'What worked well in this session?',
     required: false,
     placeholder: 'Share what you found most helpful...',
-    maxLength: 500
+    maxLength: 500,
   },
   {
     id: 'what-could-improve',
@@ -228,7 +228,7 @@ export const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
     question: 'What could be improved for future sessions?',
     required: false,
     placeholder: 'Share any suggestions for improvement...',
-    maxLength: 500
+    maxLength: 500,
   },
   {
     id: 'additional-comments',
@@ -237,8 +237,8 @@ export const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
     question: 'Any additional comments or feedback?',
     required: false,
     placeholder: 'Share any other thoughts or concerns...',
-    maxLength: 1000
-  }
+    maxLength: 1000,
+  },
 ];
 
 // Feedback templates for different session types
@@ -249,32 +249,32 @@ export const FEEDBACK_TEMPLATES: FeedbackTemplate[] = [
     description: 'Standard feedback form for one-on-one counseling sessions',
     sessionType: 'individual-counseling',
     questions: FEEDBACK_QUESTIONS,
-    isActive: true
+    isActive: true,
   },
   {
     id: 'group-therapy-template',
     name: 'Group Therapy Session',
     description: 'Feedback form for group therapy sessions',
     sessionType: 'group-therapy',
-    questions: FEEDBACK_QUESTIONS.filter(q => 
-      !['counselor-communication', 'counselor-helpfulness'].includes(q.id)
+    questions: FEEDBACK_QUESTIONS.filter(
+      (q) => !['counselor-communication', 'counselor-helpfulness'].includes(q.id)
     ).concat([
       {
         id: 'group-dynamics',
         type: 'rating',
         category: 'session-environment',
         question: 'How comfortable did you feel sharing in the group setting?',
-        required: true
+        required: true,
       },
       {
         id: 'group-benefit',
         type: 'boolean',
         category: 'personal-outcomes',
-        question: 'Did you benefit from hearing others\' experiences?',
-        required: true
-      }
+        question: "Did you benefit from hearing others' experiences?",
+        required: true,
+      },
     ]),
-    isActive: true
+    isActive: true,
   },
   {
     id: 'crisis-intervention-template',
@@ -287,25 +287,25 @@ export const FEEDBACK_TEMPLATES: FeedbackTemplate[] = [
         type: 'rating',
         category: 'counselor-performance',
         question: 'How well did the counselor provide immediate support?',
-        required: true
+        required: true,
       },
       {
         id: 'safety-assessment',
         type: 'boolean',
         category: 'session-environment',
         question: 'Did you feel your safety was properly assessed?',
-        required: true
+        required: true,
       },
       {
         id: 'crisis-resolution',
         type: 'scale',
         category: 'personal-outcomes',
         question: 'How much did this session help with your immediate crisis?',
-        required: true
-      }
+        required: true,
+      },
     ],
-    isActive: true
-  }
+    isActive: true,
+  },
 ];
 
 // Utility functions
@@ -315,12 +315,14 @@ export const calculateOverallRating = (categoryRatings: CategoryRatings): number
 };
 
 export const getFeedbackTemplate = (sessionType: SessionType): FeedbackTemplate | undefined => {
-  return FEEDBACK_TEMPLATES.find(template => 
-    template.sessionType === sessionType && template.isActive
+  return FEEDBACK_TEMPLATES.find(
+    (template) => template.sessionType === sessionType && template.isActive
   );
 };
 
-export const categorizeRating = (rating: number): 'excellent' | 'good' | 'average' | 'poor' | 'very-poor' => {
+export const categorizeRating = (
+  rating: number
+): 'excellent' | 'good' | 'average' | 'poor' | 'very-poor' => {
   if (rating >= 4.5) return 'excellent';
   if (rating >= 3.5) return 'good';
   if (rating >= 2.5) return 'average';
@@ -331,23 +333,35 @@ export const categorizeRating = (rating: number): 'excellent' | 'good' | 'averag
 export const getRatingColor = (rating: number): string => {
   const category = categorizeRating(rating);
   switch (category) {
-    case 'excellent': return 'text-green-600 bg-green-50';
-    case 'good': return 'text-blue-600 bg-blue-50';
-    case 'average': return 'text-yellow-600 bg-yellow-50';
-    case 'poor': return 'text-orange-600 bg-orange-50';
-    case 'very-poor': return 'text-red-600 bg-red-50';
-    default: return 'text-gray-600 bg-gray-50';
+    case 'excellent':
+      return 'text-green-600 bg-green-50';
+    case 'good':
+      return 'text-blue-600 bg-blue-50';
+    case 'average':
+      return 'text-yellow-600 bg-yellow-50';
+    case 'poor':
+      return 'text-orange-600 bg-orange-50';
+    case 'very-poor':
+      return 'text-red-600 bg-red-50';
+    default:
+      return 'text-gray-600 bg-gray-50';
   }
 };
 
 export const getRatingEmoji = (rating: number): string => {
   const category = categorizeRating(rating);
   switch (category) {
-    case 'excellent': return '🌟';
-    case 'good': return '😊';
-    case 'average': return '😐';
-    case 'poor': return '😕';
-    case 'very-poor': return '😢';
-    default: return '❓';
+    case 'excellent':
+      return '🌟';
+    case 'good':
+      return '😊';
+    case 'average':
+      return '😐';
+    case 'poor':
+      return '😕';
+    case 'very-poor':
+      return '😢';
+    default:
+      return '❓';
   }
 };

@@ -2,7 +2,11 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import QuickMoodCheckIn from '@/components/dashboard/QuickMoodCheckIn';
-import { MoodSummaryWidget, MoodStreakWidget, MoodWeeklyWidget } from '@/components/dashboard/MoodWidgets';
+import {
+  MoodSummaryWidget,
+  MoodStreakWidget,
+  MoodWeeklyWidget,
+} from '@/components/dashboard/MoodWidgets';
 import { Heart, Zap, TrendingUp, Calendar, BarChart3 } from 'lucide-react';
 
 export const QuickMoodShowcase: React.FC = () => {
@@ -126,12 +130,12 @@ export const QuickMoodShowcase: React.FC = () => {
             <h3 className="text-lg font-semibold">Mood Summary</h3>
             <MoodSummaryWidget />
           </div>
-          
+
           <div className="space-y-3">
             <h3 className="text-lg font-semibold">Tracking Streak</h3>
             <MoodStreakWidget />
           </div>
-          
+
           <div className="space-y-3">
             <h3 className="text-lg font-semibold">Weekly Pattern</h3>
             <MoodWeeklyWidget />
@@ -158,7 +162,7 @@ export const QuickMoodShowcase: React.FC = () => {
                 <li>• Dashboard widget integration</li>
               </ul>
             </div>
-            
+
             <div className="space-y-2">
               <h4 className="font-semibold text-primary">📈 Analytics & Insights:</h4>
               <ul className="space-y-1 text-muted-foreground">
@@ -168,7 +172,7 @@ export const QuickMoodShowcase: React.FC = () => {
                 <li>• Personalized recommendations</li>
               </ul>
             </div>
-            
+
             <div className="space-y-2">
               <h4 className="font-semibold text-primary">🎨 User Experience:</h4>
               <ul className="space-y-1 text-muted-foreground">
@@ -178,7 +182,7 @@ export const QuickMoodShowcase: React.FC = () => {
                 <li>• Responsive design for all devices</li>
               </ul>
             </div>
-            
+
             <div className="space-y-2">
               <h4 className="font-semibold text-primary">💾 Data Management:</h4>
               <ul className="space-y-1 text-muted-foreground">

@@ -12,13 +12,13 @@ interface AchievementNotificationProps {
 
 export const AchievementNotification: React.FC<AchievementNotificationProps> = ({
   achievement,
-  onClose
+  onClose,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
-    
+
     // Auto-close after 5 seconds
     const autoCloseTimer = setTimeout(() => {
       setIsVisible(false);
@@ -37,9 +37,11 @@ export const AchievementNotification: React.FC<AchievementNotificationProps> = (
   };
 
   return (
-    <div className={`fixed top-4 right-4 z-50 transition-all duration-300 ${
-      isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
-    }`}>
+    <div
+      className={`fixed top-4 right-4 z-50 transition-all duration-300 ${
+        isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+      }`}
+    >
       <Card className="enhanced-card bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-200 shadow-aurora max-w-sm">
         <CardContent className="p-4">
           <div className="flex items-start justify-between mb-3">
@@ -47,7 +49,10 @@ export const AchievementNotification: React.FC<AchievementNotificationProps> = (
               <div className="p-2 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-full animate-bounce">
                 <Trophy className="h-4 w-4 text-yellow-600" />
               </div>
-              <Badge variant="secondary" className="bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-700">
+              <Badge
+                variant="secondary"
+                className="bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-700"
+              >
                 <Sparkles className="h-3 w-3 mr-1" />
                 Achievement Unlocked!
               </Badge>
@@ -61,17 +66,15 @@ export const AchievementNotification: React.FC<AchievementNotificationProps> = (
               <X className="h-3 w-3" />
             </Button>
           </div>
-          
+
           <div className="flex items-center space-x-3">
             <div className="text-3xl animate-pulse">{achievement.icon}</div>
             <div>
               <h4 className="font-bold text-yellow-800 text-sm">{achievement.title}</h4>
-              <p className="text-xs text-yellow-700 leading-relaxed">
-                {achievement.description}
-              </p>
+              <p className="text-xs text-yellow-700 leading-relaxed">{achievement.description}</p>
             </div>
           </div>
-          
+
           <div className="mt-3 pt-2 border-t border-yellow-200">
             <div className="flex items-center justify-between">
               <span className="text-xs text-yellow-600 font-medium">
@@ -103,7 +106,7 @@ export const AchievementNotificationManager = () => {
   useEffect(() => {
     // Listen for new achievements
     const handleAchievementUnlocked = (event: CustomEvent<Achievement>) => {
-      setNotifications(prev => [...prev, event.detail]);
+      setNotifications((prev) => [...prev, event.detail]);
     };
 
     window.addEventListener('achievementUnlocked', handleAchievementUnlocked as EventListener);
@@ -114,7 +117,7 @@ export const AchievementNotificationManager = () => {
   }, []);
 
   const removeNotification = (achievementId: string) => {
-    setNotifications(prev => prev.filter(n => n.id !== achievementId));
+    setNotifications((prev) => prev.filter((n) => n.id !== achievementId));
   };
 
   return (

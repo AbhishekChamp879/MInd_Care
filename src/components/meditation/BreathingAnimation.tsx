@@ -3,25 +3,25 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Play, 
-  Pause, 
-  Square, 
-  RotateCcw, 
+import {
+  Play,
+  Pause,
+  Square,
+  RotateCcw,
   Settings,
   Wind,
   Timer,
   TrendingUp,
-  Info
+  Info,
 } from 'lucide-react';
-import { 
-  BreathingExercise, 
+import {
+  BreathingExercise,
   BreathingSession,
   BreathingTechnique,
   BreathingPhase,
   BREATHING_EXERCISES,
   formatMeditationTime,
-  getBreathingPhaseColor
+  getBreathingPhaseColor,
 } from '@/types/meditation';
 
 interface BreathingAnimationProps {
@@ -37,11 +37,12 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
   onSessionStart,
   onSessionPause,
   selectedTechnique = '4-7-8-breathing',
-  className = ''
+  className = '',
 }) => {
   // Get the selected exercise
-  const exercise = BREATHING_EXERCISES.find(ex => ex.type === selectedTechnique) || BREATHING_EXERCISES[0];
-  
+  const exercise =
+    BREATHING_EXERCISES.find((ex) => ex.type === selectedTechnique) || BREATHING_EXERCISES[0];
+
   // Session state
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -77,7 +78,8 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
 
     const updateAnimation = () => {
       const phase = exercise.phases[currentPhaseIndex];
-      const elapsed = phaseTimeRemaining === phase.duration ? 0 : phase.duration - phaseTimeRemaining;
+      const elapsed =
+        phaseTimeRemaining === phase.duration ? 0 : phase.duration - phaseTimeRemaining;
       const phaseProgress = elapsed / phase.duration;
 
       // Update animation based on phase type
@@ -142,19 +144,19 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
 
   const moveToNextPhase = () => {
     const nextPhaseIndex = (currentPhaseIndex + 1) % exercise.phases.length;
-    
+
     // If we've completed all phases, increment cycle
     if (nextPhaseIndex === 0) {
       const nextCycle = currentCycle + 1;
       setCurrentCycle(nextCycle);
-      
+
       // Check if we've completed all cycles
       if (nextCycle >= targetCycles) {
         handleComplete();
         return;
       }
     }
-    
+
     setCurrentPhaseIndex(nextPhaseIndex);
     setPhaseTimeRemaining(exercise.phases[nextPhaseIndex].duration);
     phaseStartRef.current = Date.now();
@@ -162,7 +164,7 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
 
   const handleStart = () => {
     const now = Date.now();
-    
+
     if (!isActive) {
       // Starting fresh session
       sessionStartRef.current = now;
@@ -201,7 +203,7 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
       duration: totalElapsed,
       startTime: new Date(sessionStartRef.current || Date.now()).toISOString(),
       endTime: new Date().toISOString(),
-      completed: false
+      completed: false,
     };
 
     onSessionComplete?.(sessionData);
@@ -225,7 +227,7 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
       duration: totalElapsed,
       startTime: new Date(sessionStartRef.current || Date.now()).toISOString(),
       endTime: new Date().toISOString(),
-      completed: true
+      completed: true,
     };
 
     onSessionComplete?.(sessionData);
@@ -254,10 +256,14 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'beginner': return 'text-green-600 bg-green-50';
-      case 'intermediate': return 'text-yellow-600 bg-yellow-50';
-      case 'advanced': return 'text-red-600 bg-red-50';
-      default: return 'text-gray-600 bg-gray-50';
+      case 'beginner':
+        return 'text-green-600 bg-green-50';
+      case 'intermediate':
+        return 'text-yellow-600 bg-yellow-50';
+      case 'advanced':
+        return 'text-red-600 bg-red-50';
+      default:
+        return 'text-gray-600 bg-gray-50';
     }
   };
 
@@ -276,12 +282,8 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
             <Badge variant="outline" className={getDifficultyColor(exercise.difficulty)}>
               {exercise.difficulty}
             </Badge>
-            <Badge variant="outline">
-              {exercise.totalCycleDuration}s cycle
-            </Badge>
-            <Badge variant="outline">
-              {targetCycles} cycles
-            </Badge>
+            <Badge variant="outline">{exercise.totalCycleDuration}s cycle</Badge>
+            <Badge variant="outline">{targetCycles} cycles</Badge>
           </div>
         </CardDescription>
       </CardHeader>
@@ -291,7 +293,10 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
         <div className="flex justify-center">
           <div className="relative w-64 h-64">
             {/* Outer ring for progress */}
-            <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+            <svg
+              className="absolute inset-0 w-full h-full transform -rotate-90"
+              viewBox="0 0 100 100"
+            >
               <circle
                 cx="50"
                 cy="50"
@@ -316,13 +321,13 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
             </svg>
 
             {/* Animated breathing circle */}
-            <div 
+            <div
               className="absolute inset-8 rounded-full transition-all duration-1000 ease-in-out flex items-center justify-center"
               style={{
                 transform: `scale(${animationScale})`,
                 backgroundColor: animationColor,
                 opacity: 0.8,
-                boxShadow: `0 0 30px ${animationColor}80`
+                boxShadow: `0 0 30px ${animationColor}80`,
               }}
             >
               <div className="text-center text-white font-medium">
@@ -348,7 +353,9 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
           <div className="text-center">
             <h3 className="text-lg font-semibold mb-2">{breathingInstruction}</h3>
             <div className="flex justify-center space-x-4 text-sm text-muted-foreground">
-              <span>Cycle: {currentCycle + 1}/{targetCycles}</span>
+              <span>
+                Cycle: {currentCycle + 1}/{targetCycles}
+              </span>
               <span>Phase: {currentPhase.name}</span>
               <span>{formatMeditationTime(phaseTimeRemaining)} remaining</span>
             </div>
@@ -370,11 +377,7 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
         {/* Control Buttons */}
         <div className="flex justify-center space-x-3">
           {!isActive ? (
-            <Button
-              onClick={handleStart}
-              size="lg"
-              className="flex items-center space-x-2"
-            >
+            <Button onClick={handleStart} size="lg" className="flex items-center space-x-2">
               <Play className="h-5 w-5" />
               <span>Start Breathing</span>
             </Button>
@@ -400,13 +403,8 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
               </Button>
             </>
           )}
-          
-          <Button
-            onClick={handleReset}
-            size="lg"
-            variant="ghost"
-            disabled={isActive && !isPaused}
-          >
+
+          <Button onClick={handleReset} size="lg" variant="ghost" disabled={isActive && !isPaused}>
             <RotateCcw className="h-5 w-5" />
           </Button>
         </div>
@@ -421,7 +419,7 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
                   <Button
                     key={cycles}
                     size="sm"
-                    variant={targetCycles === cycles ? "default" : "outline"}
+                    variant={targetCycles === cycles ? 'default' : 'outline'}
                     onClick={() => setTargetCycles(cycles)}
                   >
                     {cycles}
@@ -458,7 +456,8 @@ export const BreathingAnimation: React.FC<BreathingAnimationProps> = ({
               <span className="font-medium">Breathing exercise completed!</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              You completed {targetCycles} cycles of {exercise.name} in {formatMeditationTime(totalElapsed)}.
+              You completed {targetCycles} cycles of {exercise.name} in{' '}
+              {formatMeditationTime(totalElapsed)}.
             </p>
           </div>
         )}
@@ -479,18 +478,18 @@ export const BreathingTechniqueSelector: React.FC<BreathingTechniqueSelectorProp
   selectedTechnique,
   onTechniqueChange,
   disabled = false,
-  className = ''
+  className = '',
 }) => {
   return (
     <div className={`space-y-4 ${className}`}>
       <h3 className="text-lg font-semibold">Choose a Breathing Technique</h3>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {BREATHING_EXERCISES.map((exercise) => (
-          <Card 
+          <Card
             key={exercise.id}
             className={`cursor-pointer transition-all hover:shadow-md ${
-              selectedTechnique === exercise.type 
-                ? 'ring-2 ring-primary bg-primary/5' 
+              selectedTechnique === exercise.type
+                ? 'ring-2 ring-primary bg-primary/5'
                 : 'hover:border-primary/50'
             } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
             onClick={() => !disabled && onTechniqueChange(exercise.type)}
@@ -503,16 +502,14 @@ export const BreathingTechniqueSelector: React.FC<BreathingTechniqueSelectorProp
                     {exercise.difficulty}
                   </Badge>
                 </div>
-                
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {exercise.description}
-                </p>
-                
+
+                <p className="text-sm text-muted-foreground line-clamp-2">{exercise.description}</p>
+
                 <div className="flex justify-between text-xs text-muted-foreground">
                   <span>{exercise.totalCycleDuration}s cycle</span>
                   <span>{exercise.recommendedCycles} cycles</span>
                 </div>
-                
+
                 <div className="flex flex-wrap gap-1">
                   {exercise.benefits.slice(0, 2).map((benefit, index) => (
                     <Badge key={index} variant="secondary" className="text-xs">
@@ -531,10 +528,14 @@ export const BreathingTechniqueSelector: React.FC<BreathingTechniqueSelectorProp
 
 const getDifficultyColor = (difficulty: string) => {
   switch (difficulty) {
-    case 'beginner': return 'text-green-600 bg-green-50';
-    case 'intermediate': return 'text-yellow-600 bg-yellow-50';
-    case 'advanced': return 'text-red-600 bg-red-50';
-    default: return 'text-gray-600 bg-gray-50';
+    case 'beginner':
+      return 'text-green-600 bg-green-50';
+    case 'intermediate':
+      return 'text-yellow-600 bg-yellow-50';
+    case 'advanced':
+      return 'text-red-600 bg-red-50';
+    default:
+      return 'text-gray-600 bg-gray-50';
   }
 };
 

@@ -1,19 +1,54 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useMoodTracking } from '@/hooks/useDashboardFeatures';
-import { useRealTimeUpdates, useSmoothAnimations, useStreakTracking } from '@/hooks/useRealTimeFeatures';
+import {
+  useRealTimeUpdates,
+  useSmoothAnimations,
+  useStreakTracking,
+} from '@/hooks/useRealTimeFeatures';
 import { showRealTimeNotification } from '@/components/dashboard/RealTimeFeedback';
 import notificationService from '@/services/notificationService';
 import { Heart, Smile, Plus, X } from 'lucide-react';
 
 const moodEmojis = {
-  1: { emoji: '😢', label: 'Very Sad', color: 'text-red-500', bgColor: 'bg-red-50 hover:bg-red-100' },
-  2: { emoji: '😕', label: 'Sad', color: 'text-orange-500', bgColor: 'bg-orange-50 hover:bg-orange-100' },
-  3: { emoji: '😐', label: 'Neutral', color: 'text-yellow-500', bgColor: 'bg-yellow-50 hover:bg-yellow-100' },
-  4: { emoji: '😊', label: 'Happy', color: 'text-green-500', bgColor: 'bg-green-50 hover:bg-green-100' },
-  5: { emoji: '😄', label: 'Very Happy', color: 'text-blue-500', bgColor: 'bg-blue-50 hover:bg-blue-100' }
+  1: {
+    emoji: '😢',
+    label: 'Very Sad',
+    color: 'text-red-500',
+    bgColor: 'bg-red-50 hover:bg-red-100',
+  },
+  2: {
+    emoji: '😕',
+    label: 'Sad',
+    color: 'text-orange-500',
+    bgColor: 'bg-orange-50 hover:bg-orange-100',
+  },
+  3: {
+    emoji: '😐',
+    label: 'Neutral',
+    color: 'text-yellow-500',
+    bgColor: 'bg-yellow-50 hover:bg-yellow-100',
+  },
+  4: {
+    emoji: '😊',
+    label: 'Happy',
+    color: 'text-green-500',
+    bgColor: 'bg-green-50 hover:bg-green-100',
+  },
+  5: {
+    emoji: '😄',
+    label: 'Very Happy',
+    color: 'text-blue-500',
+    bgColor: 'bg-blue-50 hover:bg-blue-100',
+  },
 };
 
 interface FloatingMoodButtonProps {
@@ -25,7 +60,7 @@ interface FloatingMoodButtonProps {
 export const FloatingMoodButton: React.FC<FloatingMoodButtonProps> = ({
   position = 'bottom-right',
   className = '',
-  showOnlyIfNotLogged = true
+  showOnlyIfNotLogged = true,
 }) => {
   const { addMoodEntry, getTodayMood } = useMoodTracking();
   const { triggerUpdate } = useRealTimeUpdates();
@@ -45,28 +80,31 @@ export const FloatingMoodButton: React.FC<FloatingMoodButtonProps> = ({
     'bottom-right': 'bottom-6 right-6',
     'bottom-left': 'bottom-6 left-6',
     'top-right': 'top-6 right-6',
-    'top-left': 'top-6 left-6'
+    'top-left': 'top-6 left-6',
   };
 
   const handleQuickMoodLog = async (mood: number) => {
     if (isLogging) return;
-    
+
     setIsLogging(true);
-    
+
     try {
       await smoothTransition(() => {
         addMoodEntry(mood);
-        
+
         // Update streak and trigger real-time updates
         const newStreak = updateStreak('mood_tracking');
         triggerUpdate('mood_logged', { mood: mood, streak: newStreak });
-        
+
         // Mark mood reminder notification as acted upon if present
         notificationService.markNotificationAsActedUpon('mood-reminder');
-        
+
         // Show success notification
-        showRealTimeNotification('success', `Mood logged! ${moodEmojis[mood as keyof typeof moodEmojis].label}`);
-        
+        showRealTimeNotification(
+          'success',
+          `Mood logged! ${moodEmojis[mood as keyof typeof moodEmojis].label}`
+        );
+
         // Check for streak milestones
         if (newStreak > 0 && newStreak % 3 === 0) {
           showRealTimeNotification('milestone', `🔥 ${newStreak} day mood tracking streak!`);
@@ -115,7 +153,7 @@ export const FloatingMoodButton: React.FC<FloatingMoodButtonProps> = ({
               How are you feeling right now? One tap to log your mood.
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="space-y-4">
             <div className="grid grid-cols-5 gap-3">
               {Object.entries(moodEmojis).map(([value, { emoji, label, bgColor }]) => (
@@ -132,9 +170,7 @@ export const FloatingMoodButton: React.FC<FloatingMoodButtonProps> = ({
                         <div className="text-2xl mb-1 group-hover:text-3xl gentle-transition">
                           {emoji}
                         </div>
-                        <div className="text-xs font-medium">
-                          {label.split(' ')[0]}
-                        </div>
+                        <div className="text-xs font-medium">{label.split(' ')[0]}</div>
                       </div>
                     </Button>
                   </TooltipTrigger>
@@ -144,19 +180,13 @@ export const FloatingMoodButton: React.FC<FloatingMoodButtonProps> = ({
                 </Tooltip>
               ))}
             </div>
-            
+
             {isLogging && (
-              <div className="text-center text-sm text-muted-foreground">
-                Logging your mood...
-              </div>
+              <div className="text-center text-sm text-muted-foreground">Logging your mood...</div>
             )}
-            
+
             <div className="flex justify-center">
-              <Button 
-                variant="outline" 
-                onClick={() => setIsOpen(false)}
-                className="text-xs"
-              >
+              <Button variant="outline" onClick={() => setIsOpen(false)} className="text-xs">
                 Cancel
               </Button>
             </div>
