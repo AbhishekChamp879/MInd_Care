@@ -901,7 +901,7 @@ const StatsCard = ({ title, stats }: StatsCardProps) => {
     </Card>
   );
 };
-
+// FAQ Item with Smooth Expand/Collapse Animation
 interface FAQItemProps {
   question: string;
   answer: string;
