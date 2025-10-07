@@ -5,6 +5,8 @@ import Footer from '@/components/layout/Footer';
 import heroImage from '@/assets/freepik__retouch__90823.png';
 import { Shield, Heart, UserCheck, CheckCircle, Play } from 'lucide-react';
 import { useEffect } from 'react';
+import Header from '@/components/layout/Header';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const About = () => {
   useEffect(() => {

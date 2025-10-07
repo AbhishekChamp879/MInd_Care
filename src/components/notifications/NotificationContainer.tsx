@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import NotificationToast from './NotificationToast';
 import { WellnessNotification } from '@/types/notifications';
-
+import Header from '@/components/layout/Header';
+import { useTheme } from '@/contexts/ThemeContext';
 interface NotificationContainerProps {
   maxToasts?: number;
 }
