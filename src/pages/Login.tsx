@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import Footer from '@/components/layout/Footer';
 import { Heart, Mail, Lock, User, Shield, GraduationCap } from 'lucide-react';
 import { LoginCredentials } from '@/types/auth';
 
@@ -221,6 +222,7 @@ const Login = () => {
           <p>🏥 HIPAA compliant and stigma-free environment</p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

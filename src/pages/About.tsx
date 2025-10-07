@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import Footer from '@/components/layout/Footer';
 import heroImage from '@/assets/freepik__retouch__90823.png';
 import { Shield, Heart, UserCheck, CheckCircle, Play } from 'lucide-react';
 import { useEffect } from 'react';
@@ -193,6 +194,7 @@ const About = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
