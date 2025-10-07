@@ -29,7 +29,7 @@ import {
   Quote,
   Play,
 } from 'lucide-react';
-import { useState, useEffect, ComponentType, SVGProps } from 'react';
+import React,{ useState, useRef, useEffect, ComponentType, SVGProps, } from 'react';
 import type { User } from '@/types/auth';
 
 const Index = () => {
@@ -909,25 +909,46 @@ interface FAQItemProps {
 
 const FAQItem = ({ question, answer }: FAQItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  // 1. Create a ref to link to the answer content container
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
+  // 2. Calculate the dynamic height: 0 when closed, full height when open
+  const height = isOpen ? contentRef.current?.scrollHeight || 0 : 0;
 
   return (
     <div className="enhanced-card">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggleOpen}
         className="w-full p-6 text-left flex justify-between items-center hover:bg-muted/10 transition-colors duration-200"
+        aria-expanded={isOpen}
       >
         <h3 className="font-semibold text-lg pr-4">{question}</h3>
+        {/* The icon rotation is already good! */}
         <ChevronDown
-          className={`h-5 w-5 text-muted-foreground transition-transform duration-200 flex-shrink-0 ${
+          className={`h-5 w-5 text-muted-foreground transition-transform duration-300 flex-shrink-0 ${
             isOpen ? 'transform rotate-180' : ''
           }`}
         />
       </button>
-      {isOpen && (
+
+      {/* 3. The Container for Smooth Animation */}
+      <div
+        ref={contentRef}
+        // KEY: Apply dynamic max-height and the transition class
+        style={{ maxHeight: `${height}px` }}
+        className="overflow-hidden transition-[max-height] duration-500 ease-in-out" 
+      >
+        {/* 4. Inner Content: This is where your padding and border-t logic goes */}
         <div className="px-6 pb-6 pt-0">
-          <div className="text-muted-foreground leading-relaxed border-t pt-4">{answer}</div>
+          <div className="text-muted-foreground leading-relaxed border-t pt-4">
+            {answer}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
