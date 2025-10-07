@@ -902,55 +902,54 @@ const StatsCard = ({ title, stats }: StatsCardProps) => {
   );
 };
 // FAQ Item with Smooth Expand/Collapse Animation
+
 interface FAQItemProps {
   question: string;
   answer: string;
+  isOpen?: boolean;           // optional now
+  onClick?: () => void;       // optional now
 }
 
-const FAQItem = ({ question, answer }: FAQItemProps) => {
+// FAQItem component
+
+const FAQItem = ({ question, answer }: { question: string; answer: string }) => {
   const [isOpen, setIsOpen] = useState(false);
-  // 1. Create a ref to link to the answer content container
   const contentRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState(0);
 
-  const toggleOpen = () => {
-    setIsOpen(!isOpen);
-  };
-
-  // 2. Calculate the dynamic height: 0 when closed, full height when open
-  const height = isOpen ? contentRef.current?.scrollHeight || 0 : 0;
+  // Update height when open/close
+  useEffect(() => {
+    if (contentRef.current) {
+      setHeight(isOpen ? contentRef.current.scrollHeight : 0);
+    }
+  }, [isOpen]);
 
   return (
-    <div className="enhanced-card">
+    <div className="border border-border rounded-xl overflow-hidden hover:shadow-md">
       <button
-        onClick={toggleOpen}
-        className="w-full p-6 text-left flex justify-between items-center hover:bg-muted/10 transition-colors duration-200"
+        className="flex items-center justify-between w-full p-5 text-left text-lg font-medium"
+        onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
       >
-        <h3 className="font-semibold text-lg pr-4">{question}</h3>
-        {/* The icon rotation is already good! */}
+        <span>{question}</span>
         <ChevronDown
-          className={`h-5 w-5 text-muted-foreground transition-transform duration-300 flex-shrink-0 ${
-            isOpen ? 'transform rotate-180' : ''
+          className={`h-5 w-5 text-muted-foreground transition-transform duration-700 ${
+            isOpen ? "rotate-180" : ""
           }`}
         />
       </button>
 
-      {/* 3. The Container for Smooth Animation */}
+      {/* Animate height only, padding inside content */}
       <div
-        ref={contentRef}
-        // KEY: Apply dynamic max-height and the transition class
-        style={{ maxHeight: `${height}px` }}
-        className="overflow-hidden transition-[max-height] duration-500 ease-in-out" 
+        style={{ height }}
+        className="overflow-hidden transition-[height] duration-700 ease-in-out"
       >
-        {/* 4. Inner Content: This is where your padding and border-t logic goes */}
-        <div className="px-6 pb-6 pt-0">
-          <div className="text-muted-foreground leading-relaxed border-t pt-4">
-            {answer}
-          </div>
+        <div ref={contentRef} className="p-5 pt-0">
+          <p className="text-muted-foreground leading-relaxed">{answer}</p>
         </div>
       </div>
     </div>
   );
 };
 
-export default Index;
+export default FAQItem;
