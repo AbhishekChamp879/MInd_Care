@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -60,10 +60,21 @@ const Login = () => {
       admin: { email: 'admin@mindbuddy.com', password: 'admin123' },
     };
 
-    setCredentials({
-      ...demoCredentials[role],
-      role,
-    });
+    if (process.env.NODE_ENV === 'development') {
+      // Allow demo autofill in dev mode only
+      setCredentials({ 
+        ...demoCredentials[role],
+        role 
+      });
+    } else {
+        
+      setCredentials({
+        email: credentials.email,
+        password: credentials.password,
+        role 
+      });
+    }
+
   };
 
   const getRoleIcon = (role: string) => {
