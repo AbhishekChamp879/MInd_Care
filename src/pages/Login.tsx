@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
