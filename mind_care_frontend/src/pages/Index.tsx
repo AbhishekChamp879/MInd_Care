@@ -533,50 +533,54 @@ const GuestHomePage = () => {
                 </span>
               </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                icon: Users,
-                number: 10000,
-                suffix: '+',
-                label: 'Students Helped',
-                description: 'Across 200+ Universities',
-              },
-              {
-                icon: MessageCircle,
-                number: 95,
-                suffix: '%',
-                label: 'Crisis Detection Rate',
-                description: 'AI-Powered Screening',
-              },
-              {
-                icon: Heart,
-                number: 4.9,
-                suffix: '/5',
-                label: 'Satisfaction Rating',
-                description: 'From Our Students',
-              },
-              {
-                icon: TrendingUp,
-                number: 78,
-                suffix: '%',
-                label: 'Improved Wellbeing',
-                description: 'Within First Month',
-              },
-            ].map((stat, index) => (
-              <div key={index} className="enhanced-card p-6 text-center">
-                <stat.icon className="h-12 w-12 mx-auto mb-4 text-primary" />
-                <div className="text-4xl font-bold text-primary mb-2">
-                  <AnimatedCounter end={stat.number} suffix={stat.suffix} />
-                </div>
-                <div className="font-semibold text-lg mb-1">{stat.label}</div>
-                <div className="text-sm text-muted-foreground">{stat.description}</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {[
+                  {
+                    icon: Users,
+                    number: 10000,
+                    suffix: '+',
+                    label: 'Students Helped',
+                    description: 'Across 200+ Universities',
+                  },
+                  {
+                    icon: MessageCircle,
+                    number: 95,
+                    suffix: '%',
+                    label: 'Crisis Detection Rate',
+                    description: 'AI-Powered Screening',
+                  },
+                  {
+                    icon: Heart,
+                    number: 4.9,
+                    suffix: '/5',
+                    label: 'Satisfaction Rating',
+                    description: 'From Our Students',
+                  },
+                  {
+                    icon: TrendingUp,
+                    number: 78,
+                    suffix: '%',
+                    label: 'Improved Wellbeing',
+                    description: 'Within First Month',
+                  },
+                ].map((stat, index) => {
+                  const Icon = stat.icon as ComponentType<SVGProps<SVGSVGElement>>;
+                  return (
+                    <div key={index} className="enhanced-card p-6 text-center">
+                      <Icon className="h-12 w-12 mx-auto mb-4 text-primary" />
+                      <div className="text-4xl font-bold text-primary mb-2">
+                        <AnimatedCounter end={stat.number} suffix={stat.suffix} />
+                      </div>
+                      <div className="font-semibold text-lg mb-1">{stat.label}</div>
+                      <div className="text-sm text-muted-foreground">{stat.description}</div>
+                    </div>
+                  );
+                })}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </section>
-
+        </section>
+      </ScrollFadeIn>
       {/* Enhanced Features Section */}
       <section id="learn-more" className="py-20 px-4 bg-background">
         <div className="container mx-auto">
@@ -668,9 +672,9 @@ const GuestHomePage = () => {
                 </div>
               ))}
             </div>
+            </div>
           </div>
         </section>
-      </ScrollFadeIn>
 
       {/* Statistics Section */}
       <ScrollFadeIn yOffset={28} delay={0.06}>
