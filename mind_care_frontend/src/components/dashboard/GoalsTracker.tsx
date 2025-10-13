@@ -116,7 +116,7 @@ export const GoalsTracker = () => {
       triggerUpdate('goal_deleted', { goalId });
 
       if (goal) {
-        showRealTimeNotification('info', `Goal removed: ${goal.title}`);
+        showRealTimeNotification('success', `Goal removed: ${goal.title}`);
       }
     });
   };

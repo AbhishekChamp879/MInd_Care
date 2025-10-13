@@ -117,6 +117,7 @@ export const useGoals = (): {
   addGoal: (title: string, description: string, targetDate: string, category: Goal['category']) => void;
   updateGoalProgress: (id: string, progress: number) => void;
   completeGoal: (id: string) => void;
+  deleteGoal: (id: string) => void;
   getActiveGoals: () => Goal[];
   getCompletedGoals: () => Goal[];
   getWeeklyGoalProgress: () => number;

@@ -36,6 +36,13 @@ const EnhancedThemeSettings = lazy(() => import('./components/settings/EnhancedT
 const QuickMoodShowcase = lazy(() => import('./components/dashboard/QuickMoodShowcase'));
 const FeedbackDemo = lazy(() => import('./pages/FeedbackDemo'));
 const About = lazy(() => import('./pages/About'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Terms = lazy(() => import('./pages/Terms'));
+const Help = lazy(() => import('./pages/Help'));
+const Crisis = lazy(() => import('./pages/Crisis'));
+const FAQ = lazy(() => import('./pages/FAQ'));
+const Report = lazy(() => import('./pages/Report'));
+const Cookies = lazy(() => import('./pages/Cookies'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const ContactUs = lazy(() => import('./pages/ContactUs'));
 const MentalHealthBlog = lazy(() => import('./pages/MentalHealthBlog'));
@@ -85,6 +92,13 @@ const App = () => (
                 >
                   <Routes>
                     <Route path="/about" element={<About />} />
+                    <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/terms" element={<Terms />} />
+                    <Route path="/help" element={<Help />} />
+                    <Route path="/crisis" element={<Crisis />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/report" element={<Report />} />
+                    <Route path="/cookies" element={<Cookies />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/select-institution" element={<InstitutionSelection />} />

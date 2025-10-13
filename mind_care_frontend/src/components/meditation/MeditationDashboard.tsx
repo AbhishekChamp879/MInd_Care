@@ -402,7 +402,7 @@ export const MeditationDashboard: React.FC<MeditationDashboardProps> = ({
             {/* Breathing Animation */}
             <BreathingAnimation
               onSessionComplete={(session) => {
-                logMeditation('Breathing exercise session completed', session);
+                logMeditation('Breathing exercise session completed', { session });
                 setActiveSession(null);
                 setCurrentTab('progress');
               }}

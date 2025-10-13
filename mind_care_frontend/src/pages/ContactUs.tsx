@@ -26,9 +26,10 @@ export default function ContactUs() {
 
     try {
       // Check if EmailJS environment variables are configured
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+  const env = (import.meta as any).env || {};
+  const serviceId = env.VITE_EMAILJS_SERVICE_ID;
+  const templateId = env.VITE_EMAILJS_TEMPLATE_ID;
+  const publicKey = env.VITE_EMAILJS_PUBLIC_KEY;
 
       if (!serviceId || !templateId || !publicKey) {
         throw new Error('EmailJS configuration is missing. Please set up environment variables.');
