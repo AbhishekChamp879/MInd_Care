@@ -60,6 +60,7 @@ import {
   useMoodTracking,
   useGoals,
 } from '@/hooks/useDashboardFeatures';
+import MoodCalendarCard from '@/components/dashboard/MoodCalendarCard';
 
 // Enhanced Quick Action Card Component - Still needed for the action cards section
 const ActionCard = ({
@@ -74,7 +75,7 @@ const ActionCard = ({
 }: {
   title: string;
   description: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<Record<string, unknown>>;
   href: string;
   badge?: string;
   color?: 'primary' | 'secondary' | 'accent' | 'success';
@@ -357,6 +358,9 @@ const StudentDashboard = () => {
               ]}
               onCardClick={handleActionCardClick}
             />
+            <div className="hidden lg:block">
+              <MoodCalendarCard />
+            </div>
           </div>
         </section>
 

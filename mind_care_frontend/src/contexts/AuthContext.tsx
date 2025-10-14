@@ -1,35 +1,50 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, LoginCredentials, mockUsers } from '@/types/auth';
-import { User as UserType } from '@/types/auth'; // Ensure this is imported if UserType is used
+import bcrypt from 'bcryptjs';
+import CryptoJS from 'crypto-js';
 
+// ------------------------------
+// ENV TYPE DEFINITION
+// ------------------------------
+interface ImportMetaEnv {
+  readonly VITE_ENCRYPTION_KEY?: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
+// ------------------------------
+// CONTEXT INTERFACE
+// ------------------------------
 interface AuthContextType {
-  user: User | null;
-  login: (credentials: LoginCredentials) => Promise<boolean>;
-  logout: () => void;
-  updateUser: (userData: Partial<User>) => void;
-  isLoading: boolean;
+  user: User | null;
+  login: (credentials: LoginCredentials) => Promise<boolean>;
+  logout: () => void;
+  updateUser: (userData: Partial<User>) => void;
+  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+  const context = useContext(AuthContext);
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
+  return context;
 };
 
 interface AuthProviderProps {
-  children: React.ReactNode;
+  children: React.ReactNode;
 }
 
-// Encryption utilities for NON-SENSITIVE data storage
-const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY || 'default-key-change-in-production';
+// ------------------------------
+// ENCRYPTION UTILITIES
+// ------------------------------
+const ENCRYPTION_KEY =
+  import.meta.env.VITE_ENCRYPTION_KEY || 'default-key-change-in-production';
 
-const encryptData = (data: string): string => {
-  return CryptoJS.AES.encrypt(data, ENCRYPTION_KEY).toString();
-};
+const encryptData = (data: string): string =>
+  CryptoJS.AES.encrypt(data, ENCRYPTION_KEY).toString();
 
 const decryptData = (encryptedData: string): string | null => {
   try {
@@ -42,128 +57,119 @@ const decryptData = (encryptedData: string): string | null => {
   }
 };
 
-// Secure storage for user profile data ONLY (never contains passwords)
+// ------------------------------
+// SECURE STORAGE (For Non-Sensitive Data)
+// ------------------------------
 const secureStorage = {
   setItem: (key: string, value: any): void => {
-    const stringValue = JSON.stringify(value);
-    const encrypted = encryptData(stringValue);
-    sessionStorage.setItem(key, encrypted);
+    try {
+      const encrypted = encryptData(JSON.stringify(value));
+      sessionStorage.setItem(key, encrypted);
+    } catch (err) {
+      console.error('Failed to encrypt & store data:', err);
+    }
   },
-  
+
   getItem: (key: string): any | null => {
     const encrypted = sessionStorage.getItem(key);
     if (!encrypted) return null;
-    
+
     const decrypted = decryptData(encrypted);
     if (!decrypted) return null;
-    
+
     try {
       return JSON.parse(decrypted);
-    } catch (error) {
-      console.error('Parse failed:', error);
+    } catch (err) {
+      console.error('Failed to parse decrypted data:', err);
       return null;
     }
   },
-  
+
   removeItem: (key: string): void => {
     sessionStorage.removeItem(key);
-  }
+  },
 };
 
-// SEPARATE storage for password database (uses sessionStorage directly, no encryption)
-// This is acceptable because passwords are already hashed with bcrypt
-const passwordStorage = {
-  setItem: (key: string, value: any): void => {
-    // Store password database directly without AES encryption
-    // Passwords are already protected by bcrypt hashing
-    sessionStorage.setItem(key, JSON.stringify(value));
-  },
-  
-  getItem: (key: string): any | null => {
-    const data = sessionStorage.getItem(key);
-    if (!data) return null;
-    
-    try {
-      return JSON.parse(data);
-    } catch (error) {
-      console.error('Parse failed:', error);
-      return null;
-    }
-  },
-  
-  removeItem: (key: string): void => {
-    sessionStorage.removeItem(key);
-  }
-};
-
+// ------------------------------
+// AUTH PROVIDER
+// ------------------------------
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    // Check for stored user session
-    const storedUser = localStorage.getItem('mindbuddy_user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setIsLoading(false);
-  }, []);
+  useEffect(() => {
+    // Load user session from localStorage
+    const storedUser = localStorage.getItem('mindbuddy_user');
+    if (storedUser) setUser(JSON.parse(storedUser));
+    setIsLoading(false);
+  }, []);
 
-  const login = async (credentials: LoginCredentials): Promise<boolean> => {
-    setIsLoading(true);
+  // ------------------------------
+  // LOGIN FUNCTION
+  // ------------------------------
+  const login = async (credentials: LoginCredentials): Promise<boolean> => {
+    setIsLoading(true);
 
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    // Simulate API latency
+    await new Promise((resolve) => setTimeout(resolve, 800));
 
-    const mockUser = mockUsers[credentials.email];
+    const emailKey = credentials.email?.toLowerCase();
+    const mockUser = emailKey ? mockUsers[emailKey] : null;
 
-    if (
-      mockUser &&
-      mockUser.password === credentials.password &&
-      mockUser.user.role === credentials.role
-    ) {
-      setUser(mockUser.user);
-      localStorage.setItem('mindbuddy_user', JSON.stringify(mockUser.user));
-      setIsLoading(false);
-      // Redirect to institution selection instead of directly to dashboard
-      window.location.href = '/select-institution';
-      return true;
-    }
+    console.debug('[Auth] Login Attempt:', {
+      email: emailKey,
+      foundUser: !!mockUser,
+      expectedRole: mockUser?.user.role,
+      providedRole: credentials.role,
+    });
 
-    setIsLoading(false);
-    return false;
-  };
+    const passwordMatch = mockUser
+      ? bcrypt.compareSync(credentials.password, mockUser.password)
+      : false;
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('mindbuddy_user');
-    // Clear institution-related data for privacy
-    localStorage.removeItem('selected_institution');
-    localStorage.removeItem('recent_institutions');
-    localStorage.removeItem('institution_favorites');
-    // Redirect to the main landing page
-    window.location.href = '/';
-  };
+    if (mockUser && passwordMatch && mockUser.user.role === credentials.role) {
+      setUser(mockUser.user);
+      localStorage.setItem('mindbuddy_user', JSON.stringify(mockUser.user));
 
-  const updateUser = (data: Partial<User>) => { // Changed UserType to User for simplicity
-    if (user) {
-      const updatedUser = { ...user, ...data };
-      
-      // 1. Update React state in context
-      setUser(updatedUser); 
+      setIsLoading(false);
+      window.location.href = '/select-institution'; // Redirect
+      return true;
+    }
 
-      // 2. WRITE TO PERSISTENCE (FIXED)
-      localStorage.setItem('mindbuddy_user', JSON.stringify(updatedUser));
-    }
+    setIsLoading(false);
+    return false;
   };
 
-  const value = {
-    user,
-    login,
-    logout,
-    updateUser,
-    isLoading,
-  };
+  // ------------------------------
+  // LOGOUT FUNCTION
+  // ------------------------------
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('mindbuddy_user');
+    localStorage.removeItem('selected_institution');
+    localStorage.removeItem('recent_institutions');
+    localStorage.removeItem('institution_favorites');
+    window.location.href = '/';
+  };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  // ------------------------------
+  // UPDATE USER FUNCTION
+  // ------------------------------
+  const updateUser = (data: Partial<User>) => {
+    if (!user) return;
+
+    const updatedUser = { ...user, ...data };
+    setUser(updatedUser);
+    localStorage.setItem('mindbuddy_user', JSON.stringify(updatedUser));
+  };
+
+  const value: AuthContextType = {
+    user,
+    login,
+    logout,
+    updateUser,
+    isLoading,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
