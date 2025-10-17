@@ -333,14 +333,14 @@ const Profile = () => {
               </DropdownMenu>
             </div>
             <CardTitle className="text-xl text-center px-2">{user.name}</CardTitle>
-            <CardDescription className="flex items-center justify-center space-x-2">
+            <div className="flex items-center justify-center space-x-2">
               <Badge className={`${getRoleColor(user.role)} text-white`}>
                 {user.role === 'student' && <GraduationCap className="h-3 w-3 mr-1" />}
                 {user.role === 'counselor' && <Award className="h-3 w-3 mr-1" />}
                 {user.role === 'admin' && <Shield className="h-3 w-3 mr-1" />}
                 {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
               </Badge>
-            </CardDescription>
+            </div>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center space-x-2 text-sm">

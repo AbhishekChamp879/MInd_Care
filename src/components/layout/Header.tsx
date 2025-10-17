@@ -84,10 +84,19 @@ const Header = () => {
   const navItems = getNavItems();
 
   const getInitials = (name: string) => {
-    const username = name.split(' ');
-    const result = username[0][0] + username[username.length - 1][0].toUpperCase();
-
-    return result;
+    if (!name || !name.trim()) return '??';
+    
+    const words = name.trim().split(' ').filter(word => word.length > 0);
+    if (words.length === 0) return '??';
+    
+    if (words.length === 1) {
+      return words[0][0].toUpperCase();
+    }
+    
+    const firstInitial = words[0][0].toUpperCase();
+    const lastInitial = words[words.length - 1][0].toUpperCase();
+    
+    return firstInitial + lastInitial;
   };
 
   return (
