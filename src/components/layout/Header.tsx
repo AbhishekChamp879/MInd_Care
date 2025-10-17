@@ -84,11 +84,10 @@ const Header = () => {
   const navItems = getNavItems();
 
   const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase();
+    const username = name.split(' ');
+    const result = username[0][0] + username[username.length - 1][0].toUpperCase();
+
+    return result;
   };
 
   return (

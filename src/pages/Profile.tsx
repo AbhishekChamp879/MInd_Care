@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
   User,
   Phone,
@@ -40,6 +41,108 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<Partial<UserType>>(user || {});
   const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+
+  const supportedLanguages = [
+    'English', 'Portuguese', 'Spanish', 'French', 'German', 'Italian', 
+    'Chinese', 'Japanese', 'Korean', 'Arabic', 'Russian', 'Dutch',
+    'Swedish', 'Norwegian', 'Finnish', 'Danish', 'Polish', 'Turkish'
+  ];
+
+  const commonTimezones = [
+    'UTC-12:00', 'UTC-11:00', 'UTC-10:00', 'UTC-09:00', 'UTC-08:00',
+    'UTC-07:00', 'UTC-06:00', 'UTC-05:00', 'UTC-04:00', 'UTC-03:00',
+    'UTC-02:00', 'UTC-01:00', 'UTC+00:00', 'UTC+01:00', 'UTC+02:00',
+    'UTC+03:00', 'UTC+04:00', 'UTC+05:00', 'UTC+06:00', 'UTC+07:00',
+    'UTC+08:00', 'UTC+09:00', 'UTC+10:00', 'UTC+11:00', 'UTC+12:00'
+  ];
+
+  const validateField = (field: string, value: string): string | null => {
+    switch (field) {
+      case 'name': {
+        if (!value.trim()) return 'Name is required';
+        if (value.length < 2) return 'Name must be at least 2 characters';
+        if (value.length > 40) return 'Name cannot exceed 40 characters';
+        if (!/^[a-zA-ZÀ-ÿ\s]+$/.test(value)) return 'Name must contain only letters and spaces';
+        
+        // Additional validation for UI consistency
+        const words = value.trim().split(' ').filter(word => word.length > 0);
+        if (words.length > 4) return 'Name cannot have more than 4 words';
+        if (words.some(word => word.length > 15)) return 'Individual words cannot exceed 15 characters';
+        if (words.some(word => word.length < 2)) return 'Each name part must be at least 2 characters';
+        
+        // Check for excessive spaces
+        if (/\s{2,}/.test(value)) return 'No multiple consecutive spaces allowed';
+        if (value.startsWith(' ') || value.endsWith(' ')) return 'Name cannot start or end with spaces';
+        
+        break;
+      }
+      
+      case 'email': {
+        if (!value.trim()) return 'Email is required';
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) return 'Invalid email format';
+        break;
+      }
+      
+      case 'dateOfBirth': {
+        if (value) {
+          const birthDate = new Date(value);
+          const today = new Date();
+          const maxAge = new Date(today.getFullYear() - 120, today.getMonth(), today.getDate());
+          const minAge = new Date(today.getFullYear() - 13, today.getMonth(), today.getDate());
+          
+          if (birthDate > today) return 'Birth date cannot be in the future';
+          if (birthDate < maxAge) return 'Invalid birth date';
+          if (birthDate > minAge) return 'Minimum age is 13 years';
+        }
+        break;
+      }
+      
+      case 'phone':
+      case 'emergencyPhone': {
+        if (value && !/^\+?[\d\s\-()]+$/.test(value)) {
+          return 'Invalid phone number format';
+        }
+        if (value && (value.length < 10 || value.length > 20)) {
+          return 'Phone number must be between 10 and 20 characters';
+        }
+        break;
+      }
+      
+      case 'preferredLanguage': {
+        if (value && !supportedLanguages.includes(value)) {
+          return 'Language not supported';
+        }
+        break;
+      }
+      
+      case 'emergencyContact': {
+        if (value && value.length > 100) return 'Emergency contact name too long';
+        break;
+      }
+      
+      default:
+        return null;
+    }
+    return null;
+  };
+
+  const validateAllFields = (): boolean => {
+    const errors: Record<string, string> = {};
+    
+    Object.entries(editData).forEach(([field, value]) => {
+      if (typeof value === 'string') {
+        const error = validateField(field, value);
+        if (error) {
+          errors[field] = error;
+        }
+      }
+    });
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   useEffect(() => {
     if (user) {
@@ -60,12 +163,32 @@ const Profile = () => {
   }
 
   const handleSave = () => {
+    if (!validateAllFields()) {
+      toast({
+        title: 'Validation Error',
+        description: 'Please fix the errors before saving.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     updateUser(editData);
     setIsEditing(false);
+    setValidationErrors({});
     toast({
       title: 'Profile Updated',
       description: 'Your profile information has been saved successfully.',
     });
+  };
+
+  const handleFieldChange = (field: string, value: string) => {
+    setEditData({ ...editData, [field]: value });
+    
+    const error = validateField(field, value);
+    setValidationErrors(prev => ({
+      ...prev,
+      [field]: error || ''
+    }));
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,11 +261,19 @@ const Profile = () => {
   };
 
   const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase();
+    if (!name || !name.trim()) return '??';
+    
+    const words = name.trim().split(' ').filter(word => word.length > 0);
+    if (words.length === 0) return '??';
+    
+    if (words.length === 1) {
+      return words[0][0].toUpperCase();
+    }
+    
+    const firstInitial = words[0][0].toUpperCase();
+    const lastInitial = words[words.length - 1][0].toUpperCase();
+    
+    return firstInitial + lastInitial;
   };
 
   return (
@@ -201,7 +332,7 @@ const Profile = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            <CardTitle className="text-xl">{user.name}</CardTitle>
+            <CardTitle className="text-xl text-center px-2">{user.name}</CardTitle>
             <CardDescription className="flex items-center justify-center space-x-2">
               <Badge className={`${getRoleColor(user.role)} text-white`}>
                 {user.role === 'student' && <GraduationCap className="h-3 w-3 mr-1" />}
@@ -273,18 +404,28 @@ const Profile = () => {
                     <Input
                       id="name"
                       value={isEditing ? editData.name || '' : user.name || ''}
-                      onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+                      onChange={(e) => handleFieldChange('name', e.target.value)}
                       disabled={!isEditing}
+                      maxLength={40}
+                      className={validationErrors.name ? 'border-red-500' : ''}
                     />
+                    {validationErrors.name && (
+                      <p className="text-sm text-red-500">{validationErrors.name}</p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <Input
                       id="email"
+                      type='email'
                       value={isEditing ? editData.email || '' : user.email || ''}
-                      onChange={(e) => setEditData({ ...editData, email: e.target.value })}
+                      onChange={(e) => handleFieldChange('email', e.target.value)}
                       disabled={!isEditing}
+                      className={validationErrors.email ? 'border-red-500' : ''}
                     />
+                    {validationErrors.email && (
+                      <p className="text-sm text-red-500">{validationErrors.email}</p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="dateOfBirth">Date of Birth</Label>
@@ -292,22 +433,43 @@ const Profile = () => {
                       id="dateOfBirth"
                       type="date"
                       value={isEditing ? editData.dateOfBirth || '' : user.dateOfBirth || ''}
-                      onChange={(e) => setEditData({ ...editData, dateOfBirth: e.target.value })}
+                      onChange={(e) => handleFieldChange('dateOfBirth', e.target.value)}
                       disabled={!isEditing}
+                      max={new Date().toISOString().split('T')[0]}
+                      className={validationErrors.dateOfBirth ? 'border-red-500' : ''}
                     />
+                    {validationErrors.dateOfBirth && (
+                      <p className="text-sm text-red-500">{validationErrors.dateOfBirth}</p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="preferredLanguage">Preferred Language</Label>
-                    <Input
-                      id="preferredLanguage"
-                      value={
-                        isEditing ? editData.preferredLanguage || '' : user.preferredLanguage || ''
-                      }
-                      onChange={(e) =>
-                        setEditData({ ...editData, preferredLanguage: e.target.value })
-                      }
-                      disabled={!isEditing}
-                    />
+                    {isEditing ? (
+                      <Select
+                        value={editData.preferredLanguage || ''}
+                        onValueChange={(value) => handleFieldChange('preferredLanguage', value)}
+                      >
+                        <SelectTrigger className={validationErrors.preferredLanguage ? 'border-red-500' : ''}>
+                          <SelectValue placeholder="Select a language" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {supportedLanguages.map((lang) => (
+                            <SelectItem key={lang} value={lang}>
+                              {lang}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <Input
+                        id="preferredLanguage"
+                        value={user.preferredLanguage || ''}
+                        disabled
+                      />
+                    )}
+                    {validationErrors.preferredLanguage && (
+                      <p className="text-sm text-red-500">{validationErrors.preferredLanguage}</p>
+                    )}
                   </div>
                 </div>
               </TabsContent>
@@ -318,19 +480,43 @@ const Profile = () => {
                     <Label htmlFor="phone">Phone Number</Label>
                     <Input
                       id="phone"
+                      type="tel"
+                      placeholder="+1 (555) 123-4567"
                       value={isEditing ? editData.phone || '' : user.phone || ''}
-                      onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
+                      onChange={(e) => handleFieldChange('phone', e.target.value)}
                       disabled={!isEditing}
+                      maxLength={20}
+                      className={validationErrors.phone ? 'border-red-500' : ''}
                     />
+                    {validationErrors.phone && (
+                      <p className="text-sm text-red-500">{validationErrors.phone}</p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="timezone">Timezone</Label>
-                    <Input
-                      id="timezone"
-                      value={isEditing ? editData.timezone || '' : user.timezone || ''}
-                      onChange={(e) => setEditData({ ...editData, timezone: e.target.value })}
-                      disabled={!isEditing}
-                    />
+                    {isEditing ? (
+                      <Select
+                        value={editData.timezone || ''}
+                        onValueChange={(value) => handleFieldChange('timezone', value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select timezone" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {commonTimezones.map((tz) => (
+                            <SelectItem key={tz} value={tz}>
+                              {tz}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <Input
+                        id="timezone"
+                        value={user.timezone || ''}
+                        disabled
+                      />
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="emergencyContact">Emergency Contact</Label>
@@ -339,20 +525,30 @@ const Profile = () => {
                       value={
                         isEditing ? editData.emergencyContact || '' : user.emergencyContact || ''
                       }
-                      onChange={(e) =>
-                        setEditData({ ...editData, emergencyContact: e.target.value })
-                      }
+                      onChange={(e) => handleFieldChange('emergencyContact', e.target.value)}
                       disabled={!isEditing}
+                      maxLength={100}
+                      className={validationErrors.emergencyContact ? 'border-red-500' : ''}
                     />
+                    {validationErrors.emergencyContact && (
+                      <p className="text-sm text-red-500">{validationErrors.emergencyContact}</p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="emergencyPhone">Emergency Phone</Label>
                     <Input
                       id="emergencyPhone"
+                      type="tel"
+                      placeholder="+1 (555) 123-4567"
                       value={isEditing ? editData.emergencyPhone || '' : user.emergencyPhone || ''}
-                      onChange={(e) => setEditData({ ...editData, emergencyPhone: e.target.value })}
+                      onChange={(e) => handleFieldChange('emergencyPhone', e.target.value)}
                       disabled={!isEditing}
+                      maxLength={20}
+                      className={validationErrors.emergencyPhone ? 'border-red-500' : ''}
                     />
+                    {validationErrors.emergencyPhone && (
+                      <p className="text-sm text-red-500">{validationErrors.emergencyPhone}</p>
+                    )}
                   </div>
                 </div>
               </TabsContent>
@@ -367,6 +563,7 @@ const Profile = () => {
                         value={isEditing ? editData.university || '' : user.university || ''}
                         onChange={(e) => setEditData({ ...editData, university: e.target.value })}
                         disabled={!isEditing}
+                        maxLength={100}
                       />
                     </div>
                     <div className="space-y-2">
@@ -376,6 +573,7 @@ const Profile = () => {
                         value={isEditing ? editData.major || '' : user.major || ''}
                         onChange={(e) => setEditData({ ...editData, major: e.target.value })}
                         disabled={!isEditing}
+                        maxLength={50}
                       />
                     </div>
                     <div className="space-y-2">
@@ -385,6 +583,7 @@ const Profile = () => {
                         value={isEditing ? editData.year || '' : user.year || ''}
                         onChange={(e) => setEditData({ ...editData, year: e.target.value })}
                         disabled={!isEditing}
+                        maxLength={20}
                       />
                     </div>
                     <div className="space-y-2">
@@ -394,6 +593,7 @@ const Profile = () => {
                         value={isEditing ? editData.studentId || '' : user.studentId || ''}
                         onChange={(e) => setEditData({ ...editData, studentId: e.target.value })}
                         disabled={!isEditing}
+                        maxLength={20}
                       />
                     </div>
                   </div>
