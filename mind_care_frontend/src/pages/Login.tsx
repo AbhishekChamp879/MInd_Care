@@ -12,6 +12,7 @@ import PageTransition from '@/components/ui/PageTransition';
 import ScrollFadeIn from '@/components/ui/ScrollFadeIn';
 import { FaGoogle } from 'react-icons/fa';
 import { toast } from '@/components/ui/sonner';
+import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();
